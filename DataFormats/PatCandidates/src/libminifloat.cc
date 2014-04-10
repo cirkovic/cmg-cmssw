@@ -1,4 +1,4 @@
-#include "AnalysisDataFormats/CMGTools/interface/libminifloat.h"
+#include "DataFormats/PatCandidates/interface/libminifloat.h"
 
 namespace {
     MiniFloatConverter dummy; // so the constructor is called

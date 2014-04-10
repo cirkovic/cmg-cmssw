@@ -45,6 +45,7 @@ class ttHLepTreeProducerTTH( ttHLepTreeProducerNew ):
             NTupleVariable("ht4l", lambda ev: ev.ht4l, help="H_{T}(4l)"),
             NTupleVariable("q3l", lambda ev: ev.q3l, int, help="q(3l)"),
             NTupleVariable("q4l", lambda ev: ev.q4l, int, help="q(4l)"),
+            NTupleVariable("metSignificance", lambda ev: ev.metSignificance, int, help="E_{T}^{miss} significance"),
             ##--------------------------------------------------
             NTupleVariable("minMWjj", lambda ev: ev.minMWjj, int, help="minMWjj"),
             NTupleVariable("minMWjjPt", lambda ev: ev.minMWjjPt, int, help="minMWjjPt"),
@@ -81,7 +82,7 @@ class ttHLepTreeProducerTTH( ttHLepTreeProducerNew ):
 
         self.globalObjects = {
             "met" : NTupleObject("met", metType, help="PF E_{T}^{miss}, after type 1 corrections"),
-            "metNoPU" : NTupleObject("metNoPU", fourVectorType, help="PF noPU E_{T}^{miss}"),
+            # "metNoPU" : NTupleObject("metNoPU", fourVectorType, help="PF noPU E_{T}^{miss}"), # FIXME
         }
         self.collections = {
             "selectedLeptons" : NTupleCollection("LepGood", leptonTypeTTH, 8, help="Leptons after the preselection"),

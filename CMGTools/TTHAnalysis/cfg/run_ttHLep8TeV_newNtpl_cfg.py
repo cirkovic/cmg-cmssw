@@ -10,7 +10,8 @@ PDFWeights = []
 
 # this analyzer finds the initial events before the skim
 skimAnalyzer = cfg.Analyzer(
-    'skimAnalyzerCount'
+    'skimAnalyzerCount',
+    useLumiBlocks = False, # since we run on a non-CMG dataset, there's no info on lumi blocks, and this way we use less memory
     )
 
 eventSelector = cfg.Analyzer(
@@ -33,9 +34,8 @@ triggerAna = cfg.Analyzer(
 # this analyzer is just there to select a list of good primary vertices.
 ttHVertexAna = cfg.Analyzer(
     'VertexAnalyzer',
-    goodVertices = 'offlinePrimaryVertices',
-    #goodVertices = 'slimmedPrimaryVertices',
-    #allVertices = 'slimmedPrimaryVertices',
+    goodVertices = 'offlineSlimmedPrimaryVertices',
+    allVertices = 'offlineSlimmedPrimaryVertices',
     vertexWeight = None,
     fixedWeight = 1,
     verbose = False
@@ -47,7 +47,7 @@ pileUpAna = cfg.Analyzer(
     "PileUpAnalyzer",
     # build unweighted pu distribution using number of pile up interactions if False
     # otherwise, use fill the distribution using number of true interactions
-    #allVertices = 'slimmedPrimaryVertices',
+    allVertices = 'offlineSlimmedPrimaryVertices',
     true = True,
     makeHists=False
     )
@@ -68,18 +68,18 @@ susyScanAna = cfg.Analyzer(
 # Lepton Analyzer
 ttHLepAna = cfg.Analyzer(
     'ttHLepAnalyzerBase',
-    rhoMuon= 'kt6PFJetsCentralNeutral',
-    rhoElectron = 'kt6PFJets',
-    muons='cmgMuonSel',
-    electrons='cmgElectronSel',
-    photons='cmgPhotonSel',
+    rhoMuon= 'fixedGridRhoFastjetAll',
+    rhoElectron = 'fixedGridRhoFastjetAll',
+    muons='slimmedMuons',
+    electrons='slimmedElectrons',
+    photons='slimmedPhotons',
     isolationCut=0.4, 
     sip3dCut=10,
     sip3dCutVeryLoose=100,
     minGoodLeptons=2,
     minInclusiveLeptons=2,
     doSSLeptons=False,
-    doMuScleFitCorrections="rereco",
+    doMuScleFitCorrections=False, #"rereco",
     doRochesterCorrections=False,
     doElectronScaleCorrections=False,
     doRecomputeSIP3D=False,
@@ -98,7 +98,8 @@ ttHTauAna = cfg.Analyzer(
     ptMin = 20,
     vetoLeptons = True,
     leptonVetoDR = 0.5,
-    tauID = "byMediumIsolationMVA2",
+    #tauID = "byMediumIsolationMVA2",
+    tauID = "byLooseCombinedIsolationDeltaBetaCorr3Hits",
     tauLooseID = "decayModeFinding",
 )
 
@@ -111,13 +112,13 @@ ttHTauMCAna = cfg.Analyzer(
 # Jets Analyzer 
 ttHJetAna = cfg.Analyzer(
     'ttHJetAnalyzer',
-    jetCol = 'cmgPFJetSelCHS',
-    jetCol4MVA = 'cmgPFJetSel',
+    jetCol = 'slimmedJets',
+    jetCol4MVA = 'slimmedJets',
     jetPt = 25.,
     jetEta = 4.7,
     jetEtaCentral = 2.4,
     relaxJetId = False,  
-    doPuId = True,
+    doPuId = True, # FIXME
     recalibrateJets = False,
     shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
     cleanJetsFromTaus = False,
@@ -207,7 +208,7 @@ if test==1:
     # necessary to debug the code, until it doesn't crash anymore
     #comp = TW
     comp = TTH
-    comp.files = comp.files[:1]
+    comp.files = [ 'root://eoscms//eos/cms/store/cmst3/user/gpetrucc/miniAOD/TTJets.root' ]
     selectedComponents = [comp]
     comp.splitFactor = 1
     ## search for memory leaks
