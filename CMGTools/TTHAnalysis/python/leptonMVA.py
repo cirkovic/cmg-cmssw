@@ -50,7 +50,7 @@ _CommonVars = [
     MVAVar("neuRelIso := relIso - chargedIso/pt",lambda x: x.relIso(dBetaFactor=0.5) - x.chargedHadronIso()/x.pt()),  
     MVAVar("chRelIso := chargedIso/pt",lambda x: x.chargedHadronIso()/x.pt()),
     MVAVar("jetDR_in := min(dr_in,0.5)", lambda x : min(deltaR(x.eta(),x.phi(),x.jet.eta(),x.jet.phi()),0.5), corrfunc=ROOT.correctJetDRMC),
-    MVAVar("jetPtRatio_in := min(ptf_in,1.5)", lambda x : min(x.pt()/x.jet.pt(),1.5), corrfunc=ROOT.correctJetPtRatioMC),
+	MVAVar("jetPtRatio_in := min(ptf_in,1.5)", lambda x : min(x.pt()/x.jet.pt() if hasattr(x,'jet') and x.jet.pt()<>0 else -1, 1.5), corrfunc=ROOT.correctJetPtRatioMC),
     MVAVar("jetBTagCSV_in := max(CSV_in,0)", lambda x : max( (x.jet.btag('combinedSecondaryVertexBJetTags') if hasattr(x.jet, 'btag') else -99) ,0.)),
     #MVAVar("jetDR_out := min(dr_out,5)", lambda x : min(x.dr_out,5.)),
     #MVAVar("jetPtRatio_out := min(ptf_out,1.5)", lambda x : min(x.ptf_out,1.5)),
