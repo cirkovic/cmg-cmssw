@@ -48,7 +48,7 @@ treeProducer = cfg.Analyzer(
 #-------- SEQUENCE
 from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14 import * 
 
-selectedComponents = [ SingleMu, DoubleElectron, TTHTauTau_PU20bx25, DYJetsM50_PU20bx25, TTJets_PUS14 ]
+selectedComponents = [ TTHTauTau_PU20bx25, TTHWW_PU20bx25, TTHZZ4L_PU20bx25]
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
@@ -57,7 +57,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
     comp = TTHTauTau_PU20bx25
