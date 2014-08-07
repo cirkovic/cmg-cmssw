@@ -1,41 +1,64 @@
 void trainMVA_2lss(TString name) {
-    TString Path = "/data/b/botta/TTHAnalysis/trees/TREES_250513_HADD";
+    TString Path = "/afs/cern.ch/work/c/cirkovic/Milos_11-07-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/cfg/TEST_TTH_vs_TTJets_PU20bx25_Output_Directory";
     //gROOT->ProcessLine(".L ../../../python/plotter/functions.cc+");
 
     TFile *fOut = new TFile(name+".root","RECREATE");
     TMVA::Factory *factory = new TMVA::Factory(name, fOut, "!V:!Color");
 
-    TFile *fSig = TFile::Open(Path+"/TTH122/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-    TTree *tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
+    TFile *fSig;
+    TTree *tSig;
+    
+    fSig = TFile::Open(Path+"/TTHBB_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
     //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
     factory->AddSignalTree(tSig, 1.0);
-    fSig = TFile::Open(Path+"/TTH127/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-    tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
+    
+    fSig = TFile::Open(Path+"/TTHGG_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
+    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
     factory->AddSignalTree(tSig, 1.0);
-    //fSig = TFile::Open(Path+"/TTH/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-    //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
+    
+    fSig = TFile::Open(Path+"/TTHTauTau_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
+    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
+    factory->AddSignalTree(tSig, 1.0);
+    
+    fSig = TFile::Open(Path+"/TTHWW_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
+    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
+    factory->AddSignalTree(tSig, 1.0);
+    
+    fSig = TFile::Open(Path+"/TTHZZ4L_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
+    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
+    factory->AddSignalTree(tSig, 1.0);
+    
+    //fSig = TFile::Open(Path+"/TTH/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+    //tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
     //factory->AddSignalTree(tSig, 1.0);
 
-    TCut all = "nLepGood == 2 && LepGood1_charge == LepGood2_charge && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100";
+    //TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met > 100";
+    
+    TCut all = "nLepGood == 2 && LepGood_charge.at(0) == LepGood_charge.at(1) && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt.at(1) > 20 && LepGood_pt.at(0)+LepGood_pt.at(1) > 100";
+    
     if (name.Contains("ttW")) {
-        TFile *fBkg = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-        TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
+        TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+        TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
         factory->AddBackgroundTree(tBkg, 1.0);
     } else if (name.Contains("ttbar")) {
-        TFile *fBkg = TFile::Open(Path+"/TTJetsSem/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-        TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
+        TFile *fBkg = TFile::Open(Path+"/TTJets_PU20bx25/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+        TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
         //tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg, 1.0);
-        //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-        //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
+        //fBkg = TFile::Open(Path+"/TTJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+        //tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
         //factory->AddBackgroundTree(tBkg, 0.2);
     } else if (name.Contains("mix")) {
-        TFile *fBkg1 = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-        TTree *tBkg1 = (TTree *) fBkg1->Get("ttHLepTreeProducerBase");
+        TFile *fBkg1 = TFile::Open(Path+"/TTJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+        TTree *tBkg1 = (TTree *) fBkg1->Get("treeProducerSusyMultilepton");
         factory->AddBackgroundTree(tBkg1, 1.0);
-        TFile *fBkg2 = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
-        TTree *tBkg2 = (TTree *) fBkg2->Get("ttHLepTreeProducerBase");
+        TFile *fBkg2 = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
+        TTree *tBkg2 = (TTree *) fBkg2->Get("treeProducerSusyMultilepton");
         factory->AddBackgroundTree(tBkg2, 1.0);
     } else  {
         std::cout << "Training not implemented " << std::endl;
@@ -64,8 +87,8 @@ void trainMVA_2lss(TString name) {
     //factory->AddVariable("met := min(met, 300)", 'F');
 
     // Jets and HT
-    factory->AddVariable("jet1Pt := min(Jet1_pt, 300)", 'F');
-    factory->AddVariable("jet2Pt := min(Jet2_pt, 300)", 'F');
+    factory->AddVariable("jet1Pt := min(Jet_pt[0], 300)", 'F');
+    factory->AddVariable("jet2Pt := min(Jet_pt[1], 300)", 'F');
     //factory->AddVariable("jetptmin := min(Jet1_pt,Jet2_pt)", 'F');
     factory->AddVariable("htJet25 := min(htJet25, 1000)", 'F');
 
@@ -76,7 +99,7 @@ void trainMVA_2lss(TString name) {
 
     //factory->AddVariable("ptavgEtaJets := (abs(Jet1_eta)*Jet1_pt+abs(Jet2_eta)*Jet2_pt)/(Jet1_pt+Jet2_pt)", 'F');
 
-    factory->AddVariable("htJet25ratio1224Lep := (LepGood1_pt*(abs(LepGood1_eta)<1.2) + LepGood2_pt*(abs(LepGood2_eta)<1.2) + Jet1_pt*(abs(Jet1_eta) < 1.2) + Jet2_pt*(abs(Jet2_eta) < 1.2) + Jet3_pt*(abs(Jet3_eta) < 1.2) + Jet4_pt*(abs(Jet4_eta) < 1.2) + Jet5_pt*(abs(Jet5_eta) < 1.2) + Jet6_pt*(abs(Jet6_eta) < 1.2) + Jet7_pt*(abs(Jet7_eta) < 1.2) + Jet8_pt*(abs(Jet8_eta) < 1.2))/ (LepGood1_pt + LepGood2_pt + Jet1_pt*(abs(Jet1_eta) < 2.4) + Jet2_pt*(abs(Jet2_eta) < 2.4) + Jet3_pt*(abs(Jet3_eta) < 2.4) + Jet4_pt*(abs(Jet4_eta) < 2.4) + Jet5_pt*(abs(Jet5_eta) < 2.4) + Jet6_pt*(abs(Jet6_eta) < 2.4) + Jet7_pt*(abs(Jet7_eta) < 2.4) + Jet8_pt*(abs(Jet8_eta) < 2.4))", 'F');
+    //factory->AddVariable("htJet25ratio1224Lep := (LepGood_pt[0]*(abs(LepGood_eta[0])<1.2) + LepGood_pt[1]*(abs(LepGood_eta[1])<1.2) + Jet_pt[0]*(abs(Jet_eta[0]) < 1.2) + Jet_pt[1]*(abs(Jet_eta[1]) < 1.2) + Jet_pt[2]*(abs(Jet_eta[2]) < 1.2) + Jet_pt[3]*(abs(Jet_eta[3]) < 1.2) + Jet_pt[4]*(abs(Jet[4]_eta) < 1.2) + Jet[5]_pt*(abs(Jet[5]_eta) < 1.2) + Jet_pt[6]*(abs(Jet_eta[6]) < 1.2) + Jet_p[7]t*(abs(Jet_eta[7]) < 1.2))/ (LepGood_pt[0] + LepGood_pt[1] + Jet_pt[0]*(abs(Jet_eta[0]) < 2.4) + Jet_pt[1]*(abs(Jet_eta[1]) < 2.4) + Jet_pt[2]*(abs(Jet_eta[2]) < 2.4) + Jet_pt[3]*(abs(Jet_eta[3]) < 2.4) + Jet_pt[4]*(abs(Jet_eta[4]) < 2.4) + Jet_pt[5]*(abs(Jet_eta[5]) < 2.4) + Jet_pt[6]*(abs(Jet_eta[6]) < 2.4) + Jet_pt[7]*(abs(Jet_eta[7]) < 2.4))", 'F');
 
   
     // Event reconstruction   

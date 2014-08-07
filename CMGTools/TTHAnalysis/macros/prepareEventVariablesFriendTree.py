@@ -5,14 +5,14 @@ import os.path
 
 MODULES = []
 
-#from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
-#MODULES.append( ('2lss', EventVars2LSS()) )
+from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
+MODULES.append( ('2lss', EventVars2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
 #MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_3l import FinalMVA_3L
 #MODULES.append( ('3l_mva', FinalMVA_3L()) )
-from CMGTools.TTHAnalysis.tools.bbvars import bbVars
-MODULES.append( ('bbvars', bbVars()) )
+#from CMGTools.TTHAnalysis.tools.bbvars import bbVars
+#MODULES.append( ('bbvars', bbVars()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_2lss_2 import FinalMVA_2LSS_2
 #MODULES.append( ('finalMVA_2lss_2', FinalMVA_2LSS_2()) )
 #from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
