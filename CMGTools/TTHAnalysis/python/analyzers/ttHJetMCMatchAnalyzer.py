@@ -82,7 +82,7 @@ class ttHJetMCMatchAnalyzer( Analyzer ):
                elif aeta > 1.7: factor = 1.134 + self.shiftJER*hypot(0.035,0.066)
                elif aeta > 1.1: factor = 1.096 + self.shiftJER*hypot(0.017,0.063)
                elif aeta > 0.5: factor = 1.057 + self.shiftJER*hypot(0.012,0.056)
-               ptscale = max(0.0, (jetpt + (factor-1)*(jetpt-genpt))/jetpt)
+               ptscale = max(1e-6, (jetpt + (factor-1)*(jetpt-genpt))/jetpt)
                #print "get with pt %.1f (gen pt %.1f, ptscale = %.3f)" % (jetpt,genpt,ptscale)
                event.deltaMetFromJetSmearing[0] -= (ptscale-1)*jet.rawFactor()*jet.px()
                event.deltaMetFromJetSmearing[1] -= (ptscale-1)*jet.rawFactor()*jet.py()
