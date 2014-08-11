@@ -70,8 +70,8 @@ class ttHLepEventAnalyzer( Analyzer ):
         print
         print 'nEvt: ', self.nEvt
         self.nEvt += 1
-        if self.nEvt > 1730:
-            sys.exit()
+        #if self.nEvt > 1730:
+        #    sys.exit()
         self.readCollections( iEvent )
         self.counters.counter('events').inc('all events')
 
