@@ -86,6 +86,7 @@ def bestMatch( object, matchCollection):
 
 
 def matchObjectCollection( objects, matchCollection, deltaR2Max):
+    #print 'In matchObjectCollection:'
     pairs = {}
     if len(objects)==0:
         return pairs
@@ -96,7 +97,11 @@ def matchObjectCollection( objects, matchCollection, deltaR2Max):
         if dr2<deltaR2Max:
             pairs[object] = bm
         else:
-            pairs[object] = None            
+            pairs[object] = None
+        #print '    dr2, deltaR2Max, object, pairs[object]: '
+        #print '        ', dr2, ' < ', deltaR2Max, ' = ', dr2<deltaR2Max
+        #print '        ', object
+        #print '        ', pairs[object]
     return pairs
 
 

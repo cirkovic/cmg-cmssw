@@ -225,10 +225,20 @@ class ttHCoreEventAnalyzer( Analyzer ):
             thisDeltaPhi = abs( deltaPhi( j.phi(), event.met.phi() ) )
             if thisDeltaPhi < event.deltaPhiMin : event.deltaPhiMin = thisDeltaPhi
 
+        print 'cleanJets: '
+        for jet in event.cleanJets:
+            print '    cleanJet: ', jet
+
+        print 'selectedLeptons:'
         for lep in event.selectedLeptons:
+            print '    lep    : ' + str(lep)
+            print '    lep.jet: ' + str(lep.jet)
             self.leptonMVA.addMVA(lep)
+        print 'inclusiveLeptons:'
         for lep in event.inclusiveLeptons:
             if lep not in event.selectedLeptons:
+                print '    lep    : ' + str(lep)
+                print '    lep.jet: ' + str(lep.jet)
                 self.leptonMVA.addMVA(lep)
 
 

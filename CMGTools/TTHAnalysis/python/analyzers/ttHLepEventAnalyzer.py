@@ -19,8 +19,12 @@ from CMGTools.RootTools.utils.DeltaR import *
 from CMGTools.TTHAnalysis.leptonMVA import LeptonMVA
 from CMGTools.TTHAnalysis.signedSip import twoTrackChi2
 import os
+
+import sys
         
 class ttHLepEventAnalyzer( Analyzer ):
+    nEvt = 0
+
     def __init__(self, cfg_ana, cfg_comp, looperName ):
         super(ttHLepEventAnalyzer,self).__init__(cfg_ana,cfg_comp,looperName)
 
@@ -63,6 +67,11 @@ class ttHLepEventAnalyzer( Analyzer ):
                             event.bestMTopHadPt = tp4.Pt()
 
     def process(self, iEvent, event):
+        print
+        print 'nEvt: ', self.nEvt
+        self.nEvt += 1
+        if self.nEvt > 1730:
+            sys.exit()
         self.readCollections( iEvent )
         self.counters.counter('events').inc('all events')
 

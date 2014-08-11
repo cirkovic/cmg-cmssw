@@ -96,18 +96,37 @@ class ttHJetAnalyzer( Analyzer ):
         #                                                masks = leptons,
         #                                                deltaRMin = self.jetLepDR )
         event.cleanJetsAll = cleanNearestJetOnly(event.jets, leptons, self.jetLepDR)
+        print 'cleanJetsAll:'
+        for jet in event.cleanJetsAll:
+            print '    cleanJetAll: ', jet
         event.cleanJets    = [j for j in event.cleanJetsAll if abs(j.eta()) <  self.cfg_ana.jetEtaCentral ]
+        print 'cleanJets:'
+        for jet in event.cleanJets:
+            print '    cleanJet: ', jet
         event.cleanJetsFwd = [j for j in event.cleanJetsAll if abs(j.eta()) >= self.cfg_ana.jetEtaCentral ]
+        print 'cleanJetsFwd:'
+        for jet in event.cleanJetsFwd:
+            print '    cleanJetFwd: ', jet
 
         ## Associate jets to leptons
         leptons = event.inclusiveLeptons if hasattr(event, 'inclusiveLeptons') else event.selectedLeptons
         #jlpairs = matchObjectCollection( event.inclusiveLeptons, allJets4MVA, self.jetLepDR**2)
         jlpairs = matchObjectCollection( leptons, allJets4MVA, self.jetLepDR**2)
+        print 'jlpairs:'
+        for l in jlpairs:
+            print '    l, j: '
+            print '    ', l
+            print '    ', jlpairs[l]
+        print 'lep, jet:'
         for lep in leptons:
+            print '    lep: ', lep
             jet = jlpairs[lep]
+            print '    jet: ', jet
             if jet is None:
+                #print 'lep: ', lep
                 lep.jet = lep
             else:
+                #print 'jet: ', jet
                 lep.jet = jet
 
         return True

@@ -55,42 +55,59 @@ class ttHJetMCMatchAnalyzer( Analyzer ):
         event.heaviestQCDFlavour = 5 if len(event.bqObjects) else (4 if len(event.cqObjects) else 1);
                     
     def matchJets(self, event):
+        print 'In matchJets()'
         match = matchObjectCollection2(event.cleanJetsAll,
                                        event.genbquarks + event.genwzquarks,
                                        deltaRMax = 0.3)
+        print 'cleanJetsAll (after matchObjectCollection2 with event.genbquarks + event.genwzquarks):'
         for jet in event.cleanJetsAll:
             gen = match[jet]
             jet.mcParton    = gen
             jet.mcMatchId   = (gen.sourceId     if gen != None else 0)
             jet.mcMatchFlav = (abs(gen.pdgId()) if gen != None else 0)
+            print '    cleanJetAll: ', jet
 
         match = matchObjectCollection2(event.cleanJetsAll,
                                        event.genJets,
                                        deltaRMax = 0.3)
+        print 'cleanJetsAll (after matchObjectCollection2 with event.genJets):'
         for jet in event.cleanJetsAll:
             jet.mcJet = match[jet]
+            print '    cleanJetAll: ', jet
  
     def smearJets(self, event):
+       print 'In smearJets()'
         # https://twiki.cern.ch/twiki/bin/viewauth/CMS/TWikiTopRefSyst#Jet_energy_resolution
+       print 'cleanJetsAll:'
        for jet in event.cleanJetsAll:
+            print '    cleanJetAll(before): ', jet
             gen = jet.mcJet 
             if gen != None:
+               print '        jet.mcJet != None'
                genpt, jetpt, aeta = gen.pt(), jet.pt(), abs(jet.eta())
                # from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
-               factor = 1.052 + self.shiftJER*hypot(0.012,0.062);
                if   aeta > 2.3: factor = 1.288 + self.shiftJER*hypot(0.127,0.154)
                elif aeta > 1.7: factor = 1.134 + self.shiftJER*hypot(0.035,0.066)
                elif aeta > 1.1: factor = 1.096 + self.shiftJER*hypot(0.017,0.063)
                elif aeta > 0.5: factor = 1.057 + self.shiftJER*hypot(0.012,0.056)
+               else:            factor = 0.961 + self.shiftJER*hypot(0.001,0.0105)
                ptscale = max(0.0, (jetpt + (factor-1)*(jetpt-genpt))/jetpt)
+               print '                   jetpt: ', jetpt
+               print '                  factor: ', factor
+               print '                   genpt: ', genpt
                #print "get with pt %.1f (gen pt %.1f, ptscale = %.3f)" % (jetpt,genpt,ptscale)
                event.deltaMetFromJetSmearing[0] -= (ptscale-1)*jet.rawFactor()*jet.px()
                event.deltaMetFromJetSmearing[1] -= (ptscale-1)*jet.rawFactor()*jet.py()
+               print '            cleanJetAll(before setP4): ', jet
+               print '                 ptscale: ', ptscale
+               print '                jet.p4(): ', jet.p4()
                jet.setP4(jet.p4()*ptscale)
+               print '            cleanJetAll(after setP4): ', jet
                # leave the uncorrected unchanged for sync
                jet._rawFactor = jet.rawFactor()/ptscale if ptscale != 0 else 0
                jet.rawFactor = types.MethodType(lambda self : self._rawFactor, jet, jet.__class__)
             #else: print "jet with pt %.1d, eta %.2f is unmatched" % (jet.pt(), jet.eta())
+            print '    cleanJetAll(after): ', jet
 
     def process(self, iEvent, event):
         ## define by how much the MET should be changed because of jet smearing
