@@ -86,11 +86,12 @@ class ttHJetMCMatchAnalyzer( Analyzer ):
                print '        jet.mcJet != None'
                genpt, jetpt, aeta = gen.pt(), jet.pt(), abs(jet.eta())
                # from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+               factor = 1.052 + self.shiftJER*hypot(0.012,0.062)
                if   aeta > 2.3: factor = 1.288 + self.shiftJER*hypot(0.127,0.154)
                elif aeta > 1.7: factor = 1.134 + self.shiftJER*hypot(0.035,0.066)
                elif aeta > 1.1: factor = 1.096 + self.shiftJER*hypot(0.017,0.063)
                elif aeta > 0.5: factor = 1.057 + self.shiftJER*hypot(0.012,0.056)
-               else:            factor = 0.961 + self.shiftJER*hypot(0.001,0.0105)
+               #else:            factor = 1.052 + self.shiftJER*hypot(0.012,0.062
                ptscale = max(0.0, (jetpt + (factor-1)*(jetpt-genpt))/jetpt)
                print '                   jetpt: ', jetpt
                print '                  factor: ', factor
