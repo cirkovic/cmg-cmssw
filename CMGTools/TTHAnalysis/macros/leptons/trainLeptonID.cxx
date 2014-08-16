@@ -1,10 +1,10 @@
 void trainLeptonID(TString name, TString train="GoodvsBad") {
-    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
+    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTH.root");
     TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
 
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
-
+    /*
     dSig->Draw(">>elistSig", "pt < 1000");
     TEventList *elistSig = (TEventList*)gDirectory->Get("elistSig");
     dSig->SetEventList(elistSig);
@@ -12,7 +12,7 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     dBg1->Draw(">>elistBg1", "pt < 1000");
     TEventList *elistBg1 = (TEventList*)gDirectory->Get("elistBg1");
     dBg1->SetEventList(elistBg1);
-
+    */
     TFile *fOut = new TFile(name+".root","RECREATE");
     TMVA::Factory *factory = new TMVA::Factory(name, fOut, "!V:!Color");
     
