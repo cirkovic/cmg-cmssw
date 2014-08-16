@@ -50,8 +50,8 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
         if (name.Contains("pteta")) {
             if (name.Contains("low_b"))  lepton += "pt <= 15 && abs(eta) <  1.5";
             if (name.Contains("low_e"))  lepton += "pt <= 15 && abs(eta) >= 1.5";
-            if (name.Contains("high_b")) lepton += "pt >  15 && pt < 500 && abs(eta) <  1.5 && pt < 500";
-            if (name.Contains("high_e")) lepton += "pt >  15 && pt < 500 && abs(eta) >= 1.5 && pt < 500";
+            if (name.Contains("high_b")) lepton += "pt >  15 && pt < 500 && abs(eta)";
+            if (name.Contains("high_e")) lepton += "pt >  15 && pt < 500 && abs(eta)";
         }
     } else if (name.Contains("el")) {
         if (name.Contains("pteta")) {
