@@ -1,0 +1,14 @@
+# --- ttH inclusive
+ttH+     : TTH : 0.1271 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+ttH+     : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+ttH+     : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+
+# --- TT+W/Z/WW (TTWW usually quite negligible)
+#TTW   : TTWJets:    0.208    ;  FillColor=ROOT.kGreen-5,  NormSystematic=0.2, Label="ttW"
+#TTZ   : TTZJets:    0.206    ;  FillColor=ROOT.kSpring+2, NormSystematic=0.2, Label="ttZ/\#gamma*"
+
+# leptonic and inclusive decays (NNLO+NNLL cross sections)
+TT   : TTJetsLep:     25.77: 1.18246 + 0.00000210061*GenTop_pt[0]*(GenTop_pt[0] - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
+TT   : TTJetsSem:   107.53: 1.18246 + 0.00000210061*GenTop_pt[0]*(GenTop_pt[0] - 2*463.312)     ;  FillColor=ROOT.kGray, NormSystematic=0.2
+#TT   : TTJetsHad:     112.16: 1.18246 + 0.00000210061*GenTop_pt[0]*(GenTop_pt[0] - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
+

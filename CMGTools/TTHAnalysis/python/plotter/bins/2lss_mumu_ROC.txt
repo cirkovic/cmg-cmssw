@@ -1,0 +1,11 @@
+== 2 good leptons: nLepGood10 == 2
+cleanup: minMllAFAS > 12
+pt2010: LepGood_pt[0]>20 && LepGood_pt[1]>10
+pt2020_htllv100 : LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100
+#lep MVA: min(LepGood_mvaTTH[0],LepGood_mvaTTH[1]) > 0.7
+mu mu:  abs(LepGood_pdgId[0]) == 13 && abs(LepGood_pdgId[1]) == 13
+same-sign: LepGood_charge[0]*LepGood_charge[1] > 0
+tight-charge: LepGood_tightCharge[0] && LepGood_tightCharge[1]
+4j: nJet25>=4
+2b loose: nBJetLoose25 >= 2 || nBJetMedium25 >= 1
+2B tight: nBJetMedium25 >= 2
