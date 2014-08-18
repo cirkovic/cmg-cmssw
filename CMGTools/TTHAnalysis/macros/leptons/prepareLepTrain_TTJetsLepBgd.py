@@ -30,7 +30,7 @@ class LepTreeProducer(Module):
     def analyze(self,event):
         lep = Collection(event,"LepGood","nLepGood",8)
         for l in lep:
-          if l.mcMatchId==0:
+          if l.mcMatchId<=0:
             self.t.sip3d = ROOT.scaleSip3dMC(l.sip3d, l.pdgId,l.pt,l.eta,l.mcMatchId,l.mcMatchAny) if self.corr else l.sip3d
             self.t.dz    = ROOT.scaleDzMC(   l.dz,    l.pdgId,l.pt,l.eta,l.mcMatchId,l.mcMatchAny) if self.corr else l.dz
             self.t.dxy   = ROOT.scaleDxyMC(  l.dxy,   l.pdgId,l.pt,l.eta,l.mcMatchId,l.mcMatchAny) if self.corr else l.dxy
