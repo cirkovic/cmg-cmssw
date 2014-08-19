@@ -1,7 +1,8 @@
 void trainLeptonID(TString name, TString train="GoodvsBad") {
 
-    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/17-08-2014/0/trainTTJetsLep_100000.root");
-    TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/17-08-2014/0/trainTTJetsLep_100000.root");
+    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
+    TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
+
 
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
