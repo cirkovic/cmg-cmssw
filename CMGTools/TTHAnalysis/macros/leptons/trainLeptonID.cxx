@@ -1,7 +1,7 @@
 void trainLeptonID(TString name, TString train="GoodvsBad") {
 
-    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
-    TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/16-08-2014/trainTTJetsLep.root");
+    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/17-08-2014/0/trainTTJetsLep_100000.root");
+    TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/17-08-2014/0/trainTTJetsLep_100000.root");
 
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
@@ -85,7 +85,7 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     factory->BookMethod( TMVA::Types::kLD, "LD", "!H:!V:VarTransform=None" );
     
     // Boosted Decision Trees with gradient boosting
-    TString BDTGopt = "!H:!V:NTrees=500:BoostType=Grad:Shrinkage=0.10:!UseBaggedGrad:nCuts=2000:nEventsMin=100:NNodesMax=9:UseNvars=9:PruneStrength=5:PruneMethod=CostComplexity:MaxDepth=8:ignorenegweightsintraining=false";
+    TString BDTGopt = "!H:!V:NTrees=500:BoostType=Grad:Shrinkage=0.10:!UseBaggedGrad:nCuts=2000:nEventsMin=100:NNodesMax=9:UseNvars=9:PruneStrength=5:PruneMethod=CostComplexity:MaxDepth=8:NegWeightTreatment=IgnoreNegWeightsInTraining";
 
     BDTGopt += ":CreateMVAPdfs"; // Create Rarity distribution
     factory->BookMethod( TMVA::Types::kBDT, "BDTG", BDTGopt);
