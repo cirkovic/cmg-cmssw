@@ -21,7 +21,7 @@ MODULES = []
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
 from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
-MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/17-08-2014/1/2")) )
+MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/19-08-2014/1/1")) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):
