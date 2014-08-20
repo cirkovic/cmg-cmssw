@@ -49,6 +49,8 @@ _CommonSpect = [
 _CommonVars = [ 
     MVAVar("neuRelIso03 := relIso03 - chargedHadRelIso03",lambda x: x.relIso03 - x.chargedHadRelIso03),  
     MVAVar("chRelIso03 := chargedHadRelIso03",lambda x: x.chargedHadRelIso03),
+    MVAVar("neuRelIso04 := relIso04 - chargedHadRelIso04",lambda x: x.relIso04 - x.chargedHadRelIso04),
+    MVAVar("chRelIso04 := chargedHadRelIso04",lambda x: x.chargedHadRelIso04),
     MVAVar("jetDR := min(jetDR,0.5)", lambda x : min(x.jetDR,0.5), corrfunc=ROOT.correctJetDRMC),
     MVAVar("jetPtRatio := min(jetPtRatio,1.5)", lambda x : min(x.jetPtRatio,1.5), corrfunc=ROOT.correctJetPtRatioMC),
     MVAVar("jetBTagCSV := max(jetBTagCSV,0)", lambda x : max(x.jetBTagCSV,0.)),
