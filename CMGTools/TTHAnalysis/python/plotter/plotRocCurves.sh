@@ -6,7 +6,7 @@ cd /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/CMSSW_5_3_19/src/CMGTools/TTHAn
 
 case $1 in
    1 )
-		python rocCurves.py -P /afs/cern.ch/work/g/gpetrucc/TREES_53X_170714 -j 6 -f -l 19.6 mca-2lss-dataBCat4Plots.txt bins/2lss_mumu.txt roc_2lss.txt -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/20-08-2014/3/1/evVarFriend_{cname}.root --tree treeProducerSusyMultilepton --s2v
+		python rocCurves.py -P /afs/cern.ch/work/g/gpetrucc/TREES_53X_170714 -j 6 -f -l 19.6 mca-2lss-dataBCat4Plots.txt bins/2lss_mumu.txt roc_2lss_mumu.txt -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/20-08-2014/3/1/evVarFriend_{cname}.root --tree treeProducerSusyMultilepton --s2v
 		mv roc_2lss_mumu.png /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/20-08-2014/4/1/1
 		#mv roc_2lss_mumu.root /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/20-08-2014/4/1/1
 		rm roc_2lss_mumu.root /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/20-08-2014/4/1/1
