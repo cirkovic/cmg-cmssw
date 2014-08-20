@@ -18,6 +18,8 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     //common variables
     factory->AddVariable("neuRelIso03 := relIso03 - chargedHadRelIso03", 'D'); allvars += "neuRelIso03";
     factory->AddVariable("chRelIso03 := chargedHadRelIso03", 'D');        allvars += ":chRelIso03";
+    factory->AddVariable("neuRelIso04 := relIso04 - chargedHadRelIso04", 'D'); allvars += "neuRelIso04";
+    factory->AddVariable("chRelIso04 := chargedHadRelIso04", 'D');        allvars += ":chRelIso04";
     factory->AddVariable("jetDR := min(jetDR,0.5)", 'D');         allvars += ":jetDR";
     factory->AddVariable("jetPtRatio := min(jetPtRatio,1.5)", 'D');   allvars += ":jetPtRatio";
     factory->AddVariable("jetBTagCSV := max(jetBTagCSV,0)", 'D');   allvars += ":jetBTagCSV";
