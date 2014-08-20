@@ -1,5 +1,9 @@
 #!/bin/sh
 
+cd /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/CMSSW_5_3_19/src
+eval `scramv1 runtime -sh`
+cd /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons
+
 case $1 in
 	1 )
 		root -l -q 'trainLeptonID.cxx("mu_pteta_high_b")' ;;
