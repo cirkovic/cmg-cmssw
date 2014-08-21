@@ -26,7 +26,7 @@ case $1 in
 	10 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_high_fb")' ;;
 	11 )
-		root -l -q 'trainLeptonID.cxx("el_pteta_high_fb")' ;;
+		root -l -q 'trainLeptonID.cxx("el_pteta_mid_fb")' ;;
 	12 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_low_fb")' ;;
 	13 )
