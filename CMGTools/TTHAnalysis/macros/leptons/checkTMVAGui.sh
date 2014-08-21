@@ -8,7 +8,7 @@ fi
 
 if [[ $1 != "" ]]
 then
-	case $1 in
+	case $2 in
 		1 )  arg=mu_pteta_low_b.root   ;;
 		2 )  arg=mu_pteta_high_b.root  ;;
 		3 )  arg=mu_pteta_low_e.root   ;;
