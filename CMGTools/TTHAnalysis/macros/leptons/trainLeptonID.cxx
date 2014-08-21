@@ -23,11 +23,6 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     factory->AddVariable("jetDR := min(jetDR,0.5)", 'D');         allvars += ":jetDR";
     factory->AddVariable("jetPtRatio := min(jetPtRatio,1.5)", 'D');   allvars += ":jetPtRatio";
     factory->AddVariable("jetBTagCSV := max(jetBTagCSV,0)", 'D');   allvars += ":jetBTagCSV";
-    //factory->AddVariable("trkKink := min(trkKink, 30)", 'D');        allvars += ":trkKink";
-    //factory->AddVariable("trkKink := trkKink", 'D');        allvars += ":trkKink";
-    //factory->AddVariable("caloCompatibility := caloCompatibility", 'D');         allvars += ":caloCompatibility";
-    //factory->AddVariable("globalTrackChi2 := min(globalTrackChi2,100)", 'D');   allvars += ":globalTrackChi2";
-    //factory->AddVariable("globalTrackChi2 := globalTrackChi2", 'D');   allvars += ":globalTrackChi2";
     factory->AddVariable("trackerLayers := trackerLayers", 'D');   allvars += ":trackerLayers";
 
 
@@ -43,6 +38,11 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
       //muons variables
         if (!name.Contains("NoID")) {
             //factory->AddVariable("tightId",'D');    allvars += ":tightId";
+				factory->AddVariable("trkKink := min(trkKink, 30)", 'D');        allvars += ":trkKink";
+				//factory->AddVariable("trkKink := trkKink", 'D');        allvars += ":trkKink";
+				factory->AddVariable("caloCompatibility := caloCompatibility", 'D');         allvars += ":caloCompatibility";
+				factory->AddVariable("globalTrackChi2 := min(globalTrackChi2,100)", 'D');   allvars += ":globalTrackChi2";
+				//factory->AddVariable("globalTrackChi2 := globalTrackChi2", 'D');   allvars += ":globalTrackChi2";
             
         }
     } else if (name.Contains("el")) {
