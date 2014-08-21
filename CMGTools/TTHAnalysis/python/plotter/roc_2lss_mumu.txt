@@ -1,4 +1,5 @@
-MVA:    min(LepGood1_mvaNew,LepGood2_mvaNew):         1000,-1,1; LineColor=213, Title="Lepton MVA2 "
+MVA1:    min(LepGood1_mvaTTH,LepGood2_mvaTTH):         1000,-1,1; LineColor=219, Title="MVA1 Old"
+MVA2:    min(LepGood1_mvaNew,LepGood2_mvaNew):         1000,-1,1; LineColor=213, Title="MVA2 New"
 #MVA2D: min(LepGood1_tightId,LepGood2_tightId)\: max(LepGood1_relIso03,LepGood2_relIso03):1000,0.,1.,1000,0,0.4; MarkerColor=25, MarkerSyle=7
 
 MVAL1: min(LepGood1_mvaNew,LepGood2_mvaNew) >=  -0.3: 2,-0.5,1.5; MarkerColor=215, MarkerSize=1.5, Title="MVA2 #geq -0.3 WP" 
