@@ -27,9 +27,10 @@ else
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
 #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
-SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
+#SYSTS="systsEnv.txt ../../macros/systematics/btagSysts2.txt"
+SYSTS=" "
 BLoose=" -I 2B "
-BAny=" -X 2B "
+BAny=" -X 2B --s2v"
 BTight="  "
 
 if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
@@ -43,42 +44,42 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
         #if [[ "$X" == "2lss_mumu" ]]; then continue; fi
         echo $X; #~gpetrucc/sh/bann $X
         # ---- MVA separated by charge (for nominal result) ----
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
+        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
+        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
 
         # ---- n(jet) separated by charge (for crosscheck) ----
         #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_pos $POS $BAny; 
         #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_neg $NEG $BAny; 
 
         # ---- unseparated (for making post-fit plots) ----
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA $MVA_2L $BAny;
+        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA $MVA_2L $BAny;
         python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet $BAny; 
 
         # ----- 3-jet category (for more fits) ----
         J3="-R 4j 3j nJet25==3"
         #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_neg $MVA_2L $NEG $BAny;
         #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_pos $MVA_2L $POS $BAny;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA4j $MVA_2L $BAny;
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA4j $MVA_2L $BAny;
 
         J4E="-R 4j 4j nJet25==4"
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J4E '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_4je_MVA $MVA_2L $BLoose;
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew' $J4E '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_4je_MVA $MVA_2L $BLoose;
         #break;
 
         # ----- cross-checks with sip(mu) < 4 and with SUS-13 analysis  ----
         #SIP4="(abs(LepGood1_pdgId)!=13||LepGood1_sip3d<4)&&(abs(LepGood2_pdgId)!=13||LepGood2_sip3d < 4)"
-        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA_neg $MVA_2L $NEG $BAny  -A pt2010 sip4 "$SIP4";
-        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA_pos $MVA_2L $POS $BAny  -A pt2010 sip4 "$SIP4";
-        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA $MVA_2L $BAny           -A pt2010 sip4 "$SIP4";
+        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA_neg $MVA_2L $NEG $BAny  -A pt2010 sip4 "$SIP4";
+        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA_pos $MVA_2L $POS $BAny  -A pt2010 sip4 "$SIP4";
+        #python makeShapeCards.py mca-2lss-dataBCat_muSip4.txt bins/${X}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCatMuSip4_MVA $MVA_2L $BAny           -A pt2010 sip4 "$SIP4";
 
-        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA_neg $MVA_2L $NEG $BAny ;
-        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA_pos $MVA_2L $POS $BAny ;
-        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA $MVA_2L $BAny          ;
+        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA_neg $MVA_2L $NEG $BAny ;
+        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA_pos $MVA_2L $POS $BAny ;
+        #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA $MVA_2L $BAny          ;
 
         # ---- other random tests ----
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '3,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_bt $MVA_2L $NEG $BTight;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_bt $MVA_2L $POS $BTight;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_pt2010 $MVA_2L $NEG $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_pt2010 $MVA_2L $POS $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '3,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_bt $MVA_2L $NEG $BTight;
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_bt $MVA_2L $POS $BTight;
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_pt2010 $MVA_2L $NEG $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
+        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_pt2010 $MVA_2L $POS $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
         if [[ "$X" != "2lss_mumu" ]]; then continue; fi
    
  
@@ -100,10 +101,10 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
             esac;
             OPT_2L="${OPT_2L/SF_LepMVATight_2l/$SFMVA}"
             if echo "X$1" | grep -q QMVA; then
-            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA_neg $MVA_2L $NEG $BAny;
-            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA_pos $MVA_2L $POS $BAny;
+            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'LepGood_mvaNew'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA_neg $MVA_2L $NEG $BAny;
+            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA_pos $MVA_2L $POS $BAny;
             else
-            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA $MVA_2L $BAny;
+            python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'LepGood_mvaNew'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_${M}_MVA $MVA_2L $BAny;
             fi;
             #python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'MVA_2LSS_23j_6var' $J3 '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_${M}_MVA_neg $MVA_2L $NEG $BAny;
             #python makeShapeCards.py syst/mca-2lss-dataBCat_${M}.txt syst/${X}_${M}.txt 'MVA_2LSS_23j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_${M}_MVA_pos $MVA_2L $POS $BAny;
