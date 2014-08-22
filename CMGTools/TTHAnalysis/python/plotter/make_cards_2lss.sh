@@ -10,7 +10,7 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/g/gpetrucc/TREES_53X_170714";
+    T="/afs/cern.ch/work/c/cirkovic/TREES_53X_170714";
     J=4;
 fi
 
