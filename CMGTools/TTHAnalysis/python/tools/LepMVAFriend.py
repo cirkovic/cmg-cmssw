@@ -60,7 +60,7 @@ _CommonVars = [
     #MVAVar("trkKink := min(trkKink,30)", lambda x : max(x.trkKink,30)),
     #MVAVar("caloCompatibility := caloCompatibility",lambda x: x.caloCompatibility),
     #MVAVar("globalTrackChi2 := min(globalTrackChi2,100)",lambda x: min(x.globalTrackChi2,100)),
-    MVAVar("trackerLayers := trackerLayers", lambda x: x.trackerLayers),
+    #MVAVar("trackerLayers := trackerLayers", lambda x: x.trackerLayers),
 ]
 _ElectronVars = [
     MVAVar("mvaId",lambda x: x.mvaId)
