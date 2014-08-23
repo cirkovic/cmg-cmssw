@@ -37,7 +37,7 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
     OPTIONS="${OPTIONS} " #--FM sf/t $T/0_SFs_v3/sfFriend_{cname}.root --xp FR_data_.* " # First I need to produce sfFriends
     OPT_2L="${OPTIONS} " #-W puWeight*Eff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l_new" # Connected to the previous line
     #ADD_OPT="${OPTIONS} --s2v "
-    MVA_2L="-F sf/t   /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/21-08-2014/3/3/evVarFriend_{cname}.root "
+    MVA_2L="-F sf/t /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/23-08-2014/3/1/evVarFriend_{cname}.root "
     POS=" -A pt2010 positive LepGood1_charge>0 "
     NEG=" -A pt2010 positive LepGood1_charge<0 "
     for X in 2lss_{mumu,ee,em}; do 
