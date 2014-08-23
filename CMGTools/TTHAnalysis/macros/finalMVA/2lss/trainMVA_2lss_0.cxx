@@ -17,13 +17,7 @@ void trainMVA_2lss(TString name) {
     //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
     //factory->AddSignalTree(tSig, 1.0);
 
-    // default cat
-    //TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
-    //2 or 3 jets
-    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && (nJet25 == 2 || nJet25 == 3) && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
-    // more than 4 jets
-    //TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
-
+    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
@@ -57,31 +51,39 @@ void trainMVA_2lss(TString name) {
         all += "abs(LepGood_pdgId[0]) == 11 && abs(LepGood_pdgId[1]) == 11";
     }
 
-	 //factory->AddSpectator("MVA_2LSS_2j3j_9var", 'F');
-    //factory->AddSpectator("MVA_2LSS_4j_9var", 'F');
-    // _vars_1_6
-    factory->AddVariable("lep2AbsEta := min(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", 'F');
-    factory->AddVariable("lep2AbsEta := abs(LepGood_eta[1])", 'F');
-    factory->AddVariable("lep2Pt := LepGood_pt[1]", 'F');
-    factory->AddVariable("MHT := mhtJet25", 'F');
-    //factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
-    //factory->AddVariable("MT_met_sumEt_lep1 := MT_met_sumEt_lep1", 'F');
-    factory->AddVariable("sum_pt := htJet25", 'F');
+    //factory->AddSpectator("MVA_2LSS_4j_6var", 'F');
 
-    // _vars_7_9 
-    //factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
-    //factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
-    //factory->AddVariable("MT_met_sumEt_leplep := MT_met_sumEt_leplep", 'F');
+    // Dileptons
+    //factory->AddVariable("lep2Pt := min(LepGood_pt[1], 200)", 'F');
+    //factory->AddVariable("htll := min(LepGood_pt[0]+LepGood_pt[1], 400)", 'F');
+    //factory->AddVariable("ptll := min(pt2l, 240)", 'F');
+    //factory->AddVariable("mll := min(mass_2(LepGood_pt[0],LepGood_eta[0],LepGood_phi[0],LepGood_mass[0], LepGood_pt[1],LepGood_eta[1],LepGood_phi[1],LepGood_mass[1]), 240)", 'F');
+    //factory->AddVariable("drll := min(deltaR(LepGood_eta[0],LepGood_phi[0], LepGood_eta[1],LepGood_phi[1]), 5)", 'F');
 
-    // _var_10
-    factory->AddVariable("numJets_float := nJet25", 'F');
+    // MET
+    factory->AddVariable("mhtJet25 := min(mhtJet25, 300)", 'F');
+    //factory->AddVariable("met_sumEt := min(met_sumEt, 300)", 'F');
 
-    // _vars_11_15
-    factory->AddVariable("b1_jet_pt := Jet_pt[0]", 'F');
-    factory->AddVariable("b2_jet_pt := Jet_pt[1]", 'F');
-    factory->AddVariable("lep1Pt := LepGood_pt[0]", 'F');
-    //factory->AddVariable("sum_pt-(sum_pz-abs(pz_of_everything)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
-    //factory->AddVariable("sum_pt/sum_pz := htJet25/sum_abspz", 'F');
+    // Jets and HT
+    factory->AddVariable("jet1Pt := min(Jet_pt[0], 300)", 'F');
+    factory->AddVariable("jet2Pt := min(Jet_pt[1], 300)", 'F');
+    //factory->AddVariable("jetptmin := min(Jet_pt[0],Jet_pt[1])", 'F');
+    factory->AddVariable("htJet25 := min(htJet25, 1000)", 'F');
+
+    // Centrality variables
+    //factory->AddVariable("lepEta2max := max(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", 'F');
+    //factory->AddVariable("lepEta2min := min(abs(LepGood_eta[]),abs(LepGood_eta[1]))", 'F');
+    //factory->AddVariable("ptavgEta   := (abs(Jet_eta[0])*Jet_pt[0]+abs(Jet_eta[1])*Jet_pt[1]+abs(LepGood_eta[0])*LepGood_pt[0]+abs(LepGood_eta[1])*LepGood_pt[1])/(Jet_pt[0]+Jet_pt[1]+LepGood_pt[0]+LepGood_pt[1])", 'F');
+
+    //factory->AddVariable("ptavgEtaJets := (abs(Jet_eta[0])*Jet_pt[0]+abs(Jet_eta[1])*Jet_pt[1])/(Jet_pt[0]+Jet_pt[1])", 'F');
+
+    factory->AddVariable("htJet25ratio1224Lep := (LepGood_pt[0]*(abs(LepGood_eta[0])<1.2) + LepGood_pt[1]*(abs(LepGood_eta[1])<1.2) + Jet_pt[0]*(abs(Jet_eta[0]) < 1.2) + Jet_pt[1]*(abs(Jet_eta[1]) < 1.2) + Jet_pt[2]*(abs(Jet_eta[2]) < 1.2) + Jet_pt[3]*(abs(Jet_eta[3]) < 1.2) + Jet_pt[4]*(abs(Jet_eta[4]) < 1.2) + Jet_pt[5]*(abs(Jet_eta[5]) < 1.2) + Jet_pt[6]*(abs(Jet_eta[6]) < 1.2) + Jet_pt[7]*(abs(Jet_eta[7]) < 1.2))/ (LepGood_pt[0] + LepGood_pt[1] + Jet_pt[0]*(abs(Jet_eta[0]) < 2.4) + Jet_pt[1]*(abs(Jet_eta[1]) < 2.4) + Jet_pt[2]*(abs(Jet_eta[2]) < 2.4) + Jet_pt[3]*(abs(Jet_eta[3]) < 2.4) + Jet_pt[4]*(abs(Jet_eta[4]) < 2.4) + Jet_pt[5]*(abs(Jet_eta[5]) < 2.4) + Jet_pt[6]*(abs(Jet_eta[6]) < 2.4) + Jet_pt[7]*(abs(Jet_eta[7]) < 2.4))", 'F');
+
+  
+    // Event reconstruction   
+    //factory->AddVariable("bestMTopHad   := min(max(bestMTopHad,100),350)", 'F');
+    factory->AddVariable("bestMTopHadPt := min(max(bestMTopHadPt,0),400)", 'F');
+    //factory->AddVariable("mtW1 := mt_2(LepGood_pt[0],LepGood_phi[0],met_sumEt,met_sumEt_phi)", 'F');
     
     factory->SetWeightExpression("1");
     factory->PrepareTrainingAndTestTree( all, all, "SplitMode=Random" );

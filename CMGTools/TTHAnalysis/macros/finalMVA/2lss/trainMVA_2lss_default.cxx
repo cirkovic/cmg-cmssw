@@ -18,11 +18,11 @@ void trainMVA_2lss(TString name) {
     //factory->AddSignalTree(tSig, 1.0);
 
     // default cat
-    //TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
+    //TCut all = "nLepGood == 2 && LepGood1_charge == LepGood2_charge && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100";
     //2 or 3 jets
-    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && (nJet25 == 2 || nJet25 == 3) && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
+    TCut all = "nLepGood == 2 && LepGood1_charge == LepGood2_charge && nBJetMedium25 >= 1 && (nJet25 == 2 || nJet25 == 3) && LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100";
     // more than 4 jets
-    //TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
+    //TCut all = "nLepGood == 2 && LepGood1_charge == LepGood2_charge && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100";
 
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
@@ -50,36 +50,36 @@ void trainMVA_2lss(TString name) {
     }
 
     if (name.Contains("_mm")) {
-        all += "abs(LepGood_pdgId[0]) == 13 && abs(LepGood_pdgId[1]) == 13";
+        all += "abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13";
     } else if (name.Contains("_em")) {
-        all += "abs(LepGood_pdgId[0]) != abs(LepGood_pdgId[1])";
+        all += "abs(LepGood1_pdgId) != abs(LepGood2_pdgId)";
     } else if (name.Contains("_ee")) {
-        all += "abs(LepGood_pdgId[0]) == 11 && abs(LepGood_pdgId[1]) == 11";
+        all += "abs(LepGood1_pdgId) == 11 && abs(LepGood2_pdgId) == 11";
     }
 
 	 //factory->AddSpectator("MVA_2LSS_2j3j_9var", 'F');
     //factory->AddSpectator("MVA_2LSS_4j_9var", 'F');
     // _vars_1_6
-    factory->AddVariable("lep2AbsEta := min(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", 'F');
-    factory->AddVariable("lep2AbsEta := abs(LepGood_eta[1])", 'F');
-    factory->AddVariable("lep2Pt := LepGood_pt[1]", 'F');
+    factory->AddVariable("lep2AbsEta := min(abs(LepGood1_eta),abs(LepGood2_eta))", 'F');
+    factory->AddVariable("lep2AbsEta := abs(LepGood2_eta)", 'F');
+    factory->AddVariable("lep2Pt := LepGood2_pt", 'F');
     factory->AddVariable("MHT := mhtJet25", 'F');
     //factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
-    //factory->AddVariable("MT_met_sumEt_lep1 := MT_met_sumEt_lep1", 'F');
+    //factory->AddVariable("MT_met_lep1 := MT_met_lep1", 'F');
     factory->AddVariable("sum_pt := htJet25", 'F');
 
     // _vars_7_9 
     //factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
     //factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
-    //factory->AddVariable("MT_met_sumEt_leplep := MT_met_sumEt_leplep", 'F');
+    //factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
 
     // _var_10
     factory->AddVariable("numJets_float := nJet25", 'F');
 
     // _vars_11_15
-    factory->AddVariable("b1_jet_pt := Jet_pt[0]", 'F');
-    factory->AddVariable("b2_jet_pt := Jet_pt[1]", 'F');
-    factory->AddVariable("lep1Pt := LepGood_pt[0]", 'F');
+    factory->AddVariable("b1_jet_pt := Jet1_pt", 'F');
+    factory->AddVariable("b2_jet_pt := Jet2_pt", 'F');
+    factory->AddVariable("lep1Pt := LepGood1_pt", 'F');
     //factory->AddVariable("sum_pt-(sum_pz-abs(pz_of_everything)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
     //factory->AddVariable("sum_pt/sum_pz := htJet25/sum_abspz", 'F');
     
