@@ -7,11 +7,11 @@ void trainMVA_2lss(TString name) {
 
     TFile *fSig = TFile::Open(Path+"/TTH122/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     TTree *tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
     factory->AddSignalTree(tSig, 1.0);
     fSig = TFile::Open(Path+"/TTH127/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
     factory->AddSignalTree(tSig, 1.0);
     //fSig = TFile::Open(Path+"/TTH/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
@@ -21,11 +21,12 @@ void trainMVA_2lss(TString name) {
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg, 1.0);
     } else if (name.Contains("ttbar")) {
         TFile *fBkg = TFile::Open(Path+"/TTJetsSem/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
-        //tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg, 1.0);
         //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
@@ -56,14 +57,14 @@ void trainMVA_2lss(TString name) {
     factory->AddVariable("lep2AbsEta := abs(LepGood2_eta)", 'F');
     factory->AddVariable("lep2Pt := LepGood2_pt", 'F');
     factory->AddVariable("MHT := mhtJet25", 'F');
-    //factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
-    //factory->AddVariable("MT_met_lep1 := MT_met_lep1", 'F');
+    factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
+    factory->AddVariable("MT_met_lep1 := MT_met_lep1", 'F');
     factory->AddVariable("sum_pt := htJet25", 'F');
 
     // _vars_7_9 
-    //factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
-    //factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
-    //factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
+    factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
+    factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
+    factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
 
     // _var_10
     factory->AddVariable("numJets_float := nJet25", 'F');
@@ -72,8 +73,8 @@ void trainMVA_2lss(TString name) {
     factory->AddVariable("b1_jet_pt := Jet1_pt", 'F');
     factory->AddVariable("b2_jet_pt := Jet2_pt", 'F');
     factory->AddVariable("lep1Pt := LepGood1_pt", 'F');
-    //factory->AddVariable("sum_pt-(sum_pz-abs(pz_of_everything)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
-    //factory->AddVariable("sum_pt/sum_pz := htJet25/sum_abspz", 'F');
+    factory->AddVariable("sum_pt-(sum_pz-abs(pz_of_everything)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
+    factory->AddVariable("sum_pt/sum_pz := htJet25/sum_abspz", 'F');
     
 #endif
 
