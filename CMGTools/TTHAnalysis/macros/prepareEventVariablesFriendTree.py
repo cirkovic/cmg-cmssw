@@ -17,9 +17,9 @@ MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
 #MODULES.append( ('finalMVA_2lss_2', FinalMVA_2LSS_2()) )
 #from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
 #MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
-from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
-MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
-MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
+#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
+#MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
+#MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):
