@@ -24,9 +24,9 @@ void trainMVA_2lss(TString name) {
         tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg, 1.0);
     } else if (name.Contains("ttbar")) {
-        TFile *fBkg = TFile::Open(Path+"/TTJetsSem/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
+        TFile *fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
-        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJets.root");
         factory->AddBackgroundTree(tBkg, 1.0);
         //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
@@ -34,9 +34,11 @@ void trainMVA_2lss(TString name) {
     } else if (name.Contains("mix")) {
         TFile *fBkg1 = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg1 = (TTree *) fBkg1->Get("ttHLepTreeProducerBase");
+        tBkg1->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJets.root");
         factory->AddBackgroundTree(tBkg1, 1.0);
         TFile *fBkg2 = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg2 = (TTree *) fBkg2->Get("ttHLepTreeProducerBase");
+        tBkg2->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg2, 1.0);
     } else  {
         std::cout << "Training not implemented " << std::endl;
