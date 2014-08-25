@@ -1,5 +1,5 @@
 void trainMVA_2lss(TString name) {
-    TString Path = "/data/b/botta/TTHAnalysis/trees/TREES_250513_HADD";
+    TString Path = "/afs/cern.ch/work/c/cirkovic/TREES_250513_HADD";
     //gROOT->ProcessLine(".L ../../../python/plotter/functions.cc+");
 
     TFile *fOut = new TFile(name+".root","RECREATE");
@@ -7,11 +7,11 @@ void trainMVA_2lss(TString name) {
 
     TFile *fSig = TFile::Open(Path+"/TTH122/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     TTree *tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
     factory->AddSignalTree(tSig, 1.0);
     fSig = TFile::Open(Path+"/TTH127/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    //tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
     factory->AddSignalTree(tSig, 1.0);
     //fSig = TFile::Open(Path+"/TTH/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
@@ -21,11 +21,12 @@ void trainMVA_2lss(TString name) {
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg, 1.0);
     } else if (name.Contains("ttbar")) {
         TFile *fBkg = TFile::Open(Path+"/TTJetsSem/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
-        //tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg, 1.0);
         //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
@@ -51,38 +52,29 @@ void trainMVA_2lss(TString name) {
     }
 
     //factory->AddSpectator("MVA_2LSS_4j_6var", 'F');
+    // _vars_1_6
+    factory->AddVariable("lep2AbsEta := min(abs(LepGood1_eta),abs(LepGood2_eta))", 'F');
+    factory->AddVariable("lep2AbsEta := abs(LepGood2_eta)", 'F');
+    factory->AddVariable("lep2Pt := LepGood2_pt", 'F');
+    factory->AddVariable("MHT := mhtJet25", 'F');
+    factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
+    factory->AddVariable("MT_met_lep1 := MT_met_lep1", 'F');
+    factory->AddVariable("sum_pt := htJet25", 'F');
 
-    // Dileptons
-    //factory->AddVariable("lep2Pt := min(LepGood2_pt, 200)", 'F');
-    //factory->AddVariable("htll := min(LepGood1_pt+LepGood2_pt, 400)", 'F');
-    //factory->AddVariable("ptll := min(pt2l, 240)", 'F');
-    //factory->AddVariable("mll := min(mass_2(LepGood1_pt,LepGood1_eta,LepGood1_phi,LepGood1_mass, LepGood2_pt,LepGood2_eta,LepGood2_phi,LepGood2_mass), 240)", 'F');
-    //factory->AddVariable("drll := min(deltaR(LepGood1_eta,LepGood1_phi, LepGood2_eta,LepGood2_phi), 5)", 'F');
+    // _vars_7_9 
+    factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
+    factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
+    factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
 
-    // MET
-    factory->AddVariable("mhtJet25 := min(mhtJet25, 300)", 'F');
-    //factory->AddVariable("met := min(met, 300)", 'F');
+    // _var_10
+    factory->AddVariable("numJets_float := nJet25", 'F');
 
-    // Jets and HT
-    factory->AddVariable("jet1Pt := min(Jet1_pt, 300)", 'F');
-    factory->AddVariable("jet2Pt := min(Jet2_pt, 300)", 'F');
-    //factory->AddVariable("jetptmin := min(Jet1_pt,Jet2_pt)", 'F');
-    factory->AddVariable("htJet25 := min(htJet25, 1000)", 'F');
-
-    // Centrality variables
-    //factory->AddVariable("lepEta2max := max(abs(LepGood1_eta),abs(LepGood2_eta))", 'F');
-    //factory->AddVariable("lepEta2min := min(abs(LepGood1_eta),abs(LepGood2_eta))", 'F');
-    //factory->AddVariable("ptavgEta   := (abs(Jet1_eta)*Jeo1_pt+abs(Jet2_eta)*Jet2_pt+abs(LepGood1_eta)*LepGood1_pt+abs(LepGood2_eta)*LepGood2_pt)/(Jet1_pt+Jet2_pt+LepGood1_pt+LepGood2_pt)", 'F');
-
-    //factory->AddVariable("ptavgEtaJets := (abs(Jet1_eta)*Jet1_pt+abs(Jet2_eta)*Jet2_pt)/(Jet1_pt+Jet2_pt)", 'F');
-
-    factory->AddVariable("htJet25ratio1224Lep := (LepGood1_pt*(abs(LepGood1_eta)<1.2) + LepGood2_pt*(abs(LepGood2_eta)<1.2) + Jet1_pt*(abs(Jet1_eta) < 1.2) + Jet2_pt*(abs(Jet2_eta) < 1.2) + Jet3_pt*(abs(Jet3_eta) < 1.2) + Jet4_pt*(abs(Jet4_eta) < 1.2) + Jet5_pt*(abs(Jet5_eta) < 1.2) + Jet6_pt*(abs(Jet6_eta) < 1.2) + Jet7_pt*(abs(Jet7_eta) < 1.2) + Jet8_pt*(abs(Jet8_eta) < 1.2))/ (LepGood1_pt + LepGood2_pt + Jet1_pt*(abs(Jet1_eta) < 2.4) + Jet2_pt*(abs(Jet2_eta) < 2.4) + Jet3_pt*(abs(Jet3_eta) < 2.4) + Jet4_pt*(abs(Jet4_eta) < 2.4) + Jet5_pt*(abs(Jet5_eta) < 2.4) + Jet6_pt*(abs(Jet6_eta) < 2.4) + Jet7_pt*(abs(Jet7_eta) < 2.4) + Jet8_pt*(abs(Jet8_eta) < 2.4))", 'F');
-
-  
-    // Event reconstruction   
-    //factory->AddVariable("bestMTopHad   := min(max(bestMTopHad,100),350)", 'F');
-    factory->AddVariable("bestMTopHadPt := min(max(bestMTopHadPt,0),400)", 'F');
-    //factory->AddVariable("mtW1 := mt_2(LepGood1_pt,LepGood1_phi,met,met_phi)", 'F');
+    // _vars_11_15
+    factory->AddVariable("b1_jet_pt := Jet1_pt", 'F');
+    factory->AddVariable("b2_jet_pt := Jet2_pt", 'F');
+    factory->AddVariable("lep1Pt := LepGood1_pt", 'F');
+    factory->AddVariable("sum_pt-(sum_pz-abs(pz_of_everything)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
+    factory->AddVariable("sum_pt/sum_pz := htJet25/sum_abspz", 'F');
     
 #endif
 
