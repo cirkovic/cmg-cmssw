@@ -66,18 +66,23 @@ class LeptonMVA:
     def __init__(self,basepath):
         global _CommonVars, _CommonSpect, _ElectronVars, _MuonVars
         self.mu = CategorizedMVA([
-            ( lambda x: x.pt <= 15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_low_b", _CommonSpect,_CommonVars+_MuonVars) ),
-            ( lambda x: x.pt <= 15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_low_e", _CommonSpect,_CommonVars+_MuonVars) ),
-            ( lambda x: x.pt >  15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_high_b",_CommonSpect,_CommonVars+_MuonVars) ),
-            ( lambda x: x.pt >  15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_high_e",_CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt <= 10 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_low_b", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt <= 10 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_low_e", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  10 and x.pt <= 20 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_med_b", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  10 and x.pt <= 20 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_med_e", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  20 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_high_b",_CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  20 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_high_e",_CommonSpect,_CommonVars+_MuonVars) ),
         ])
         self.el = CategorizedMVA([
             ( lambda x: x.pt <= 10 and abs(x.eta) <  0.8                         , MVATool("BDTG",basepath%"el_pteta_low_cb", _CommonSpect,_CommonVars+_ElectronVars) ),
             ( lambda x: x.pt <= 10 and abs(x.eta) >= 0.8 and abs(x.eta) <  1.479 , MVATool("BDTG",basepath%"el_pteta_low_fb", _CommonSpect,_CommonVars+_ElectronVars) ),
             ( lambda x: x.pt <= 10 and abs(x.eta) >= 1.479                       , MVATool("BDTG",basepath%"el_pteta_low_ec", _CommonSpect,_CommonVars+_ElectronVars) ),
-            ( lambda x: x.pt >  10 and abs(x.eta) <  0.8                         , MVATool("BDTG",basepath%"el_pteta_high_cb",_CommonSpect,_CommonVars+_ElectronVars) ),
-            ( lambda x: x.pt >  10 and abs(x.eta) >= 0.8 and abs(x.eta) <  1.479 , MVATool("BDTG",basepath%"el_pteta_high_fb",_CommonSpect,_CommonVars+_ElectronVars) ),
-            ( lambda x: x.pt >  10 and abs(x.eta) >= 1.479                       , MVATool("BDTG",basepath%"el_pteta_high_ec",_CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  10 and x.pt <= 20 and abs(x.eta) <  0.8                         , MVATool("BDTG",basepath%"el_pteta_med_cb", _CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  10 and x.pt <= 20 and abs(x.eta) >= 0.8 and abs(x.eta) <  1.479 , MVATool("BDTG",basepath%"el_pteta_med_fb", _CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  10 and x.pt <= 20 and abs(x.eta) >= 1.479                       , MVATool("BDTG",basepath%"el_pteta_med_ec", _CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  20 and abs(x.eta) <  0.8                         , MVATool("BDTG",basepath%"el_pteta_high_cb",_CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  20 and abs(x.eta) >= 0.8 and abs(x.eta) <  1.479 , MVATool("BDTG",basepath%"el_pteta_high_fb",_CommonSpect,_CommonVars+_ElectronVars) ),
+            ( lambda x: x.pt >  20 and abs(x.eta) >= 1.479                       , MVATool("BDTG",basepath%"el_pteta_high_ec",_CommonSpect,_CommonVars+_ElectronVars) ),
         ])
     def __call__(self,lep,ncorr=0):
         if   abs(lep.pdgId) == 11: return self.el(lep,ncorr)
