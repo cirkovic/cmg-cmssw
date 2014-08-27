@@ -21,6 +21,7 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     factory->AddVariable("jetDR := min(jetDR,0.5)", 'D');         allvars += ":jetDR";
     factory->AddVariable("jetPtRatio := min(jetPtRatio,1.5)", 'D');   allvars += ":jetPtRatio";
     factory->AddVariable("jetBTagCSV := max(jetBTagCSV,0)", 'D');   allvars += ":jetBTagCSV";
+    factory->AddVariable("caloCompatibility := caloCompatibility", 'D');   allvars += ":caloCompatibility";
 
 
     if (!name.Contains("NoIP")) {
