@@ -8,31 +8,31 @@ case $1 in
 	1 )
 		root -l -q 'trainLeptonID.cxx("mu_pteta_high_b")' ;;
 	2 )
-      root -l -q 'trainLeptonID.cxx("mu_pteta_mid_b")' ;;
+      root -l -q 'trainLeptonID.cxx("mu_pteta_meduim_b")' ;;
 	3 )
 		root -l -q 'trainLeptonID.cxx("mu_pteta_low_b")' ;;
 	4 )
 		root -l -q 'trainLeptonID.cxx("mu_pteta_high_e")' ;;
 	5 )
-      root -l -q 'trainLeptonID.cxx("mu_pteta_mid_e")' ;;
+      root -l -q 'trainLeptonID.cxx("mu_pteta_meduim_e")' ;;
 	6 )
 		root -l -q 'trainLeptonID.cxx("mu_pteta_low_e")' ;;
 	7 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_high_cb")' ;;
 	8 )
-		root -l -q 'trainLeptonID.cxx("el_pteta_mid_cb")' ;;
+		root -l -q 'trainLeptonID.cxx("el_pteta_meduim_cb")' ;;
 	9 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_low_cb")' ;;
 	10 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_high_fb")' ;;
 	11 )
-		root -l -q 'trainLeptonID.cxx("el_pteta_mid_fb")' ;;
+		root -l -q 'trainLeptonID.cxx("el_pteta_meduim_fb")' ;;
 	12 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_low_fb")' ;;
 	13 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_high_ec")' ;;
 	14 )
-      root -l -q 'trainLeptonID.cxx("el_pteta_mid_ec")' ;;
+      root -l -q 'trainLeptonID.cxx("el_pteta_meduim_ec")' ;;
 	15 )
 		root -l -q 'trainLeptonID.cxx("el_pteta_low_ec")' ;;
 esac
