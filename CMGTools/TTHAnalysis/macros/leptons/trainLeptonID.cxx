@@ -23,7 +23,6 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
     factory->AddVariable("jetBTagCSV := max(jetBTagCSV,0)", 'D');   allvars += ":jetBTagCSV";
 
 
-
     if (!name.Contains("NoIP")) {
         factory->AddVariable("sip3d", 'D'); 
         factory->AddVariable("dxy := log(abs(dxy))", 'D');
