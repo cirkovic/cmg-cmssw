@@ -52,6 +52,9 @@ _CommonVars = [
     MVAVar("jetDR := min(jetDR,0.5)", lambda x : min(x.jetDR,0.5), corrfunc=ROOT.correctJetDRMC),
     MVAVar("jetPtRatio := min(jetPtRatio,1.5)", lambda x : min(x.jetPtRatio,1.5), corrfunc=ROOT.correctJetPtRatioMC),
     MVAVar("jetBTagCSV := max(jetBTagCSV,0)", lambda x : max(x.jetBTagCSV,0.)),
+    MVAVar("sip3d",lambda x: x.sip3d, corrfunc=ROOT.scaleSip3dMC),
+    MVAVar("dxy := log(abs(dxy))",lambda x: log(abs(x.dxy)), corrfunc=ROOT.scaleDxyMC),
+    MVAVar("dz  := log(abs(dz))", lambda x: log(abs(x.dz)), corrfunc=ROOT.scaleDzMC),
 ]
 _ElectronVars = [
 ]
