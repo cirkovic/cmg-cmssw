@@ -57,6 +57,7 @@ _CommonVars = [
     MVAVar("dz  := log(abs(dz))", lambda x: log(abs(x.dz)), corrfunc=ROOT.scaleDzMC),
 ]
 _ElectronVars = [
+    MVAVar("mvaId",lambda x: x.mvaId)
 ]
 _MuonVars = [
     MVAVar("caloCompatibility := caloCompatibility",lambda x: x.caloCompatibility)
