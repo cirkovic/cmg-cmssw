@@ -49,30 +49,23 @@ _CommonSpect = [
 _CommonVars = [ 
     MVAVar("neuRelIso03 := relIso03 - chargedHadRelIso03",lambda x: x.relIso03 - x.chargedHadRelIso03),  
     MVAVar("chRelIso03 := chargedHadRelIso03",lambda x: x.chargedHadRelIso03),
-    MVAVar("neuRelIso04 := relIso04 - chargedHadRelIso04",lambda x: x.relIso04 - x.chargedHadRelIso04),
-    MVAVar("chRelIso04 := chargedHadRelIso04",lambda x: x.chargedHadRelIso04),
     MVAVar("jetDR := min(jetDR,0.5)", lambda x : min(x.jetDR,0.5), corrfunc=ROOT.correctJetDRMC),
     MVAVar("jetPtRatio := min(jetPtRatio,1.5)", lambda x : min(x.jetPtRatio,1.5), corrfunc=ROOT.correctJetPtRatioMC),
     MVAVar("jetBTagCSV := max(jetBTagCSV,0)", lambda x : max(x.jetBTagCSV,0.)),
-    MVAVar("sip3d",lambda x: x.sip3d, corrfunc=ROOT.scaleSip3dMC),
-    MVAVar("dxy := log(abs(dxy))",lambda x: log(abs(x.dxy)), corrfunc=ROOT.scaleDxyMC),
-    MVAVar("dz  := log(abs(dz))", lambda x: log(abs(x.dz)), corrfunc=ROOT.scaleDzMC),
-    #MVAVar("trkKink := min(trkKink,30)", lambda x : max(x.trkKink,30)),
-    #MVAVar("caloCompatibility := caloCompatibility",lambda x: x.caloCompatibility),
-    #MVAVar("globalTrackChi2 := min(globalTrackChi2,100)",lambda x: min(x.globalTrackChi2,100)),
-    #MVAVar("trackerLayers := trackerLayers", lambda x: x.trackerLayers),
 ]
 _ElectronVars = [
-    MVAVar("mvaId",lambda x: x.mvaId)
+]
+_MuonVars = [
+    MVAVar("caloCompatibility := caloCompatibility",lambda x: x.caloCompatibility)
 ]
 class LeptonMVA:
     def __init__(self,basepath):
-        global _CommonVars, _CommonSpect, _ElectronVars
+        global _CommonVars, _CommonSpect, _ElectronVars, _MuonVars
         self.mu = CategorizedMVA([
-            ( lambda x: x.pt <= 15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_low_b", _CommonSpect,_CommonVars) ),
-            ( lambda x: x.pt <= 15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_low_e", _CommonSpect,_CommonVars) ),
-            ( lambda x: x.pt >  15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_high_b",_CommonSpect,_CommonVars) ),
-            ( lambda x: x.pt >  15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_high_e",_CommonSpect,_CommonVars) ),
+            ( lambda x: x.pt <= 15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_low_b", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt <= 15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_low_e", _CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  15 and abs(x.eta) <  1.5 , MVATool("BDTG",basepath%"mu_pteta_high_b",_CommonSpect,_CommonVars+_MuonVars) ),
+            ( lambda x: x.pt >  15 and abs(x.eta) >= 1.5 , MVATool("BDTG",basepath%"mu_pteta_high_e",_CommonSpect,_CommonVars+_MuonVars) ),
         ])
         self.el = CategorizedMVA([
             ( lambda x: x.pt <= 10 and abs(x.eta) <  0.8                         , MVATool("BDTG",basepath%"el_pteta_low_cb", _CommonSpect,_CommonVars+_ElectronVars) ),
