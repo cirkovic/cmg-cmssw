@@ -27,5 +27,9 @@ case $1 in
 		python prepareEventVariablesFriendTree.py -N 500000 -T 'sf' -t treeProducerSusyMultilepton /afs/cern.ch/work/c/cirkovic/TREES_53X_170714 /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1 --vector  -d TTJetsLep -c 7 ;;
 	11 )
 		python prepareEventVariablesFriendTree.py -N 500000 -T 'sf' -t treeProducerSusyMultilepton /afs/cern.ch/work/c/cirkovic/TREES_53X_170714 /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1 --vector  -d TTJetsLep -c 8 ;;
+	12 )
+		python prepareEventVariablesFriendTree.py -N 500000 -T 'sf' -t treeProducerSusyMultilepton /afs/cern.ch/work/c/cirkovic/TREES_53X_170714 /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1 --vector  -d TTWJets ;;
+	13 )
+		python prepareEventVariablesFriendTree.py -N 500000 -T 'sf' -t treeProducerSusyMultilepton /afs/cern.ch/work/c/cirkovic/TREES_53X_170714 /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1 --vector  -d TTZJets ;;
 esac
 
