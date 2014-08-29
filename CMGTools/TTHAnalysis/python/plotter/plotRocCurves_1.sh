@@ -26,7 +26,7 @@ case $1 in
 		rm OT_roc_3l
 		;;
 	5 )
-      python rocCurves.py -P /afs/cern.ch/work/g/gpetrucc/TREES_53X_170714 -j 6 -f -l 19.6 mca_sh.txt bins/4l.txt roc_4l.txt -o OT_roc_4l -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1/evVarFriend_{cname}.root -W 'puWeight*LepEff_4lep' -p 'TTW,TT' --sp 'TTW' -X MVA --tree treeProducerSusyMultilepton --s2v # -X 2B
+      python rocCurves.py -P /afs/cern.ch/work/g/gpetrucc/TREES_53X_170714 -j 6 -f -l 19.6 mca_sh.txt bins/4l.txt roc_4l.txt -o OT_roc_4l -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_1/evVarFriend_{cname}.root -W 'puWeight*LepEff_4lep' -p 'TTW,TT' --sp 'TTW' -X MVA --tree treeProducerSusyMultilepton --s2v -X 2B
 		mv OT_roc_4l.png /afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2_3/5
 		rm OT_roc_4l
 		;;
