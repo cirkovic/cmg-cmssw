@@ -12,7 +12,7 @@ class EventVars2LSS:
         # make python lists as Collection does not support indexing in slices
         leps = [l for l in Collection(event,"LepGood","nLepGood",4)]
         jets = [j for j in Collection(event,"Jet","nJet25",8)]
-        (met_sumEt, met_phi)  = event.met_sumEt, event.met_phi
+        (met_pt, met_phi)  = event.met_pt, event.met_phi
         njet = len(jets); nlep = len(leps)
         # prepare output
         ret = dict([(name,0.0) for name in self.branches])
@@ -28,11 +28,11 @@ class EventVars2LSS:
                     sumdr += deltaR(j,j2)
             ret["avg_dr_jet"] = sumdr/ndr if ndr else 0;
         if nlep > 0:
-            ret["MT_met_lep1"] = sqrt( 2*leps[0].pt*met_sumEt*(1-cos(leps[0].phi-met_phi)) )
+            ret["MT_met_lep1"] = sqrt( 2*leps[0].pt*met_pt*(1-cos(leps[0].phi-met_phi)) )
         if nlep > 1:
-            px = leps[0].pt*cos(leps[0].phi) + leps[1].pt*cos(leps[1].phi) + met_sumEt*cos(met_phi) 
-            py = leps[0].pt*sin(leps[0].phi) + leps[1].pt*sin(leps[1].phi) + met_sumEt*sin(met_phi) 
-            ht = leps[0].pt + leps[1].pt + met_sumEt
+            px = leps[0].pt*cos(leps[0].phi) + leps[1].pt*cos(leps[1].phi) + met_pt*cos(met_phi) 
+            py = leps[0].pt*sin(leps[0].phi) + leps[1].pt*sin(leps[1].phi) + met_pt*sin(met_phi) 
+            ht = leps[0].pt + leps[1].pt + met_pt
             ret["MT_met_leplep"] = sqrt(max(0,ht**2 - px**2 - py**2))
         if nlep >= 1:
             sumapz, sumspz = 0,0
