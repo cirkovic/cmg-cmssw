@@ -5,8 +5,8 @@ import os.path
 
 MODULES = []
 
-#from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
-#MODULES.append( ('2lss', EventVars2LSS()) )
+from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
+MODULES.append( ('2lss', EventVars2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
 #MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_3l import FinalMVA_3L
@@ -20,8 +20,8 @@ MODULES = []
 #from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
-from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
-MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2")) )
+#from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
+#MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2")) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):
