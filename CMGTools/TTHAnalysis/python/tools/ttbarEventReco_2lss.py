@@ -6,10 +6,11 @@ def mt(*x):
     return sqrt(max(ht*ht-pt*pt,0))
 def solveWlv(lW,met_pt,met_phi):
     MW=80.4
-    a = (1 - (lW.p4().Z()/lW.energy)**2)
-    ppe    = met_pt * lW.pt * cos(lW.phi - met_phi)/lW.energy
-    brk    = MW**2 / (2*lW.energy) + ppe
-    b      = (lW.p4().Z()/lW.energy) * brk
+    #print "CIRKOVIC: lW.p4().Energy(): ", lW.p4().Energy()
+    a = (1 - (lW.p4().Z()/lW.p4().Energy())**2)
+    ppe    = met_pt * lW.pt * cos(lW.phi - met_phi)/lW.p4().Energy()
+    brk    = MW**2 / (2*lW.p4().Energy()) + ppe
+    b      = (lW.p4().Z()/lW.p4().Energy()) * brk
     c      = met_pt**2 - brk**2
     delta   = b**2 - a*c
     sqdelta = sqrt(delta)    if delta    > 0 else 0
