@@ -23,9 +23,10 @@ MODULES = []
 #MODULES.append( ('finalMVA_2lss_2', FinalMVA_2LSS_2()) )
 from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
 MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
-#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
+from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
+MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":""})))
 #from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
 #MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/27-08-2014/2")) )
 
