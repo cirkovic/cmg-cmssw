@@ -11,5 +11,5 @@ do
 	sed -i 's/Jet'$i'_eta/Jet_eta['$(( $i - 1 ))']/g' $1
 done
 
-sed -i 's/met/met_sumEt/g' $1
+sed -i 's/met/met_pt/g' $1
 

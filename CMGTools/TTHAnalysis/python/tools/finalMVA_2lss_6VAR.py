@@ -5,17 +5,17 @@ class FinalMVA_2LSS_6VAR:
     def __init__(self):
         self._MVAs = {}
         self._vars_1_6 = [
-                MVAVar("abs(LepGood2_eta)", func = lambda ev : abs(ev.LepGood2_eta)),
-                MVAVar("LepGood2_pt",       func = lambda ev : ev.LepGood2_pt),
-                MVAVar("mhtJet25",          func = lambda ev : ev.mhtJet25),
-                MVAVar("mindr_lep2_jet",    func = lambda ev : ev.mindr_lep2_jet),
-                MVAVar("MT_met_lep1",       func = lambda ev : ev.MT_met_lep1),
-                MVAVar("htJet25",           func = lambda ev : ev.htJet25)
+                MVAVar("abs(LepGood_eta[1])", func = lambda ev : abs(ev.LepGood_eta[1])),
+                MVAVar("LepGood_pt[1]",       func = lambda ev : ev.LepGood_pt[1]),
+                MVAVar("mhtJet25",            func = lambda ev : ev.mhtJet25),
+                MVAVar("mindr_lep2_jet",      func = lambda ev : ev.mindr_lep2_jet),
+                MVAVar("MT_met_lep1",         func = lambda ev : ev.MT_met_lep1),
+                MVAVar("htJet25",             func = lambda ev : ev.htJet25)
         ]
 
         P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/1/1/"
         self._MVAs["MVA_2LSS_23j_6var"] = MVATool("MVA_2LSS_23j_6var",
-            P+"6var_test/TMVAClassification_BDTG.weights.xml",
+            P+"6VAR/ttbar/weights/ttbar_BDTG.weights.xml",
             self._vars_1_6)
 
     def listBranches(self):

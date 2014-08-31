@@ -17,7 +17,7 @@ void trainMVA_2lss_9VAR(TString name) {
     //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
     //factory->AddSignalTree(tSig, 1.0);
 
-    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_sumEt > 100";
+    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_pt > 100";
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");

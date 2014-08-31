@@ -51,13 +51,16 @@ void trainMVA_2lss(TString name) {
         all += "abs(LepGood1_pdgId) == 11 && abs(LepGood2_pdgId) == 11";
     }
 
-    // MET
-    factory->AddVariable("mhtJet25 := min(mhtJet25, 300)", 'F');
-    factory->AddVariable("jet1Pt := min(Jet1_pt, 300)", 'F');
-    factory->AddVariable("jet2Pt := min(Jet2_pt, 300)", 'F');
-    factory->AddVariable("htJet25 := min(htJet25, 1000)", 'F');
-    factory->AddVariable("htJet25ratio1224Lep := (LepGood1_pt*(abs(LepGood1_eta)<1.2) + LepGood2_pt*(abs(LepGood2_eta)<1.2) + Jet1_pt*(abs(Jet1_eta) < 1.2) + Jet2_pt*(abs(Jet2_eta) < 1.2) + Jet3_pt*(abs(Jet3_eta) < 1.2) + Jet4_pt*(abs(Jet4_eta) < 1.2) + Jet5_pt*(abs(Jet5_eta) < 1.2) + Jet6_pt*(abs(Jet6_eta) < 1.2) + Jet7_pt*(abs(Jet7_eta) < 1.2) + Jet8_pt*(abs(Jet8_eta) < 1.2))/ (LepGood1_pt + LepGood2_pt + Jet1_pt*(abs(Jet1_eta) < 2.4) + Jet2_pt*(abs(Jet2_eta) < 2.4) + Jet3_pt*(abs(Jet3_eta) < 2.4) + Jet4_pt*(abs(Jet4_eta) < 2.4) + Jet5_pt*(abs(Jet5_eta) < 2.4) + Jet6_pt*(abs(Jet6_eta) < 2.4) + Jet7_pt*(abs(Jet7_eta) < 2.4) + Jet8_pt*(abs(Jet8_eta) < 2.4))", 'F');
-    
+    factory->AddVariable("abs(LepGood2_eta) := abs(LepGood2_eta)", 'F');
+    factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
+    factory->AddVariable("htJet25 := htJet25", 'F');
+    factory->AddVariable("avg_dr_jet := avg_dr_jet", 'F');
+    factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
+    factory->AddVariable("htJet25 - (sum_abspz - abs(sum_sgnpz)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F');
+    factory->AddVariable("htJet25/sum_abspz := htJet25/sum_abspz", 'F');
+    factory->AddVariable("m_tjjb := min(m_tjjb, 330) := m_tjjb := min(m_tjjb, 330)", 'F');
+    factory->AddVariable("m_tlvb := min(m_tlvb, 330) := m_tlvb := min(m_tlvb, 330)", 'F');
+
 #endif
 
     factory->SetWeightExpression("1");

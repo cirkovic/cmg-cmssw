@@ -1,6 +1,12 @@
 #!/bin/sh
 
-command='ls '$1'/evVarFriend_*.chunk0.root'
+if [ -z "$2" ]
+	then name=evVarFriend
+	else name=$2
+fi
+
+command='ls '$1'/'$name'_*.chunk0.root'
+
 for file in `$command`
 do
   string_to_replace=".chunk0."

@@ -17,7 +17,7 @@ class FinalMVA_2LSS_7VAR:
 
         P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/1/1/";
         self._MVAs["MVA_2LSS_23j_7var"] = MVATool("MVA_2LSS_23j_7var",
-            P+"7var_test/TMVAClassification_BDTG.weights.xml",
+            P+"7VAR/ttbar/weights/ttbar_BDTG.weights.xml",
             self._vars_1_7)
 
     def listBranches(self):
