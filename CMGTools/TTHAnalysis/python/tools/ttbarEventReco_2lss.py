@@ -4,13 +4,13 @@ def mt(*x):
     ht = sum([xi.Pt() for xi in x])
     pt = sum(x[1:],x[0]).Pt()
     return sqrt(max(ht*ht-pt*pt,0))
-def solveWlv(lW,met,metphi):
+def solveWlv(lW,met_pt,met_phi):
     MW=80.4
-    a = (1 - (lW.p4().Z()/lW.energy)**2)
-    ppe    = met * lW.pt * cos(lW.phi - metphi)/lW.energy
-    brk    = MW**2 / (2*lW.energy) + ppe
-    b      = (lW.p4().Z()/lW.energy) * brk
-    c      = met**2 - brk**2
+    a = (1 - (lW.p4().Z()/lW.p4().Energy())**2)
+    ppe    = met_pt * lW.pt * cos(lW.phi - met_phi)/lW.p4().Energy()
+    brk    = MW**2 / (2*lW.p4().Energy()) + ppe
+    b      = (lW.p4().Z()/lW.p4().Energy()) * brk
+    c      = met_pt**2 - brk**2
     delta   = b**2 - a*c
     sqdelta = sqrt(delta)    if delta    > 0 else 0
     return [ (b + s*sqdelta)/a for s in +1,-1 ]
@@ -47,11 +47,11 @@ class TTEventReco_MC:
         jets = [j for j in Collection(event,"Jet","nJet25",8)]
         bjets = [ j for j in jets if j.btagCSV > 0.679 ]
         if len(bjets) == 0: bjets.append(jets[0])
-        (met, metphi)  = event.met, event.met_phi
+        (met_pt, met_phi)  = event.met_pt, event.met_phi
         metp4 = ROOT.TLorentzVector()
-        metp4.SetPtEtaPhiM(met,0,metphi,0)
+        metp4.SetPtEtaPhiM(met_pt,0,met_phi,0)
         njet = len(jets); nb = len(bjets); nlep = len(leps)
-        bquarks = [j for j in Collection(event,"GenBQuark","nGenBQuarks",2)]
+        bquarks = [j for j in Collection(event,"GenBQuark","nGenBQuark",2)]
         tquarks = [j for j in Collection(event,"GenTop")]
         if len(tquarks) != 2: return ret0
         lquarks = [j for j in Collection(event,"GenQuark")]
@@ -108,8 +108,8 @@ class TTEventReco_MC:
         ret["has_lb"] = (lb != None)
         # --------------------------------------------------------------------------
         ret["has_Wlv"] = (lW != None)
-        ret["mt_Wlv"]  = sqrt(2*lW.pt*met*(1-cos(lW.phi-metphi))) if lW else 0.0
-        ret["mt_Wlv_wrong"]  = sqrt(2*lb.pt*met*(1-cos(lb.phi-metphi))) if lb else 0.0
+        ret["mt_Wlv"]  = sqrt(2*lW.pt*met_pt*(1-cos(lW.phi-met_phi))) if lW else 0.0
+        ret["mt_Wlv_wrong"]  = sqrt(2*lb.pt*met_pt*(1-cos(lb.phi-met_phi))) if lb else 0.0
         # --------------------------------------------------------------------------
         #ret["has_same_b"] = (lb != None) and (sum([b.quark == lb.quark for b in bjets]) > 0)
         # --------------------------------------------------------------------------
@@ -195,14 +195,14 @@ class TTEventReco_MC:
             ret["tlv_bq_eta"] = t.bquark.eta if t.bquark != None else 99.0
             ret["tlv_bq_phi"] = t.bquark.phi if t.bquark != None else 99.0
             ## solve quadratic equation for W mass
-            pz1, pz2 = solveWlv(lW,met,metphi)
+            pz1, pz2 = solveWlv(lW,met_pt,met_phi)
             ret["v_pz1"] = pz1; ret["v_pz2"] = pz2
             ret["W_pz1"] = lW.p4().Z()+pz1; ret["W_pz2"] = lW.p4().Z()+pz2
-            metp4z1 = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pz1, hypot(met,pz1))
-            metp4z2 = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pz2, hypot(met,pz2))
+            metp4z1 = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pz1, hypot(met_pt,pz1))
+            metp4z2 = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pz2, hypot(met_pt,pz2))
             ## take the minimum, for now
             pzmin = pz1 if abs(pz1) < abs(pz2) else pz2
-            metp4min = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pzmin, hypot(met,pzmin))
+            metp4min = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pzmin, hypot(met_pt,pzmin))
             ## now the rest 
             b_p4 = None; v_p4 = None
             for bj in bjets:
@@ -229,7 +229,7 @@ class TTEventReco_MC:
                 ret["t_pz1"] = lW.p4().Z() + pz1 + b_p4.Z()
                 ret["t_pz2"] = lW.p4().Z() + pz2 + b_p4.Z()
                 pzcheat = pz1 if abs(pz1-v_p4.Z()) < abs(pz2-v_p4.Z()) else pz2
-                metp4cheat = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pzcheat, hypot(met,pzcheat))
+                metp4cheat = ROOT.TLorentzVector(metp4.Px(), metp4.Py(), pzcheat, hypot(met_pt,pzcheat))
                 ret["m_tlvb1"]          = (metp4z1    + lW.p4() + b_p4).M()
                 ret["m_tlvb2"]          = (metp4z2    + lW.p4() + b_p4).M()
                 ret["m_tlvb"]           = (metp4min   + lW.p4() + b_p4).M()
@@ -463,10 +463,10 @@ class TTEventReco:
         bjets = [ j for j in jets if j.btagCSV > 0.679 ]
         if len(bjets) == 0: bjets.append(jets[0])
         nb = len(bjets)
-        (met, metphi)  = event.met, event.met_phi
+        (met_pt, met_phi)  = event.met_pt, event.met_phi
         metp4 = ROOT.TLorentzVector()
-        metp4.SetPtEtaPhiM(met,0,metphi,0)
-        bquarks = [j for j in Collection(event,"GenBQuark","nGenBQuarks",2)] if isMC else []
+        metp4.SetPtEtaPhiM(met_pt,0,met_phi,0)
+        bquarks = [j for j in Collection(event,"GenBQuark","nGenBQuark",2)] if isMC else []
         tquarks = [j for j in Collection(event,"GenTop")]   if isMC else []
         lquarks = [j for j in Collection(event,"GenQuark")] if isMC else []
         # --------------------------------------------------------------------------
