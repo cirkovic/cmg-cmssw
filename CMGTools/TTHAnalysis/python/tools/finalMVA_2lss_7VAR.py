@@ -5,8 +5,8 @@ class FinalMVA_2LSS_7VAR:
     def __init__(self):
         self._MVAs = {}
         self._vars_1_7 = [
-                MVAVar("abs(LepGood2_eta)", func = lambda ev : abs(ev.LepGood2_eta)),
-                MVAVar("LepGood2_pt",     func = lambda ev : ev.LepGood2_pt),
+                MVAVar("abs(LepGood_eta[1])", func = lambda ev : abs(ev.LepGood_eta[1])),
+                MVAVar("LepGood_pt[1]",     func = lambda ev : ev.LepGood_pt[1]),
                 MVAVar("mhtJet25",        func = lambda ev : ev.mhtJet25),
                 MVAVar("mindr_lep2_jet", func = lambda ev : ev.mindr_lep2_jet),
                 MVAVar("MT_met_lep1",    func = lambda ev : ev.MT_met_lep1),
@@ -15,8 +15,8 @@ class FinalMVA_2LSS_7VAR:
                 #MVAVar("m_tlvb := min(m_tlvb, 330)", func = lambda ev : min(ev.m_tlvb, 330))
         ]
 
-        P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/1/1/";
-        self._MVAs["MVA_2LSS_23j_7var"] = MVATool("MVA_2LSS_23j_7var",
+        P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/2/";
+        self._MVAs["MVA_2LSS_4j_7var"] = MVATool("MVA_2LSS_4j_7var",
             P+"7VAR/ttbar/weights/ttbar_BDTG.weights.xml",
             self._vars_1_7)
 

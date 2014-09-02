@@ -13,8 +13,8 @@ class FinalMVA_2LSS_6VAR:
                 MVAVar("htJet25",             func = lambda ev : ev.htJet25)
         ]
 
-        P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/1/1/"
-        self._MVAs["MVA_2LSS_23j_6var"] = MVATool("MVA_2LSS_23j_6var",
+        P="/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/2/"
+        self._MVAs["MVA_2LSS_4j_6var"] = MVATool("MVA_2LSS_4j_6var",
             P+"6VAR/ttbar/weights/ttbar_BDTG.weights.xml",
             self._vars_1_6)
 
