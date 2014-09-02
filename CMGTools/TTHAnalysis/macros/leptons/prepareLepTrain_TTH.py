@@ -35,17 +35,17 @@ class LepTreeProducer(Module):
         #self.copyvars = [ 'relIso','chargedIso','mvaId','pt','eta','pdgId','innerHits','tightId',"mva","LepGood"]
         #for C in self.copyvars: self.t.branch(C,"F")
         n=8
-        self.t.branch("LepGood_relIso03","F",n)
-        self.t.branch("LepGood_relIso04","F",n)
-        self.t.branch("LepGood_chargedHadRelIso03","F",n)
-        self.t.branch("LepGood_chargedHadRelIso04","F",n)
-        self.t.branch("LepGood_mvaId","F",n)
-        self.t.branch("LepGood_pt","F",n)
-        self.t.branch("LepGood_eta","F",n)
-        self.t.branch("LepGood_pdgId","I",n)
-        #self.t.branch("LepGood_innerHits","I",n)
-        self.t.branch("LepGood_tightId","I",n)
-        self.t.branch("LepGood_mvaTTH","F",n)
+        self.t.branch("relIso03","F",n)
+        self.t.branch("relIso04","F",n)
+        self.t.branch("chargedHadRelIso03","F",n)
+        self.t.branch("chargedHadRelIso04","F",n)
+        self.t.branch("mvaId","F",n)
+        self.t.branch("pt","F",n)
+        self.t.branch("eta","F",n)
+        self.t.branch("pdgId","I",n)
+        #self.t.branch("innerHits","I",n)
+        self.t.branch("tightId","I",n)
+        self.t.branch("mvaTTH","F",n)
         # these I can't copy since I need
         for C in [ 'sip3d','dxy','dz' ]: self.t.branch(C,"F")
         self.first = True
@@ -93,17 +93,17 @@ class LepTreeProducer(Module):
                     self.t.good = -event.LepGood_mcMatchAny[i]
             self.t.fill()
             #for C in self.copyvars: setattr(self.t, C, getattr(l,C))
-            self.t.LepGood_relIso03 = event.LepGood_relIso03
-            self.t.LepGood_relIso04 = event.LepGood_relIso04
-            self.t.LepGood_chargedHadRelIso03 = event.LepGood_chargedHadRelIso03
-            self.t.LepGood_chargedHadRelIso04 = event.LepGood_chargedHadRelIso04
-            self.t.LepGood_mvaId = event.LepGood_mvaId
-            self.t.LepGood_pt = event.LepGood_pt
-            self.t.LepGood_eta = event.LepGood_eta
-            self.t.LepGood_pdgId = event.LepGood_pdgId
-            #self.t.LepGood_innerHits = event.LepGood_innerHits
-            self.t.LepGood_tightId = event.LepGood_tightId
-            self.t.LepGood_mvaTTH = event.LepGood_mvaTTH
+            self.t.relIso03 = event.LepGood_relIso03
+            self.t.relIso04 = event.LepGood_relIso04
+            self.t.chargedHadRelIso03 = event.LepGood_chargedHadRelIso03
+            self.t.chargedHadRelIso04 = event.LepGood_chargedHadRelIso04
+            self.t.mvaId = event.LepGood_mvaId
+            self.t.pt = event.LepGood_pt
+            self.t.eta = event.LepGood_eta
+            self.t.pdgId = event.LepGood_pdgId
+            #self.t.innerHits = event.LepGood_innerHits
+            self.t.tightId = event.LepGood_tightId
+            self.t.mvaTTH = event.LepGood_mvaTTH
             self.t.nJet25 = event.nJet25
             self.t.nBJetLoose25 = event.nBJetLoose25
             self.t.nBJetMedium25 = event.nBJetMedium25
