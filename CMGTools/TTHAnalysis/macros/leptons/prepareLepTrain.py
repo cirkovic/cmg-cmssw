@@ -40,7 +40,8 @@ class LepTreeProducer(Module):
     def analyze(self,event):
         #if event.nLepGood < 3: return False
         #jet = Collection(event,"Jet")
-        lep = Collection(event,"LepGood","nLepGood",8)
+        #lep = Collection(event,"LepGood","nLepGood",8)
+        lep = Collection(event,"LepGood")
         glep = Collection(event,"GenLep")
         gtau = Collection(event,"GenLepFromTau")
         for l in lep:
@@ -76,7 +77,7 @@ class LepTreeProducer(Module):
 
 from sys import argv
 f = ROOT.TFile.Open(argv[1])
-t = f.Get("ttHLepTreeProducerBase")
+t = f.Get("treeProducerSusyMultilepton")
 print "Reading %s (%d entries)" % (argv[1], t.GetEntries())
 
 booker = Booker(argv[2] if len(argv) >= 3 else "lepTree.root")
