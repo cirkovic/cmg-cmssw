@@ -1,6 +1,6 @@
 ch=2lss
 
-for NVAR in 6VAR #7VAR 9VAR
+for NVAR in 6VAR 7VAR 9VAR
 do
 	for arg in ttbar ttW mix
 	do

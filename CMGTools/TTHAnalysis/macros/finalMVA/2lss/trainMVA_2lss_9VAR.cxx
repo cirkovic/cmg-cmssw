@@ -1,5 +1,5 @@
 void trainMVA_2lss_9VAR(TString name) {
-    TString Path = "/afs/cern.ch/work/c/cirkovic/TREES_53X_170714";
+    TString Path = "/afs/cern.ch/work/c/cirkovic/TREES_53X_170714_1";
     //gROOT->ProcessLine(".L ../../../python/plotter/functions.cc+");
 
     TFile *fOut = new TFile(name+".root","RECREATE");
@@ -7,7 +7,7 @@ void trainMVA_2lss_9VAR(TString name) {
 
     TFile *fSig = TFile::Open(Path+"/TTH/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
     TTree *tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
-    tSig->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/2/1/evVarFriend_TTH.root");
+    tSig->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/1/evVarFriend_TTH.root");
     factory->AddSignalTree(tSig, 1.0);
     //fSig = TFile::Open(Path+"/TTH127/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     //tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
@@ -21,13 +21,12 @@ void trainMVA_2lss_9VAR(TString name) {
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
-        tBkg->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/2/1/evVarFriend_TTWJets.root");
+        tBkg->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/1/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg, 1.0);
     } else if (name.Contains("ttbar")) {
         TFile *fBkg = TFile::Open(Path+"/TTJetsSem/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
-        //tBkg->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/23-08-2014/3/1/evVarFriend_TTJetsSem.root");
-        tBkg->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/2/1/evVarFriend_TTJetsSem.root");
+        tBkg->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/1/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg, 1.0);
         //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
@@ -35,11 +34,11 @@ void trainMVA_2lss_9VAR(TString name) {
     } else if (name.Contains("mix")) {
         TFile *fBkg1 = TFile::Open(Path+"/TTJetsSem/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg1 = (TTree *) fBkg1->Get("treeProducerSusyMultilepton");
-        tBkg1->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/2/1/evVarFriend_TTJetsSem.root");
+        tBkg1->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/1/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg1, 1.0);
         TFile *fBkg2 = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg2 = (TTree *) fBkg2->Get("treeProducerSusyMultilepton");
-        tBkg2->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/30-08-2014/2/1/evVarFriend_TTWJets.root");
+        tBkg2->AddFriend("sf/t", "/afs/cern.ch/work/c/cirkovic/Milos_13-08-2014/31-08-2014/2/1/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg2, 1.0);
     } else  {
         std::cout << "Training not implemented " << std::endl;
