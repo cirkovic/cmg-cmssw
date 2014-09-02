@@ -1,4 +1,8 @@
 void trainLeptonID(TString name, TString train="GB") {
+
+    TFile *_file0 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_01-09-2014/02-09-2014/1/1/trainTTH.root");
+    TFile *_file1 = TFile::Open("/afs/cern.ch/work/c/cirkovic/Milos_01-09-2014/02-09-2014/1/1/trainTTJetsLep.root");
+
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
     TFile *fOut = new TFile(name+".root","RECREATE");
@@ -14,15 +18,22 @@ void trainLeptonID(TString name, TString train="GB") {
 
     TString allvars = ""; 
     //factory->AddVariable("relIso", 'D'); allvars += "relIso";
+    /*
     factory->AddVariable("neuRelIso := relIso - chargedIso/pt", 'D'); allvars += "neuRelIso";
     factory->AddVariable("chRelIso := chargedIso/pt", 'D');        allvars += ":chRelIso";
     factory->AddVariable("jetDR_in := min(dr_in,0.5)", 'D');         allvars += ":jetDR_in";
     factory->AddVariable("jetPtRatio_in := min(ptf_in,1.5)", 'D');   allvars += ":jetPtRatio_in";
     factory->AddVariable("jetBTagCSV_in := max(CSV_in,0)", 'D');   allvars += ":jetBTagCSV_in";
+    */
     //factory->AddVariable("jetDR_out := min(dr_out,5)", 'D');       allvars += ":jetDR_out";
     //factory->AddVariable("jetPtRatio_out := min(ptf_out,1.5)", 'D'); allvars += ":jetPtRatio_out";
     //factory->AddVariable("jetBTagCSV_out := max(CSV_out,0)", 'D'); allvars += ":jetBTagCSV_out";
 
+    factory->AddVariable("neuRelIso := relIso03 - chargedHadRelIso03/pt", 'D'); allvars += "neuRelIso";
+    factory->AddVariable("chRelIso := chargedHadRelIso03/pt", 'D');        allvars += ":chRelIso";
+    factory->AddVariable("jetDR_in := min(dr_in,0.5)", 'D');         allvars += ":jetDR_in";
+    factory->AddVariable("jetPtRatio_in := min(ptf_in,1.5)", 'D');   allvars += ":jetPtRatio_in";
+    factory->AddVariable("jetBTagCSV_in := max(CSV_in,0)", 'D');   allvars += ":jetBTagCSV_in";
 
     if (!name.Contains("NoIP")) {
         factory->AddVariable("sip3d", 'D'); 
@@ -39,7 +50,7 @@ void trainLeptonID(TString name, TString train="GB") {
     } else if (name.Contains("el")) {
         if (!name.Contains("NoID")) {
             factory->AddVariable("mvaId",'D');     allvars += ":mvaId";
-            factory->AddVariable("innerHits",'D'); allvars += ":innerHits";
+            //factory->AddVariable("innerHits",'D'); allvars += ":innerHits";
         }
     } else { std::cerr << "ERROR: must either be electron or muon." << std::endl; return; }
    
