@@ -22,7 +22,7 @@ class LepTreeProducer(Module):
         self.t.branch("nBJetLoose25","I")
         self.t.branch("nBJetMedium25","I")
         self.t.branch("puWeight","F")
-        self.copyvars = ['relIso03','chargedHadRelIso03','relIso04','chargedHadRelIso04','mvaId','pt','eta','pdgId','lostHits','tightId','nStations','trkKink','caloCompatibility','globalTrackChi2','trackerLayers','pixelLayers','mcMatchId','mcMatchAny', 'mcMatchTau']        
+        self.copyvars = ['relIso03','chargedHadRelIso03','relIso04','chargedHadRelIso04','mvaId','pt','eta','pdgId','lostHits','tightId','nStations','trkKink','trackerLayers','pixelLayers','mcMatchId','mcMatchAny', 'mcMatchTau']        
         for C in self.copyvars: self.t.branch(C,"F")
         # these I can't copy since I need to apply corrections
         for C in [ 'sip3d','dxy','dz','jetPtRatio','jetBTagCSV','jetDR']: self.t.branch(C,"F")
