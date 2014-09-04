@@ -1,4 +1,5 @@
-== 2 good leptons: nLepGood == 2 || LepGood3_mva < 0.7
+#== 2 good leptons: nLepGood == 2 || LepGood3_mva < 0.7
+== 2 good leptons: nLepGood == 2
 cleanup: minMllAFAS > 12
 pt2010: LepGood1_pt>20 && LepGood2_pt>10
 pt2020_htllv100 : LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100

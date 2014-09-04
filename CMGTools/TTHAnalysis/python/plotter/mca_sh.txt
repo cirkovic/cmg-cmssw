@@ -1,0 +1,2 @@
+TTHWW : TTHWW_PU20bx25 : 0.5027 ;  FillColor=ROOT.kGreen-5,  NormSystematic=0.2, Label="ttH -> WW"
+
