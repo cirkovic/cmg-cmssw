@@ -61,14 +61,14 @@ test = 1
 if test==1:
     # test a single component, using a single thread.
     comp = TTHTTnlo_S14
-    comp.files = comp.files[:1]
+    comp.files = comp.files[:]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
         comp.splitFactor = 1
-        comp.files = comp.files[:1]
+        comp.files = comp.files[:]
 
 
 
