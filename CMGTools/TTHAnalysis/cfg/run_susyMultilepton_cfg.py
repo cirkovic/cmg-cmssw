@@ -67,7 +67,7 @@ if test==1:
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 10
+        comp.splitFactor = 50
         comp.files = comp.files[:]
 
 
