@@ -48,7 +48,7 @@ treeProducer = cfg.Analyzer(
 #-------- SEQUENCE
 from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14 import * 
 
-selectedComponents = [ TTJets_PU20bx25, TTJets_PUS14 ]
+selectedComponents = [ TTJets_PU20bx25, TTJets_PUS14, DYJetsM50_PU20bx25, DYJetsM50_HT100to200_PU_S14_POSTLS170, DYJetsM50_HT200to400_PU_S14_POSTLS170, DYJetsM50_HT400to600_PU_S14_POSTLS170, DYJetsM50_HT600toInf_PU_S14_POSTLS170 ]
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
