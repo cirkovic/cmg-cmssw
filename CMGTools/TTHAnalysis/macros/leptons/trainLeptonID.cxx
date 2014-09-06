@@ -1,10 +1,7 @@
 void trainLeptonID(TString name, TString train="GoodvsBad") {
-
-    TFile *_file0 = TFile::Open("/afs/cern.ch/user/c/cirkovic/public/Milos_13-08-2014/20-08-2014/1/1/trainTTJetsSem2.root");
-    TFile *_file1 = TFile::Open("/afs/cern.ch/user/c/cirkovic/public/Milos_13-08-2014/20-08-2014/1/1/trainTTJetsSem2.root");
-
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
+    TTree *dBg2 = (TTree*) _file2->Get("rec/t");
     TFile *fOut = new TFile(name+".root","RECREATE");
     TMVA::Factory *factory = new TMVA::Factory(name, fOut, "!V:!Color");
 
@@ -34,7 +31,7 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
       //muons variables
         if (!name.Contains("NoID")) {
             //factory->AddVariable("tightId",'D');    allvars += ":tightId";
-            factory->AddVariable("caloCompatibility := caloCompatibility", 'D');   allvars += ":caloCompatibility";
+            
         }
     } else if (name.Contains("el")) {
       //electron variables
@@ -49,30 +46,26 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
 
     if (name.Contains("mu")) {
         if (name.Contains("pteta")) {
-            if (name.Contains("low_b"))  lepton += "pt <= 10 && abs(eta) <  1.5";
-            if (name.Contains("low_e"))  lepton += "pt <= 10 && abs(eta) >= 1.5";
-            if (name.Contains("med_b"))  lepton += "pt > 10 && pt <= 20 && abs(eta) <  1.5";
-            if (name.Contains("med_e"))  lepton += "pt > 10 && pt <= 20 && abs(eta) >= 1.5";
-            if (name.Contains("high_b")) lepton += "pt > 20 && abs(eta) <  1.5";
-            if (name.Contains("high_e")) lepton += "pt > 20 && abs(eta) >= 1.5";
+            if (name.Contains("low_b"))  lepton += "pt <= 15 && abs(eta) <  1.5";
+            if (name.Contains("low_e"))  lepton += "pt <= 15 && abs(eta) >= 1.5";
+            if (name.Contains("high_b")) lepton += "pt >  15 && abs(eta) <  1.5";
+            if (name.Contains("high_e")) lepton += "pt >  15 && abs(eta) >= 1.5";
         }
     } else if (name.Contains("el")) {
         if (name.Contains("pteta")) {
             if (name.Contains("low_cb"))  lepton += "pt <= 10 && abs(eta) <   0.8";
             if (name.Contains("low_fb"))  lepton += "pt <= 10 && abs(eta) >=  0.8 && abs(eta) < 1.479";
             if (name.Contains("low_ec"))  lepton += "pt <= 10 && abs(eta) >=  1.479";
-            if (name.Contains("med_cb"))  lepton += "pt > 10 && pt <= 20 && abs(eta) <   0.8";
-            if (name.Contains("med_fb"))  lepton += "pt > 10 && pt <= 20 && abs(eta) >=  0.8 && abs(eta) < 1.479";
-            if (name.Contains("med_ec"))  lepton += "pt > 10 && pt <= 20 && abs(eta) >=  1.479";
-            if (name.Contains("high_cb")) lepton += "pt > 20 && abs(eta) <   0.8";
-            if (name.Contains("high_fb")) lepton += "pt > 20 && abs(eta) >=  0.8 && abs(eta) < 1.479";
-            if (name.Contains("high_ec")) lepton += "pt > 20 && abs(eta) >=  1.479";
+            if (name.Contains("high_cb")) lepton += "pt >  10 && abs(eta) <   0.8";
+            if (name.Contains("high_fb")) lepton += "pt >  10 && abs(eta) >=  0.8 && abs(eta) < 1.479";
+            if (name.Contains("high_ec")) lepton += "pt >  10 && abs(eta) >=  1.479";
         }
     }
 
-    double wSig = 1.0, wBkg = 1.0;
+    double wSig = 1.0, wBkg1 = 1.0, wBkg2 = 1.0;
     factory->AddSignalTree(dSig, wSig);
-    factory->AddBackgroundTree(dBg1, wBkg);
+    factory->AddBackgroundTree(dBg1, wBkg1);
+    factory->AddBackgroundTree(dBg2, wBkg2);
 
     // re-weighting to approximately match n(jet) multiplicity of signal
     //factory->SetWeightExpression("puWeight*((good>0)+(good<=0)*pow(nJet25,2.36))");
@@ -97,24 +90,19 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
 
     if (name.Contains("mu") && !name.Contains("pteta")) {
     TMVA::MethodCategory* BDTG_Cat_pteta = dynamic_cast<TMVA::MethodCategory*>(factory->BookMethod( TMVA::Types::kCategory, "BDTG_Cat_pteta","" ));
-    BDTG_Cat_pteta->AddMethod("pt <= 10 && abs(eta) < 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_b",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt <= 10 && abs(eta) > 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_e",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 10 && pt <= 20 && abs(eta) < 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_med_b",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 10 && pt <= 20 && abs(eta) > 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_med_e",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 20 && abs(eta) < 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_b", BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 20 && abs(eta) > 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_e", BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt < 15 && abs(eta) < 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_b",  BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt < 15 && abs(eta) > 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_e",  BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt > 15 && abs(eta) < 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_b", BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt > 15 && abs(eta) > 1.5", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_e", BDTGopt);
 
     } else if (name.Contains("el") && !name.Contains("pteta")){
     TMVA::MethodCategory* BDTG_Cat_pteta = dynamic_cast<TMVA::MethodCategory*>(factory->BookMethod( TMVA::Types::kCategory, "BDTG_Cat_pteta","" ));
     BDTG_Cat_pteta->AddMethod("pt <= 10 && abs(eta) <  0.8",                      allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_cb",  BDTGopt);
     BDTG_Cat_pteta->AddMethod("pt <= 10 && abs(eta) <  1.479 && abs(eta) >= 0.8", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_fb",  BDTGopt);
     BDTG_Cat_pteta->AddMethod("pt <= 10 && abs(eta) >= 1.479",                    allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_low_e", BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 10 && pt <= 20 && abs(eta) <  0.8",                      allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_med_cb",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 10 && pt <= 20 && abs(eta) <  1.479 && abs(eta) >= 0.8", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_med_fb",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 10 && pt <= 20 && abs(eta) >= 1.479",                    allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_med_e", BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 20 && abs(eta) <  0.8",                      allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_cb",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 20 && abs(eta) <  1.479 && abs(eta) >= 0.8", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_fb",  BDTGopt);
-    BDTG_Cat_pteta->AddMethod("pt > 20 && abs(eta) >= 1.479",                    allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_e", BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt  > 10 && abs(eta) <  0.8",                      allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_cb",  BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt  > 10 && abs(eta) <  1.479 && abs(eta) >= 0.8", allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_fb",  BDTGopt);
+    BDTG_Cat_pteta->AddMethod("pt  > 10 && abs(eta) >= 1.479",                    allvars, TMVA::Types::kBDT, "BDTG_Cat_pteta_high_e", BDTGopt);
     }
 
     factory->TrainAllMethods();
