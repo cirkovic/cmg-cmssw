@@ -1,0 +1,19 @@
+# --- ttH split by decay mode (with proper sigma*BR for 125.7)
+#ttH_htt+   : TTH : 0.1271 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+#ttH_hzz+   : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+#ttH_hww+   : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+# --- ttH inclusive
+#ttH+     : TTH : 0.1271 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+#ttH+     : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+ttHWW+     : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+
+
+# -- Reducible background: fakes from MC
+TT: TTJetsLep:  25.77: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312) ;  FillColor=ROOT.kGray, NormSystematic=0.2, Label="Reducible", SkipMe=False, KeysPdf=True
+TT: TTJetsSem:  107.53: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312);  FillColor=ROOT.kGray, NormSystematic=0.2, Label="Reducible", SkipMe=False, KeysPdf=True
+DY10: DYJetsM10 : 915     ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=True, KeysPdf=True
+#Fakes_MC: DY1JetsM50: 666.3  ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=True, KeysPdf=True
+#Fakes_MC: DY2JetsM50: 215.0  ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=True, KeysPdf=True
+#Fakes_MC: DY3JetsM50:  60.7  ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=True, KeysPdf=True
+#Fakes_MC: DY4JetsM50:  27.4  ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=True, KeysPdf=True
+DY50: DYJetsM50: 215.0  ;  FillColor=ROOT.kGray, Label="Reducible", SkipMe=False, KeysPdf=True

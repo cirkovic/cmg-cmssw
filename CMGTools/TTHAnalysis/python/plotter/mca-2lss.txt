@@ -1,0 +1,24 @@
+# --- ttH split by decay mode (with proper sigma*BR for 125.7)
+#ttH_hww+   : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10, Label="ttH WW"
+#ttH_hzz+   : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kPink+9, Label="ttH ZZ"
+#ttH_htt+   : TTH : 0.1271 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+4, Label="ttH \#tau\#tau"
+# --- ttH inclusive
+#ttH+     : TTH : 0.1271 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+#ttH+     : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+ttHWW+     : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+# --- more statistics including also 122 and 127 GeV
+
+# -- Reducible background: fakes
+#Fakes_MC  : TTJetsLep:      25.77*(1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)) : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0);  FillColor=ROOT.kGray, NormSystematic=0.2, SkipMe=True, KeysPdf=True
+#Fakes_MC  : TTJetsSem:	  107.53*(1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312));  FillColor=ROOT.kGray, NormSystematic=0.2, SkipMe=True, KeysPdf=True
+#Fakes_MC  : TTJetsHad:     112.16*(1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312));  FillColor=ROOT.kGray, NormSystematic=0.2, SkipMe=True, KeysPdf=True
+TT  : TTJetsLep:      25.77*(1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)) : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0);  FillColor=ROOT.kGray, NormSystematic=0.2, SkipMe=False, KeysPdf=True
+TT  : TTJetsSem:    107.53*(1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312));  FillColor=ROOT.kGray, NormSystematic=0.2, SkipMe=False, KeysPdf=True
+DY10  : DYJetsM10 : 915     : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0)  ;  FillColor=ROOT.kCyan, SkipMe=False, KeysPdf=True
+#Fakes_MC  : DY1JetsM50 : 666.3  : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0)  ;  FillColor=ROOT.kViolet-4, SkipMe=True, KeysPdf=True
+#Fakes_MC  : DY2JetsM50 : 215.0  : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0)  ;  FillColor=ROOT.kViolet-4, SkipMe=True, KeysPdf=True
+#Fakes_MC  : DY3JetsM50 :  60.7  : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0)  ;  FillColor=ROOT.kViolet-4, SkipMe=True, KeysPdf=True
+#Fakes_MC  : DY4JetsM50 :  27.4  : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0) ;  FillColor=ROOT.kViolet-4, SkipMe=True, KeysPdf=True
+
+DY50  : DYJetsM50 : 215.0  : (LepGood1_mcMatchId == 0 || LepGood2_mcMatchId == 0)  ;  FillColor=ROOT.kViolet-4, SkipMe=False, KeysPdf=True
+
