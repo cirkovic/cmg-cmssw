@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<MethodSetup Method="LD::LD">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.1.0 [262400]"/>
+    <Info name="ROOT Release" value="5.28/00 [334848]"/>
+    <Info name="Creator" value="mdjordje"/>
+    <Info name="Date" value="Fri Sep  5 12:30:07 2014"/>
+    <Info name="Host" value="Linux lxbuild148.cern.ch 2.6.18-194.26.1.el5 #1 SMP Wed Nov 10 09:45:46 CET 2010 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/afs/cern.ch/user/m/mdjordje/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/leptons"/>
+    <Info name="Training events" value="7883"/>
+    <Info name="TrainingTime" value="0.0166101"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="Yes">None</Option>
+    <Option name="H" modified="Yes">False</Option>
+    <Option name="CreateMVAPdfs" modified="No">False</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+  </Options>
+  <Variables NVar="8">
+    <Variable VarIndex="0" Expression="relIso03-chargedHadRelIso03" Label="neuRelIso03" Title="neuRelIso03" Unit="" Internal="neuRelIso03" Type="D" Min="0" Max="0.399746"/>
+    <Variable VarIndex="1" Expression="chargedHadRelIso03" Label="chRelIso03" Title="chRelIso03" Unit="" Internal="chRelIso03" Type="D" Min="0" Max="0.399988"/>
+    <Variable VarIndex="2" Expression="min(jetDR,0.5)" Label="jetDR" Title="jetDR" Unit="" Internal="jetDR" Type="D" Min="0" Max="0.339563"/>
+    <Variable VarIndex="3" Expression="min(jetPtRatio,1.5)" Label="jetPtRatio" Title="jetPtRatio" Unit="" Internal="jetPtRatio" Type="D" Min="0.0554132" Max="1.13318"/>
+    <Variable VarIndex="4" Expression="max(jetBTagCSV,0)" Label="jetBTagCSV" Title="jetBTagCSV" Unit="" Internal="jetBTagCSV" Type="D" Min="0" Max="1"/>
+    <Variable VarIndex="5" Expression="sip3d" Label="sip3d" Title="sip3d" Unit="" Internal="sip3d" Type="D" Min="0.00878464" Max="431.503"/>
+    <Variable VarIndex="6" Expression="log(abs(dxy))" Label="dxy" Title="dxy" Unit="" Internal="dxy" Type="D" Min="-16.2607" Max="-3.00144"/>
+    <Variable VarIndex="7" Expression="log(abs(dz))" Label="dz" Title="dz" Unit="" Internal="dz" Type="D" Min="-12.3014" Max="-1.61132"/>
+  </Variables>
+  <Spectators NSpec="0"/>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs/>
+  <Weights NOut="1" NCoeff="9">
+    <Coefficient IndexOut="0" IndexCoeff="0" Value="-3.9684287369186910e-01"/>
+    <Coefficient IndexOut="0" IndexCoeff="1" Value="-7.3987490678732915e-01"/>
+    <Coefficient IndexOut="0" IndexCoeff="2" Value="-1.1593102477946542e+00"/>
+    <Coefficient IndexOut="0" IndexCoeff="3" Value="2.2356068889167071e+00"/>
+    <Coefficient IndexOut="0" IndexCoeff="4" Value="1.1460262062272073e+00"/>
+    <Coefficient IndexOut="0" IndexCoeff="5" Value="-3.5638616186629735e-01"/>
+    <Coefficient IndexOut="0" IndexCoeff="6" Value="6.3307431270309689e-06"/>
+    <Coefficient IndexOut="0" IndexCoeff="7" Value="-2.5813985197160771e-02"/>
+    <Coefficient IndexOut="0" IndexCoeff="8" Value="-2.4426997276292939e-02"/>
+  </Weights>
+</MethodSetup>
