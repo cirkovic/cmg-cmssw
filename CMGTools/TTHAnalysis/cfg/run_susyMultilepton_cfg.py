@@ -48,7 +48,9 @@ treeProducer = cfg.Analyzer(
 #-------- SEQUENCE
 from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14 import * 
 
-selectedComponents = [ TTJets_PU20bx25, TTJets_PUS14, DYJetsM50_PU20bx25, DYJetsM50_HT100to200_PU_S14_POSTLS170, DYJetsM50_HT200to400_PU_S14_POSTLS170, DYJetsM50_HT400to600_PU_S14_POSTLS170, DYJetsM50_HT600toInf_PU_S14_POSTLS170 ]
+#selectedComponents = [ TTHZZ4L_PU20bx25, DYJetsM50_HT100to200_PU_S14_POSTLS170, DYJetsM50_HT200to400_PU_S14_POSTLS170, DYJetsM50_HT600toInf_PU_S14_POSTLS170 ]
+#selectedComponents = [ TTHZZ4L_PU20bx25 ]
+selectedComponents = [ DYJetsM50_Flat20to50 ]#, DYJetsM50_HT100to200_PU_S14_POSTLS170, DYJetsM50_HT200to400_PU_S14_POSTLS170, DYJetsM50_HT600toInf_PU_S14_POSTLS170 ]
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
@@ -60,14 +62,14 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 2
 if test==1:
     # test a single component, using a single thread.
-    comp = TTHTTnlo_S14
+    comp = DYJetsM50_HT100to200_PU_S14_POSTLS170
     comp.files = comp.files[:]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 50
+        comp.splitFactor = 100
         comp.files = comp.files[:]
 
 

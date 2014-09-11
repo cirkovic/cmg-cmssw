@@ -87,14 +87,14 @@ class LepMVAFriend:
         self.mva = LeptonMVA(path+"/weights/%s_BDTG.weights.xml")
         self.fast = fast
     def listBranches(self):
-        return [ ("nLepGood","I"), ("LepGood_mvaNew","F",8,"nLepGood") ]
+        return [ ("nLepGood","I"), ("LepGood_mvaOld","F",8,"nLepGood") ]
     def __call__(self,event):
         lep = Collection(event,"LepGood","nLepGood",8)
         ret = { 'nLepGood' : event.nLepGood }
         if event.run >= 1: # DATA
-            ret['LepGood_mvaNew'] = [ self.mva(l, ncorr=0) for l in lep ] 
+            ret['LepGood_mvaOld'] = [ self.mva(l, ncorr=0) for l in lep ] 
         else:              # MC
-            ret['LepGood_mvaNew'] = [ self.mva(l, ncorr=0) for l in lep ] 
+            ret['LepGood_mvaOld'] = [ self.mva(l, ncorr=0) for l in lep ] 
         return ret
 
 if __name__ == '__main__':
@@ -112,3 +112,4 @@ if __name__ == '__main__':
     el = EventLoop([ Tester("tester") ])
     el.loop([tree], maxEvents = 50)
 
+        
