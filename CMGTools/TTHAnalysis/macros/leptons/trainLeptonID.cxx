@@ -44,7 +44,7 @@ void trainLeptonID(TString name, TString train="GB") {
     } else { std::cerr << "ERROR: must either be electron or muon." << std::endl; return; }
    
 
-    TCut lepton = (name.Contains("mu") ? "abs(pdgId) == 13" : "abs(pdgId) == 11");
+    TCut lepton = (name.Contains("mu") ? "(abs(pdgId) == 13) && ((pt > 5) && (abs(eta) < 2.4)) && (true) && (reliso03 < 0.4) && (abs(dxy) < 0.00005) && (abs(dz) < 0.002) && (lostHits <= 1)" : "(abs(pdgId) == 11) && ((pt < 7) && (abs(eta) < 2.5)) && (true) && (reliso03 < 0.4) && (abs(dxy) < 0.00005) && (abs(dz) < 0.002) && (lostHits <= 1)");
 
     if (name.Contains("mu")) {
         if (name.Contains("pteta")) {
