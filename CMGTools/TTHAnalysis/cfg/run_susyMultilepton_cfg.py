@@ -58,7 +58,7 @@ for data in dataSamplesMuE:
     data.vetoTriggers=triggers_ee+triggers_mumu
 
 
-selectedComponents = mcSamplesAll + dataSamplesAll
+selectedComponents = [ TTJetsHad ]
 
 #-------- SEQUENCE
 
@@ -69,7 +69,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
     comp = TTJets
@@ -79,8 +79,8 @@ if test==1:
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 1
-        comp.files = comp.files[:1]
+        comp.splitFactor = 50
+        comp.files = comp.files[:]
 
 
 
