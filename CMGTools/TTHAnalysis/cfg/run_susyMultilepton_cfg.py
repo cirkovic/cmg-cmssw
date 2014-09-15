@@ -69,11 +69,11 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 2
+test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = TTJets
-    comp.files = comp.files[:1]
+    comp = TTH
+    comp.files = comp.files[:]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
