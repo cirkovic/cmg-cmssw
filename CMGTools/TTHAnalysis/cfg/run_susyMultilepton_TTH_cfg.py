@@ -13,7 +13,7 @@ from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import *
 # Redefine what I need
 
 # --- LEPTON SKIMMING ---
-ttHLepSkim.minLeptons = 2
+#ttHLepSkim.minLeptons = 2
 ttHLepSkim.maxLeptons = 999
 #ttHLepSkim.idCut  = ""
 #ttHLepSkim.ptCuts = []
