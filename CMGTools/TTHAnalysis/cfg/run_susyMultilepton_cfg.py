@@ -46,16 +46,16 @@ treeProducer = cfg.Analyzer(
 #-------- SAMPLES AND TRIGGERS -----------
 from CMGTools.TTHAnalysis.samples.samples_8TeV_v517 import * 
 
-for mc in mcSamples+mcSamplesAll:
-    mc.triggers = triggersMC_mue
-for data in dataSamplesMu:
-    data.triggers = triggers_mumu
-for data in dataSamplesE:
-    data.triggers = triggers_ee
-    data.vetoTriggers = triggers_mumu
-for data in dataSamplesMuE:
-    data.triggers = triggers_mue
-    data.vetoTriggers=triggers_ee+triggers_mumu
+#for mc in mcSamples+mcSamplesAll:
+#    mc.triggers = triggersMC_mue
+#for data in dataSamplesMu:
+#    data.triggers = triggers_mumu
+#for data in dataSamplesE:
+#    data.triggers = triggers_ee
+#    data.vetoTriggers = triggers_mumu
+#for data in dataSamplesMuE:
+#    data.triggers = triggers_mue
+#    data.vetoTriggers=triggers_ee+triggers_mumu
 
 
 selectedComponents = [ TTJetsHad ]
