@@ -13,7 +13,7 @@ from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import *
 # Redefine what I need
 
 # --- LEPTON SKIMMING ---
-#ttHLepSkim.minLeptons = 2
+ttHLepSkim.minLeptons = 2
 ttHLepSkim.maxLeptons = 999
 #ttHLepSkim.idCut  = ""
 #ttHLepSkim.ptCuts = []
@@ -34,11 +34,11 @@ treeProducer = cfg.Analyzer(
     saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
     PDFWeights = PDFWeights,
     triggerBits = {
-            'SingleMu' : [],
-            'DoubleMu' : [],
-            'DoubleEl' : [],
-            'TripleEl' : [],
-            'MuEG'     : []
+            'SingleMu' : triggers_1mu,
+            'DoubleMu' : triggers_mumu,
+            'DoubleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5" not in t ],
+            'TripleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5"     in t ],
+            'MuEG'     : [ t for t in triggers_mue if "Mu" in t and "Ele" in t ]
         }
     )
 
@@ -46,16 +46,16 @@ treeProducer = cfg.Analyzer(
 #-------- SAMPLES AND TRIGGERS -----------
 from CMGTools.TTHAnalysis.samples.samples_8TeV_v517 import * 
 
-#for mc in mcSamples+mcSamplesAll:
-#    mc.triggers = triggersMC_mue
-#for data in dataSamplesMu:
-#    data.triggers = triggers_mumu
-#for data in dataSamplesE:
-#    data.triggers = triggers_ee
-#    data.vetoTriggers = triggers_mumu
-#for data in dataSamplesMuE:
-#    data.triggers = triggers_mue
-#    data.vetoTriggers=triggers_ee+triggers_mumu
+for mc in mcSamples+mcSamplesAll:
+    mc.triggers = triggersMC_mue
+for data in dataSamplesMu:
+    data.triggers = triggers_mumu
+for data in dataSamplesE:
+    data.triggers = triggers_ee
+    data.vetoTriggers = triggers_mumu
+for data in dataSamplesMuE:
+    data.triggers = triggers_mue
+    data.vetoTriggers=triggers_ee+triggers_mumu
 
 
 selectedComponents = [ TTH ]
@@ -72,8 +72,8 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 2
 if test==1:
     # test a single component, using a single thread.
-    comp = TTH
-    comp.files = comp.files[:]
+    comp = TTJets
+    comp.files = comp.files[:1]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
