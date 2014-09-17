@@ -58,7 +58,7 @@ for data in dataSamplesMuE:
     data.vetoTriggers=triggers_ee+triggers_mumu
 
 
-selectedComponents = [ TTLep, TTJets, TTJetsSem, TTJetsSem2, TTJetsHad ]
+selectedComponents = [ TTLep, TTJets, TTJetsLep, TTJetsSem, TTJetsSem2, TTJetsHad ]
 
 #-------- SEQUENCE
 
