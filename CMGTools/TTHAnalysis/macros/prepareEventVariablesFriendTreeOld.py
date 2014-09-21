@@ -20,8 +20,8 @@ MODULES = []
 #from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
-from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
-MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/work/c/cirkovic/Retraining_200914/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
+from CMGTools.TTHAnalysis.tools.LepMVAFriendOld import LepMVAFriendOld
+MODULES.append( ('LepMVAFriendOld', LepMVAFriendOld("/afs/cern.ch/work/c/cirkovic/Retraining_200914/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):

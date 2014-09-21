@@ -46,19 +46,22 @@ treeProducer = cfg.Analyzer(
 #-------- SAMPLES AND TRIGGERS -----------
 from CMGTools.TTHAnalysis.samples.samples_8TeV_v517 import * 
 
-for mc in mcSamples+mcSamplesAll:
-    mc.triggers = triggersMC_mue
-for data in dataSamplesMu:
-    data.triggers = triggers_mumu
-for data in dataSamplesE:
-    data.triggers = triggers_ee
-    data.vetoTriggers = triggers_mumu
-for data in dataSamplesMuE:
-    data.triggers = triggers_mue
-    data.vetoTriggers=triggers_ee+triggers_mumu
+#for mc in mcSamples+mcSamplesAll:
+#    mc.triggers = triggersMC_mue
+#for data in dataSamplesMu:
+#    data.triggers = triggers_mumu
+#for data in dataSamplesE:
+#    data.triggers = triggers_ee
+#    data.vetoTriggers = triggers_mumu
+#for data in dataSamplesMuE:
+#    data.triggers = triggers_mue
+#    data.vetoTriggers=triggers_ee+triggers_mumu
 
 
-selectedComponents = mcSamplesAll + dataSamplesAll
+TTH_samples    = [ TTH, TTH122, TTH127 ]
+TTJets_samples = [ TTLep, TTJets, TTJetsLep, TTJetsSem, TTJetsSem2, TTJetsHad ]
+
+selectedComponents = TTH_samples + TTJets_samples
 
 #-------- SEQUENCE
 
@@ -69,7 +72,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
     comp = TTJets
@@ -79,8 +82,8 @@ if test==1:
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 1
-        comp.files = comp.files[:1]
+        comp.splitFactor = 100
+        comp.files = comp.files[:]
 
 
 

@@ -1,6 +1,8 @@
 void trainLeptonID(TString name, TString train="GoodvsBad") {
     TTree *dSig = (TTree*) _file0->Get("rec/t");
     TTree *dBg1 = (TTree*) _file1->Get("rec/t");
+    TTree *dBg2 = (TTree*) _file2->Get("rec/t");
+    TTree *dBg3 = (TTree*) _file3->Get("rec/t");
     TFile *fOut = new TFile(name+".root","RECREATE");
     TMVA::Factory *factory = new TMVA::Factory(name, fOut, "!V:!Color");
 
@@ -61,9 +63,11 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
         }
     }
 
-    double wSig = 1.0, wBkg = 1.0;
+    double wSig = 1.0, wBkg1 = 1.0, wBkg2 = 1.0, wBkg3 = 1.0;
     factory->AddSignalTree(dSig, wSig);
-    factory->AddBackgroundTree(dBg1, wBkg);
+    factory->AddBackgroundTree(dBg1, wBkg1);
+    factory->AddBackgroundTree(dBg2, wBkg2);
+    factory->AddBackgroundTree(dBg3, wBkg3);
 
     // re-weighting to approximately match n(jet) multiplicity of signal
     //factory->SetWeightExpression("puWeight*((good>0)+(good<=0)*pow(nJet25,2.36))");
