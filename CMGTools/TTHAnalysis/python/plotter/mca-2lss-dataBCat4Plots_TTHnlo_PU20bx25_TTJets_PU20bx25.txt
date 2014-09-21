@@ -1,0 +1,5 @@
+ttH+ : TTHnlo_PU20bx25 : 0.3709741254633933385787740429054 ; FillColor=ROOT.kOrange+10, Label="ttH"
+#TT   : TTJets_PU20bx25 : 237.02087886377615 ; FillColor=ROOT.kGray, Label="TT"
+TT   : TTJets_PU20bx25 : 245.46 ; FillColor=ROOT.kGray, Label="TT"
+#TT   : TTJets_PU20bx25 : 424.5 ; FillColor=ROOT.kGray, Label="TT"
+

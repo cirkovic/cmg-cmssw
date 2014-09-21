@@ -1,0 +1,6 @@
+#ttH+   : TTHnlo_S14   : 0.37097412546339337 ; FillColor=ROOT.kOrange+10
+#TT     : TTJets_PUS14 : 424.5               ; FillColor=ROOT.kGray, Label="TT"
+ttH+ : TTHnlo_S14 : 0.3709741254633933385787740429054 ; FillColor=ROOT.kOrange+10, Label="ttH"
+#TT   : TTJets_PUS14 : 237.02087886377615 ; FillColor=ROOT.kGray, Label="TT"
+TT   : TTJets_PUS14 : 245.46 ; FillColor=ROOT.kGray, Label="TT"
+#TT   : TTJets_PUS14 : 424.5 ; FillColor=ROOT.kGray, Label="TT"

@@ -34,11 +34,11 @@ treeProducer = cfg.Analyzer(
     saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
     PDFWeights = PDFWeights,
     triggerBits = {
-            'SingleMu' : triggers_1mu,
-            'DoubleMu' : triggers_mumu,
-            'DoubleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5" not in t ],
-            'TripleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5"     in t ],
-            'MuEG'     : [ t for t in triggers_mue if "Mu" in t and "Ele" in t ]
+            'SingleMu' : [],
+            'DoubleMu' : [],
+            'DoubleEl' : [],
+            'TripleEl' : [],
+            'MuEG'     : []
         }
     )
 
@@ -51,11 +51,7 @@ from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14 import *
 TTH_samples    = [ TTHnlo_PU20bx25, TTHnlo_S14 ]
 TTJets_samples = [ TTJets_PU20bx25, TTJets_PUS14 ]
 
-#selectedComponents = TTH_samples + TTJets_samples
-#selectedComponents = TTH_samples
-#selectedComponents = TTJets_samples # OUTPUT, JobName70_1
-#selectedComponents = [ TTHnlo_PU20bx25 ] # OUTPUT1, JobName70_2
-selectedComponents = [ TTHnlo_S14 ] # OUTPUT2, JobName70_3
+selectedComponents = TTH_samples
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
