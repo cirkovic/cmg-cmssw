@@ -5,8 +5,8 @@ import os.path
 
 MODULES = []
 
-#from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
-#MODULES.append( ('2lss', EventVars2LSS()) )
+from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
+MODULES.append( ('2lss', EventVars2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
 #MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_3l import FinalMVA_3L
@@ -15,13 +15,18 @@ MODULES = []
 #MODULES.append( ('bbvars', bbVars()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_2lss_2 import FinalMVA_2LSS_2
 #MODULES.append( ('finalMVA_2lss_2', FinalMVA_2LSS_2()) )
-#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
-#MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
-#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
+from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
+MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
+from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
-from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
-MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/user/b/botta/CMGToolsGit/newRecipe/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
+MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","BestBySum4NoTJJb":"_bySum4","ByGuessLL2B":"_byLL"})) )
+#from CMGTools.TTHAnalysis.tools.doubleWlvEventReco import TTEventReco_2LOS_MC
+#MODULES.append( ('2lss', TTEventReco_2LOS_MC()) )
+#from CMGTools.TTHAnalysis.tools.metLD_reshape import MetLDReshaper
+#MODULES.append( ('2lss', MetLDReshaper()) )
+#from CMGTools.TTHAnalysis.tools.LepMVAFriend import LepMVAFriend
+#MODULES.append( ('LepMVAFriend', LepMVAFriend("/afs/cern.ch/user/b/botta/CMGToolsGit/newRecipe/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/macros/leptons")) )
 
 class VariableProducer(Module):
     def __init__(self,name,booker,modules):
@@ -63,8 +68,8 @@ parser.add_option("-j", "--jobs",    dest="jobs",      type="int",    default=1,
 parser.add_option("-p", "--pretend", dest="pretend",   action="store_true", default=False, help="Don't run anything");
 parser.add_option("-T", "--tree-dir",   dest="treeDir",     type="string", default="sf", help="Directory of the friend tree in the file (default: 'sf')");
 parser.add_option("-q", "--queue",   dest="queue",     type="string", default=None, help="Run jobs on lxbatch instead of locally");
-parser.add_option("-t", "--tree",    dest="tree",      default='ttHLepTreeProducerTTH', help="Pattern for tree name");
-parser.add_option("-V", "--vector",  dest="vectorTree", action="store_true", default=True, help="Input tree is a vector");
+parser.add_option("-t", "--tree",    dest="tree",      default='ttHLepTreeProducerBase', help="Pattern for tree name");
+parser.add_option("-V", "--vector",  dest="vectorTree", action="store_true", default=False, help="Input tree is a vector");
 parser.add_option("-F", "--add-friend",    dest="friendTrees",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename). Can use {name}, {cname} patterns in the treename") 
 parser.add_option("--FMC", "--add-friend-mc",    dest="friendTreesMC",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename) to MC only. Can use {name}, {cname} patterns in the treename") 
 parser.add_option("--FD", "--add-friend-data",    dest="friendTreesData",  action="append", default=[], nargs=2, help="Add a friend tree (treename, filename) to data trees only. Can use {name}, {cname} patterns in the treename") 
