@@ -32,22 +32,30 @@ elif [[ "$1" == "chargeBCat" ]]; then
     for X in ee em mumu; do
         #combineCards.py ss_${X/mumu/mm}_pos=ttH_2lss_${X}BCat_nJet_pos.card.txt \
         #                ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_nJet_neg.card.txt > ttH_2lss_${X}BCat_QnJet.card.txt
-        combineCards.py ss_${X/mumu/mm}_pos=ttH_2lss_${X}BCat_MVA_pos.card.txt \
-                        ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_MVA_neg.card.txt > ttH_2lss_${X}BCat_QMVA.card.txt
-    done
+        combineCards.py ss_${X/mumu/mm}_pos=ttH_2lss_${X}BCat_23j_MVA_pos.card.txt \
+                        ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_23j_MVA_neg.card.txt > ttH_2lss_${X}BCat_23j_QMVA.card.txt
+        combineCards.py ss_${X/mumu/mm}_pos=ttH_2lss_${X}BCat_4j_MVA_pos.card.txt \
+                        ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_4j_MVA_neg.card.txt > ttH_2lss_${X}BCat_4j_QMVA.card.txt
+     done
     #combineCards.py .=ttH_2lss_eeBCat_QnJet.card.txt   \
     #                .=ttH_2lss_mumuBCat_QnJet.card.txt \
     #                .=ttH_2lss_emBCat_QnJet.card.txt     > ttH_2lssBCat_QnJet.card.txt
-    combineCards.py .=ttH_2lss_eeBCat_QMVA.card.txt   \
-                    .=ttH_2lss_mumuBCat_QMVA.card.txt \
-                    .=ttH_2lss_emBCat_QMVA.card.txt     > ttH_2lssBCat_QMVA.card.txt
+    combineCards.py .=ttH_2lss_eeBCat_23j_QMVA.card.txt   \
+                    .=ttH_2lss_mumuBCat_23j_QMVA.card.txt \
+                    .=ttH_2lss_emBCat_23j_QMVA.card.txt     > ttH_2lssBCat_23j_QMVA.card.txt
+
+    combineCards.py .=ttH_2lss_eeBCat_4j_QMVA.card.txt   \
+                    .=ttH_2lss_mumuBCat_4j_QMVA.card.txt \
+                    .=ttH_2lss_emBCat_4j_QMVA.card.txt     > ttH_2lssBCat_4j_QMVA.card.txt
+
+    combineCards.py .=ttH_2lssBCat_23j_QMVA.card.txt  .=ttH_2lssBCat_4j_QMVA.card.txt > combBCat_QMVA.card.txt
 
     #combineCards.py tl_pos=ttH_3lBCat_nJet_pos.card.txt \
     #                tl_neg=ttH_3lBCat_nJet_neg.card.txt > ttH_3lBCat_QnJet.card.txt
-    combineCards.py tl_pos=ttH_3lBCat_MVA_pos.card.txt \
-                    tl_neg=ttH_3lBCat_MVA_neg.card.txt > ttH_3lBCat_QMVA.card.txt
+    #combineCards.py tl_pos=ttH_3lBCat_MVA_pos.card.txt \
+    #                tl_neg=ttH_3lBCat_MVA_neg.card.txt > ttH_3lBCat_QMVA.card.txt
     #combineCards.py .=ttH_2lssBCat_QnJet.card.txt .=ttH_3lBCat_QnJet.card.txt ql=ttH_4l_nJet.card.txt > combBCat_QnJet.card.txt
-    combineCards.py .=ttH_2lssBCat_QMVA.card.txt  .=ttH_3lBCat_QMVA.card.txt  ql=ttH_4l_nJet.card.txt > combBCat_QMVA.card.txt
+    #combineCards.py .=ttH_2lssBCat_QMVA.card.txt  .=ttH_3lBCat_QMVA.card.txt  ql=ttH_4l_nJet.card.txt > combBCat_QMVA.card.txt
 elif [[ "$1" == "BCat" ]]; then
     combineCards.py .=ttH_2lss_eeBCat_nJet.card.txt   \
                     .=ttH_2lss_mumuBCat_nJet.card.txt \
