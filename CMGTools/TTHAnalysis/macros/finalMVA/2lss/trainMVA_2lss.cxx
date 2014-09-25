@@ -1,5 +1,6 @@
 void trainMVA_2lss(TString name) {
-    TString Path = "/afs/cern.ch/work/m/mdjordje/TTH/TREES_250513_HADD";
+    //TString Path = "/afs/cern.ch/work/c/cirkovic/Retraining_200914/CMSSW_5_3_19/src/CMGTools/TTHAnalysis/cfg/OUTPUT";
+    TString Path = "root://eoscms//eos/cms/store/caf/user/mdjordje/TTH/TREES_250513_HADD";
     //gROOT->ProcessLine(".L ../../../python/plotter/functions.cc+");
 
     TFile *fOut = new TFile(name+".root","RECREATE");
@@ -7,11 +8,13 @@ void trainMVA_2lss(TString name) {
 
     TFile *fSig = TFile::Open(Path+"/TTH122/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     TTree *tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    tSig->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTH122.root");
+    //tSig->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTH122.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH122.root");
     factory->AddSignalTree(tSig, 1.0);
     fSig = TFile::Open(Path+"/TTH127/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
     tSig = (TTree *) fSig->Get("ttHLepTreeProducerBase");
-    tSig->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTH127.root");
+    //tSig->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTH127.root");
+    tSig->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTH127.root");
     factory->AddSignalTree(tSig, 1.0);
 
 //    fSig = TFile::Open(Path+"/TTH/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
@@ -30,7 +33,8 @@ void trainMVA_2lss(TString name) {
     } else if (name.Contains("ttbar")) {        
 	TFile *fBkg = TFile::Open(Path+"/TTJetsSem/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
-        tBkg->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTJetsSem.root");
+        //tBkg->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTJetsSem.root");
+        tBkg->AddFriend("sf/t", Path+"/2_finalmva_2lss_v2/evVarFriend_TTJetsSem.root");
         factory->AddBackgroundTree(tBkg, 1.0);	
         //fBkg = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         //tBkg = (TTree *) fBkg->Get("ttHLepTreeProducerBase");
@@ -38,11 +42,11 @@ void trainMVA_2lss(TString name) {
     } else if (name.Contains("mix")) {
         TFile *fBkg1 = TFile::Open(Path+"/TTJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg1 = (TTree *) fBkg1->Get("ttHLepTreeProducerBase");
-	tBkg1->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTJets.root");
+        //tBkg1->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTJets.root");
         factory->AddBackgroundTree(tBkg1, 1.0);
         TFile *fBkg2 = TFile::Open(Path+"/TTWJets/ttHLepTreeProducerBase/ttHLepTreeProducerBase_tree.root");
         TTree *tBkg2 = (TTree *) fBkg2->Get("ttHLepTreeProducerBase");
-	tBkg2->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTWJets.root");
+        //tBkg2->AddFriend("sf/t", Path+"/1_finalmva_3l_all_vars/evVarFriend_TTWJets.root");
         factory->AddBackgroundTree(tBkg2, 1.0);
     } else  {
         std::cout << "Training not implemented " << std::endl;
@@ -77,10 +81,10 @@ void trainMVA_2lss(TString name) {
     factory->AddVariable("htJet25 - (sum_abspz - abs(sum_sgnpz)) := htJet25 - (sum_abspz - abs(sum_sgnpz))", 'F'), //good
     factory->AddVariable("htJet25/sum_abspz := htJet25/sum_abspz", 'F'),	//good
     
-    factory->AddVariable("m_tjjb := min(m_tjjb, 330)", 'F'),		//good
-    factory->AddVariable("m_tlvb := min(m_tlvb, 330)", 'F'),		//good
-    factory->AddVariable("m_Wjj := min(m_Wjj, 330)", 'F'),		//bad
-    factory->AddVariable("mt_Wlv := min(mt_Wlv, 330)", 'F'),		//bad
+    //factory->AddVariable("m_tjjb := min(m_tjjb, 330)", 'F'),		//good
+    //factory->AddVariable("m_tlvb := min(m_tlvb, 330)", 'F'),		//good
+    //factory->AddVariable("m_Wjj := min(m_Wjj, 330)", 'F'),		//bad
+    //factory->AddVariable("mt_Wlv := min(mt_Wlv, 330)", 'F'),		//bad
    
             
 #endif
