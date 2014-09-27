@@ -10,7 +10,7 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/g/gpetrucc/TREES_250513_HADD";
+    T="/afs/cern.ch/work/c/cirkovic/TREES_250513_HADD_DATA";
     J=4;
 fi
 
@@ -27,15 +27,16 @@ else
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
 #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
-SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
+#SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
 BLoose=" -I 2B "
 BAny=" -X 2B "
 BTight="  "
 
 if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
-    OPTIONS="${OPTIONS} --FM sf/t $T/0_SFs_v3/sfFriend_{cname}.root --xp FR_data_.* "
-    OPT_2L="${OPTIONS} -W puWeight*Eff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l_new"
-    MVA_2L="-F sf/t   /afs/cern.ch/user/g/gpetrucc/w/TREES_250513_HADD/2_finalmva_2lss_v2/evVarFriend_{cname}.root "
+    #OPTIONS="${OPTIONS} --FM sf/t $T/0_SFs_v3/sfFriend_{cname}.root --xp FR_data_.* "
+    #OPT_2L="${OPTIONS} -W puWeight*Eff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l_new"
+    OPT_2L="${OPTIONS} "
+    MVA_2L="-F ttHLepTreeProducerBase/t /afs/cern.ch/work/c/cirkovic/Categorization_240914/CMSSW_5_3_14/src/CMGTools/TTHAnalysis/macros/FT_OUTPUT_270914_163546/evVarFriend_{cname}.root -F ttHLepTreeProducerBase/t /afs/cern.ch/work/c/cirkovic/Categorization_240914/CMSSW_5_3_14/src/CMGTools/TTHAnalysis/macros/FT_1_OUTPUT_270914_174001/evVarFriend_{cname}.root "
     POS=" -A pt2010 positive LepGood1_charge>0 "
     NEG=" -A pt2010 positive LepGood1_charge<0 "
     for X in 2lss_{mumu,ee,em}; do 
