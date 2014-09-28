@@ -10,7 +10,7 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/g/gpetrucc/TREES_250513_HADD";
+    T="/afs/cern.ch/work/c/cirkovic/TREES_250513_HADD_DATA";
     J=4;
 fi
 
@@ -27,7 +27,7 @@ else
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
 #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
-SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
+#SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
 BLoose=" -I 2B "
 BAny=" -X 2B "
 BTight="  "
