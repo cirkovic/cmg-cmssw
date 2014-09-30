@@ -1,3 +1,11 @@
+# leptonic and inclusive decays (NNLO+NNLL cross sections)
+#TT   : TTJetsLep:     1.5*25.77: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
+#TT   : TTJetsSem:   1.5*107.53: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)     ;  FillColor=ROOT.kGray, NormSystematic=0.2
+#TT   : TTJetsHad:     1.5*112.16: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
+# leptonic and inclusive decays (NNLO+NNLL cross sections)
+TT   : TTJetsLep:     25.77: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
+TT   : TTJetsSem:   107.53: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)     ;  FillColor=ROOT.kGray, NormSystematic=0.2
+TT   : TTJetsHad:     112.16: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
 # --- ttH split by decay mode (with proper sigma*BR for 125.7)
 #ttH_hww+   : TTH : 0.1271 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10, Label="ttH WW"
 #ttH_hzz+   : TTH : 0.1271 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kPink+9, Label="ttH ZZ"
@@ -127,11 +135,6 @@ WZ_JES_Up: WZJets_skim2j_JES_Up:       1.057*1.12    ;  FillColor=ROOT.kViolet-4
 WZ_JES_Dn: WZJets_skim2j_JES_Down:     1.057*1.09    ;  FillColor=ROOT.kViolet-4, SkipMe=True
 #ZZ_JES_Up: ZZJets4L_skim3l1j_JES_Up:   0.157    ;  FillColor=ROOT.kAzure-9,  SkipMe=True
 #ZZ_JES_Dn: ZZJets4L_skim3l1j_JES_Down: 0.157    ;  FillColor=ROOT.kAzure-9,  SkipMe=True
-
-# leptonic and inclusive decays (NNLO+NNLL cross sections)
-TT   : TTJetsLep:     1.5*25.77: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
-TT   : TTJetsSem:   1.5*107.53: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)     ;  FillColor=ROOT.kGray, NormSystematic=0.2
-TT   : TTJetsHad:     1.5*112.16: 1.18246 + 0.00000210061*GenTop1_pt*(GenTop1_pt - 2*463.312)    ;  FillColor=ROOT.kGray, NormSystematic=0.2
 
 # Top+W associated prod.
 TW   : TtW:        11.73    ;  FillColor=ROOT.kGray+2, NormSystematic=0.2
@@ -372,4 +375,4 @@ FR_data_elOnly : MuEGBadSIP;            FillColor=ROOT.kGray, FakeRate='syst/fak
 #FR_data_FRmc3j2B : DoubleElectronRec;       FillColor=ROOT.kGray, FakeRate='syst/fakeRate_2lss_MC-3j2B.txt', Label='FR MC 3j2B', SkipMe=True
 #FR_data_FRmc3j2B : DoubleElectronD;         FillColor=ROOT.kGray, FakeRate='syst/fakeRate_2lss_MC-3j2B.txt', Label='FR MC 3j2B', SkipMe=True
 #FR_data_FRmc3j2B : DoubleElectronBadSIP;    FillColor=ROOT.kGray, FakeRate='syst/fakeRate_2lss_MC-3j2B.txt', Label='FR MC 3j2B', SkipMe=True
-#
+

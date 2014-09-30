@@ -172,6 +172,10 @@ def doScaleSigNormData(pspec,pmap,mca):
         if p in signals: h.Scale(sf)
     return sf
 
+def doScaleSBTo1(pmap):
+    for p,h in pmap.iteritems():
+        h.Scale(1/h.Integral())
+
 def doNormFit(pspec,pmap,mca):
     if "data" not in pmap: return -1.0
     data = pmap["data"]
@@ -483,6 +487,7 @@ class PlotMaker:
                         total.GetYaxis().SetTitle("density/bin")
                     total.GetYaxis().SetDecimals(True)
                 if options.scaleSignalToData: doScaleSigNormData(pspec,pmap,mca)
+                if options.scaleSBTo1: doScaleSBTo1(pmap)
                 elif options.fitData: doNormFit(pspec,pmap,mca)
                 #
                 for k,v in pmap.iteritems():
@@ -655,6 +660,7 @@ def addPlotMakerOptions(parser):
     parser.add_option("--rebin", dest="globalRebin", type="int", default="0", help="Rebin all plots by this factor")
     parser.add_option("--poisson", dest="poisson", action="store_true", default=False, help="Draw Poisson error bars")
     parser.add_option("--select-plot", "--sP", dest="plotselect", action="append", default=[], help="Select only these plots out of the full file")
+    parser.add_option("--scaleSBTo1", dest="scaleSBTo1", action="store_true", default=False, help="Scale all signal processes so that their integrals are equal to 1")
 
 if __name__ == "__main__":
     from optparse import OptionParser
