@@ -10,7 +10,7 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/g/gpetrucc/TREES_250513_HADD";
+    T="/afs/cern.ch/work/m/mdjordje/TTH/TREES_250513_HADD";
     J=4;
 fi
 
@@ -21,13 +21,13 @@ if [[ "$SCENARIO" != "" ]]; then
     test -d cards/$SCENARIO || mkdir -p cards/$SCENARIO
     OPTIONS=" -P $T -j $J -l 19.7 -f  --od cards/$SCENARIO --project $SCENARIO --asimov ";
 else
-    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree ttHLepTreeProducerBase ";
+    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree ttHLepTreeProducerBase --asimov ";
     #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/new196";
     OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
 #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
-SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
+SYSTS="systsEnv.txt ../../macros/systematics/btagSysts2.txt"
 BLoose=" -I 2B "
 BAny=" -X 2B "
 BTight="  "

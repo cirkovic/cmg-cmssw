@@ -101,5 +101,5 @@ CMS_ttHl_FR_shapeMC_3l: FR_.*: .*3l.* : Fakes_MC: alternateShapeOnly
 
 
 # Jet energy scale uncertainties
-CMS_ttH_JES : ttH.*|WZ|TT[WZ]$ :  .*      : JES : templates
-CMS_ttH_JES : ZZ               : [34]l_.* : JES : templates
+#CMS_ttH_JES : ttH.*|WZ|TT[WZ]$ :  .*      : JES : templates
+#CMS_ttH_JES : ZZ               : [34]l_.* : JES : templates
