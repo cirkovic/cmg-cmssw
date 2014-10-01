@@ -12,6 +12,7 @@ parser.add_option("-v", "--verbose",  dest="verbose",  default=0,  type="int",  
 parser.add_option("--masses", dest="masses", default=None, type="string", help="produce results for all these masses")
 parser.add_option("--mass-int-algo", dest="massIntAlgo", type="string", default="sigmaBR", help="Interpolation algorithm for nearby masses") 
 parser.add_option("--asimov", dest="asimov", action="store_true", help="Asimov")
+parser.add_option("--nodata", dest="nodata", action="store_true", help="No data")
 
 (options, args) = parser.parse_args()
 options.weight = True
@@ -76,13 +77,14 @@ def getYieldScale(mass,process):
 
 report = mca.getPlotsRaw("x", args[2], args[3], cuts.allCuts(), nodata=options.asimov)
 
-if options.asimov:
-    tomerge = []
-    for p in mca.listSignals() + mca.listBackgrounds():
-        if p in report: tomerge.append(report[p])
-    report['data_obs'] = mergePlots("x_data_obs", tomerge) 
-else:
-    report['data_obs'] = report['data'].Clone("x_data_obs") 
+if not options.nodata:
+    if options.asimov:
+        tomerge = []
+        for p in mca.listSignals() + mca.listBackgrounds():
+            if p in report: tomerge.append(report[p])
+        report['data_obs'] = mergePlots("x_data_obs", tomerge) 
+    else:
+        report['data_obs'] = report['data'].Clone("x_data_obs") 
 
 allyields = dict([(p,h.Integral()) for p,h in report.iteritems()])
 procs = []; iproc = {}
@@ -312,7 +314,8 @@ for mass in masses:
         datacard.write("shapes *        * %s.input.root x_$PROCESS x_$PROCESS_$SYSTEMATIC\n" % binname)
     datacard.write('##----------------------------------\n')
     datacard.write('bin         %s\n' % binname)
-    datacard.write('observation %s\n' % myyields['data_obs'])
+    if not options.nodata:
+        datacard.write('observation %s\n' % myyields['data_obs'])
     datacard.write('##----------------------------------\n')
     klen = max([7, len(binname)]+[len(p) for p in procs])
     kpatt = " %%%ds "  % klen
@@ -344,7 +347,8 @@ if len(masses) > 1:
     datacard.write("shapes ttH_htt  * common/%s.input.root x_$PROCESS$MASS x_$PROCESS$MASS_$SYSTEMATIC\n" % binname)
     datacard.write('##----------------------------------\n')
     datacard.write('bin         %s\n' % binname)
-    datacard.write('observation %s\n' % myyields['data_obs'])
+    if not options.nodata:
+        datacard.write('observation %s\n' % myyields['data_obs'])
     datacard.write('##----------------------------------\n')
     klen = max([7, len(binname)]+[len(p) for p in procs])
     kpatt = " %%%ds "  % klen

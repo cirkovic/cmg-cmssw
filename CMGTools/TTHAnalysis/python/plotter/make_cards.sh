@@ -21,7 +21,7 @@ if [[ "$SCENARIO" != "" ]]; then
     test -d cards/$SCENARIO || mkdir -p cards/$SCENARIO
     OPTIONS=" -P $T -j $J -l 19.7 -f  --od cards/$SCENARIO --project $SCENARIO --asimov ";
 else
-    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree ttHLepTreeProducerBase --asimov ";
+    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree ttHLepTreeProducerBase --nodata ";
     #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/new196";
     OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
 fi
@@ -43,6 +43,7 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
         echo $X; #~gpetrucc/sh/bann $X
         # ---- MVA separated by charge (for nominal result) ----
         python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
+        #exit
         python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
 
         # ---- n(jet) separated by charge (for crosscheck) ----
