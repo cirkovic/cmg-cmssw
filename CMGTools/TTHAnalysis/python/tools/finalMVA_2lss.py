@@ -5,53 +5,45 @@ class FinalMVA_2LSS:
     def __init__(self):
         self._MVAs = {}
         self._vars_1_6 = [ 
-                #MVAVar("lep2AbsEta", func = lambda ev : min(abs(ev.LepGood1_eta),abs(ev.LepGood2_eta))),
-                MVAVar("lep2AbsEta", func = lambda ev : abs(ev.LepGood2_eta)),
-                MVAVar("lep2Pt",     func = lambda ev : ev.LepGood2_pt),
-                MVAVar("MHT",        func = lambda ev : ev.mhtJet25),
+                ##MVAVar("lep2AbsEta", func = lambda ev : min(abs(ev.LepGood[0]_eta),abs(ev.LepGood[1]_eta))),
+                #MVAVar("lep2AbsEta", func = lambda ev : ev.lep2AbsEta),
+                #MVAVar("lep2Pt",     func = lambda ev : ev.lep2Pt),
+                #MVAVar("MHT",        func = lambda ev : ev.MHT),
+                #MVAVar("mindr_lep2_jet", func = lambda ev : ev.mindr_lep2_jet),
+                #MVAVar("MT_met_lep1",    func = lambda ev : ev.MT_met_lep1),
+                #MVAVar("sum_pt",         func = lambda ev : ev.sum_pt) 
+                
+                #MVAVar("lep2AbsEta", func = lambda ev : min(abs(ev.LepGood[0]_eta),abs(ev.LepGood[1]_eta))),
+                MVAVar("abs(LepGood_eta[1])", func = lambda ev : abs(ev.LepGood_eta[1])),
+                MVAVar("LepGood_pt[1]",     func = lambda ev : ev.LepGood_pt[1]),
+                MVAVar("mhtJet25",        func = lambda ev : ev.mhtJet25),
                 MVAVar("mindr_lep2_jet", func = lambda ev : ev.mindr_lep2_jet),
                 MVAVar("MT_met_lep1",    func = lambda ev : ev.MT_met_lep1),
-                MVAVar("sum_pt",         func = lambda ev : ev.htJet25) 
+                MVAVar("htJet25",         func = lambda ev : ev.htJet25)
+                
+#   factory->AddVariable("lep2AbsEta := abs(LepGood_eta[1])", 'F');
+#   factory->AddVariable("lep2Pt := LepGood_pt[1]", 'F');
+#   factory->AddVariable("MHT : = mhtJet25", 'F');
+#   factory->AddVariable("mindr_lep2_jet : = mindr_lep2_jet", 'F');
+#   factory->AddVariable("MT_met_lep1 : = MT_met_lep1", 'F');
+#   factory->AddVariable("sum_pt : = htJet25", 'F');
+
+# <Variables NVar="6">
+#   <Variable VarIndex="0" Expression="abs(LepGood_eta[1])" Label="lep2AbsEta" Title="lep2AbsEta" Unit="" Internal="lep2AbsEta" Type="F" Min="4.14125301e-04" Max="2.39864707e+00"/>
+#   <Variable VarIndex="1" Expression="LepGood_pt[1]" Label="lep2Pt" Title="lep2Pt" Unit="" Internal="lep2Pt" Type="F" Min="2.00183353e+01" Max="2.89519775e+02"/>
+#   <Variable VarIndex="2" Expression="mhtJet25" Label="MHT" Title="MHT" Unit="" Internal="MHT" Type="F" Min="3.35981560e+00" Max="5.82284241e+02"/>
+#   <Variable VarIndex="3" Expression="mindr_lep2_jet" Label="mindr_lep2_jet" Title="mindr_lep2_jet" Unit="" Internal="mindr_lep2_jet" Type="F" Min="3.75625700e-01" Max="3.77640629e+00"/>
+#   <Variable VarIndex="4" Expression="MT_met_lep1" Label="MT_met_lep1" Title="MT_met_lep1" Unit="" Internal="MT_met_lep1" Type="F" Min="7.54927099e-02" Max="7.47827637e+02"/>
+#   <Variable VarIndex="5" Expression="htJet25" Label="sum_pt" Title="sum_pt" Unit="" Internal="sum_pt" Type="F" Min="1.95648254e+02" Max="2.18754688e+03"/>
+# </Variables>
         ]
-        self._vars_7_9 = [
-                MVAVar("avg_dr_jets",      func = lambda ev : ev.avg_dr_jet),
-                MVAVar("mindr_lep1_jet",   func = lambda ev : ev.mindr_lep1_jet),
-                MVAVar("MT_met_leplep",    func = lambda ev : ev.MT_met_leplep),
-        ]
-        self._var_10 = [
-                MVAVar("numJets_float",    func = lambda ev : ev.nJet25)
-        ]
-        self._vars_11_15 = [
-                MVAVar("b1_jet_pt",      func = lambda ev : ev.Jet1_pt),
-                MVAVar("b2_jet_pt",      func = lambda ev : ev.Jet2_pt),
-                MVAVar("lep1Pt",         func = lambda ev : ev.LepGood1_pt),
-                MVAVar("sum_pt-(sum_pz-abs(pz_of_everything))",    func = lambda ev : ev.htJet25 - (ev.sum_abspz - abs(ev.sum_sgnpz))),
-                MVAVar("sum_pt/sum_pz",    func = lambda ev : ev.htJet25/ev.sum_abspz),
-        ]
-        P="/afs/cern.ch/user/a/abrinke1/public/MultiLepton/BDT_weights/";
-        self._MVAs["MVA_2LSS_23j_6var"] = MVATool("MVA_2LSS_23j_6var", 
-            P+"SS_eq3jge1t_useSide_2_6var_test/TMVAClassification_BDTG.weights.xml",
+        P="/afs/cern.ch/work/c/cirkovic/Milos_02-10-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/finalMVA/2lss/";
+        self._MVAs["MVA_2LSS_4j_6var_25ns"] = MVATool("MVA_2LSS_4j_6var_25ns", 
+            P+"25ns/weights/ttbar_BDTG.weights.xml",
             self._vars_1_6)
-        self._MVAs["MVA_2LSS_23j_9var"] = MVATool("MVA_2LSS_23j_9var", 
-            P+"SS_eq3jge1t_useSide_2_9var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9)
-        self._MVAs["MVA_2LSS_4j_6var"] = MVATool("MVA_2LSS_4j_6var", 
-            P+"SS_ge4jge1t_useSide_2_6var_test/TMVAClassification_BDTG.weights.xml",
+        self._MVAs["MVA_2LSS_4j_6var_50ns"] = MVATool("MVA_2LSS_4j_6var_50ns",
+            P+"50ns/weights/ttbar_BDTG.weights.xml",
             self._vars_1_6)
-        self._MVAs["MVA_2LSS_4j_10var"] = MVATool("MVA_2LSS_4j_10var", 
-            P+"SS_ge4jge1t_useSide_2_10var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9 + self._var_10)
-        self._MVAs["MVA_2LSS_4j_15var"] = MVATool("MVA_2LSS_4j_15var", 
-            P+"SS_ge4jge1t_useSide_2_15var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9 + self._var_10 + self._vars_11_15)
-        self._MVAs["MVA_2LSS_4j_6var_cat"] = CategorizedMVA(
-            [ ( lambda ev: abs(ev.LepGood1_pdgId) == 11 and abs(ev.LepGood2_pdgId) == 11,
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_TwoEle/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ),
-              ( lambda ev: abs(ev.LepGood1_pdgId) == 13 and abs(ev.LepGood2_pdgId) == 13,
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_TwoMuon/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ),
-              ( lambda ev: abs(ev.LepGood1_pdgId) != abs(ev.LepGood2_pdgId),
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_MuonEle/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ) ]
-        )
     def listBranches(self):
         return self._MVAs.keys()
     def __call__(self,event):
