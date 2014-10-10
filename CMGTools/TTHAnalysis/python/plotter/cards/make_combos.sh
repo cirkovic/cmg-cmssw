@@ -41,7 +41,7 @@ elif [[ "$1" == "chargeBCat" ]]; then
     combineCards.py .=ttH_2lss_eeBCat_QMVA.card.txt   \
                     .=ttH_2lss_mumuBCat_QMVA.card.txt \
                     .=ttH_2lss_emBCat_QMVA.card.txt     > ttH_2lssBCat_QMVA.card.txt
-
+    exit
     #combineCards.py tl_pos=ttH_3lBCat_nJet_pos.card.txt \
     #                tl_neg=ttH_3lBCat_nJet_neg.card.txt > ttH_3lBCat_QnJet.card.txt
     combineCards.py tl_pos=ttH_3lBCat_MVA_pos.card.txt \

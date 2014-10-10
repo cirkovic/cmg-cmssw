@@ -5,22 +5,22 @@ import os.path
 
 MODULES = []
 
-from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
-MODULES.append( ('2lss', EventVars2LSS()) )
-#from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
-#MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
+#from CMGTools.TTHAnalysis.tools.eventVars_2lss import EventVars2LSS 
+#MODULES.append( ('2lss', EventVars2LSS()) )
+from CMGTools.TTHAnalysis.tools.finalMVA_2lss import FinalMVA_2LSS
+MODULES.append( ('2lss_mva', FinalMVA_2LSS()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_3l import FinalMVA_3L
 #MODULES.append( ('3l_mva', FinalMVA_3L()) )
 #from CMGTools.TTHAnalysis.tools.bbvars import bbVars
 #MODULES.append( ('bbvars', bbVars()) )
 #from CMGTools.TTHAnalysis.tools.finalMVA_susy_2lss import FinalMVA_SUSY_2LSS
 #MODULES.append( ('finalMVA_susy_2lss', FinalMVA_SUSY_2LSS()) )
-from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
-MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
-from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
+#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco_MC
+#MODULES.append( ('ttreco_mc', TTEventReco_MC()) )
+#from CMGTools.TTHAnalysis.tools.ttbarEventReco_2lss import TTEventReco
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"", "BestBySum4NoTJJb":"_bySum4"})) )
 #MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","ByGuessLL2B":"_byLL"})) )
-MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","BestBySum4NoTJJb":"_bySum4","ByGuessLL2B":"_byLL"})) )
+#MODULES.append( ('ttreco', TTEventReco(sortersToUse={"BestGuess":"","BestBySum4NoTJJb":"_bySum4","ByGuessLL2B":"_byLL"})) )
 #from CMGTools.TTHAnalysis.tools.MuonMVAFriend import MuonMVAFriend
 #MODULES.append( ('', MuonMVAFriend("BPH",     "/afs/cern.ch/work/g/gpetrucc/micro/cmg/CMSSW_7_0_9/src/CMGTools/TTHAnalysis/macros/leptons/train70XBPH_BDTG.weights.xml", label="BPH")) )
 #MODULES.append( ('', MuonMVAFriend("BPHCalo", "/afs/cern.ch/work/g/gpetrucc/micro/cmg/CMSSW_7_0_9/src/CMGTools/TTHAnalysis/macros/leptons/train70XBPHCalo_BDTG.weights.xml", label="BPHCalo")) )

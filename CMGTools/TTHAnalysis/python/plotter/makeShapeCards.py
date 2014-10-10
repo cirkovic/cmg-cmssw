@@ -42,8 +42,8 @@ def file2map(x):
             fields = [ float(i) for i in cols ]
             ret[fields[0]] = dict(zip(headers,fields[1:]))
     return ret
-YRpath = os.environ['CMSSW_RELEASE_BASE']+"/src/HiggsAnalysis/CombinedLimit/data/lhc-hxswg/sm/";
-XStth = file2map(YRpath+"xs/8TeV/8TeV-ttH.txt")
+YRpath = "/afs/cern.ch/work/c/cirkovic/Milos_02-10-2014/CMSSW_6_1_1/src/HiggsAnalysis/CombinedLimit/data/lhc-hxswg/sm/";
+XStth = file2map(YRpath+"xs/14TeV/14TeV-ttH.txt")
 BRhvv = file2map(YRpath+"br/BR2bosons.txt")
 BRhff = file2map(YRpath+"br/BR2fermions.txt")
 def mkspline(table,column,sf=1.0):

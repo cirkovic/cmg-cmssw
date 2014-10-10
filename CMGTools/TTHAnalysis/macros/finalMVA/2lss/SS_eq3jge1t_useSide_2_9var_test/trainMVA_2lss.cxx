@@ -17,7 +17,7 @@ void trainMVA_2lss(TString name) {
     //tSig = (TTree *) fSig->Get("treeProducerSusyMultilepton");
     //factory->AddSignalTree(tSig, 1.0);
 
-    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && nJet25 >= 4 && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_pt > 100";
+    TCut all = "nLepGood == 2 && LepGood_charge[0] == LepGood_charge[1] && nBJetMedium25 >= 1 && (nJet25 == 2 || nJet25 == 3) && LepGood_pt[1] > 20 && LepGood_pt[0]+LepGood_pt[1]+met_pt > 100";
     if (name.Contains("ttW")) {
         TFile *fBkg = TFile::Open(Path+"/TTWJets/treeProducerSusyMultilepton/treeProducerSusyMultilepton_tree.root");
         TTree *tBkg = (TTree *) fBkg->Get("treeProducerSusyMultilepton");
@@ -92,9 +92,9 @@ void trainMVA_2lss(TString name) {
     factory->AddVariable("mindr_lep2_jet := mindr_lep2_jet", 'F');
     factory->AddVariable("MT_met_lep1 := MT_met_lep1", 'F');
     factory->AddVariable("sum_pt := htJet25", 'F');
-    //factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
-    //factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
-    //factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
+    factory->AddVariable("avg_dr_jets := avg_dr_jet", 'F');
+    factory->AddVariable("mindr_lep1_jet := mindr_lep1_jet", 'F');
+    factory->AddVariable("MT_met_leplep := MT_met_leplep", 'F');
     //factory->AddVariable("numJets_float := nJet25", 'F');
     //factory->AddVariable("b1_jet_pt := Jet_pt[0]", 'F');
     //factory->AddVariable("b2_jet_pt := Jet_pt[1]", 'F');

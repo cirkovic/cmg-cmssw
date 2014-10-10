@@ -10,7 +10,7 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/g/gpetrucc/TREES_250513_HADD";
+    T="/afs/cern.ch/work/c/cirkovic/Milos_02-10-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/cfg/TREES";
     J=4;
 fi
 
@@ -21,46 +21,46 @@ if [[ "$SCENARIO" != "" ]]; then
     test -d cards/$SCENARIO || mkdir -p cards/$SCENARIO
     OPTIONS=" -P $T -j $J -l 19.7 -f  --od cards/$SCENARIO --project $SCENARIO --asimov ";
 else
-    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree ttHLepTreeProducerBase ";
+    OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree treeProducerSusyMultilepton --asimov ";
     #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/new196";
     OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
 #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
-SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
+#SYSTS="systsEnv.txt ../../macros/systematics/btagSysts.txt"
 BLoose=" -I 2B "
-BAny=" -X 2B "
+BAny=" -X 2B --s2v "
 BTight="  "
 
 if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
-    OPTIONS="${OPTIONS} --FM sf/t $T/0_SFs_v3/sfFriend_{cname}.root --xp FR_data_.* "
-    OPT_2L="${OPTIONS} -W puWeight*Eff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l_new"
-    MVA_2L="-F sf/t   /afs/cern.ch/user/g/gpetrucc/w/TREES_250513_HADD/2_finalmva_2lss_v2/evVarFriend_{cname}.root "
+    OPTIONS="${OPTIONS} -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_08-10-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_081014_203308/evVarFriend_{cname}.root --FM sf/t /afs/cern.ch/work/c/cirkovic/Milos_08-10-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_SF_091014_004855/sfFriend_{cname}.root "
+    OPT_2L="${OPTIONS} -W puWeight*SF_LepMVATight_2l*SF_LepTightCharge_2l "
+    MVA_2L=" -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_08-10-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_1_081014_220825/evVarFriend_{cname}.root "
     POS=" -A pt2010 positive LepGood1_charge>0 "
     NEG=" -A pt2010 positive LepGood1_charge<0 "
     for X in 2lss_{mumu,ee,em}; do 
         #if [[ "$X" == "2lss_mumu" ]]; then continue; fi
         echo $X; #~gpetrucc/sh/bann $X
         # ---- MVA separated by charge (for nominal result) ----
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
+        python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
+        python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
 
         # ---- n(jet) separated by charge (for crosscheck) ----
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_pos $POS $BAny; 
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_neg $NEG $BAny; 
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_pos $POS $BAny; 
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet_neg $NEG $BAny; 
 
         # ---- unseparated (for making post-fit plots) ----
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA $MVA_2L $BAny;
-        python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet $BAny; 
+        python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA $MVA_2L $BAny;
+        python makeShapeCards.py mca.txt bins/${X}.txt 'nJet25' '3,3.5,6.5' $SYSTS $OPT_2L -o ${X}BCat_nJet $BAny; 
 
         # ----- 3-jet category (for more fits) ----
         J3="-R 4j 3j nJet25==3"
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_neg $MVA_2L $NEG $BAny;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_pos $MVA_2L $POS $BAny;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA4j $MVA_2L $BAny;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_neg $MVA_2L $NEG $BAny;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_23j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA_pos $MVA_2L $POS $BAny;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J3 '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_3j_MVA4j $MVA_2L $BAny;
 
         J4E="-R 4j 4j nJet25==4"
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J4E '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_4je_MVA $MVA_2L $BLoose;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var' $J4E '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_4je_MVA $MVA_2L $BLoose;
         #break;
 
         # ----- cross-checks with sip(mu) < 4 and with SUS-13 analysis  ----
@@ -74,10 +74,10 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
         #python makeShapeCards.py mca-2lss-dataSUS13.txt bins/${X}_SUS13.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}SUS13_MVA $MVA_2L $BAny          ;
 
         # ---- other random tests ----
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '3,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_bt $MVA_2L $NEG $BTight;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_bt $MVA_2L $POS $BTight;
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_pt2010 $MVA_2L $NEG $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
-        #python makeShapeCards.py mca-2lss-dataBCat.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_pt2010 $MVA_2L $POS $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '3,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_bt $MVA_2L $NEG $BTight;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_bt $MVA_2L $POS $BTight;
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg_pt2010 $MVA_2L $NEG $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
+        #python makeShapeCards.py mca.txt bins/${X}.txt 'MVA_2LSS_4j_6var'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos_pt2010 $MVA_2L $POS $BAny -R pt2020_htllv100 htll100 'LepGood1_pt+LepGood2_pt+met > 100';
         if [[ "$X" != "2lss_mumu" ]]; then continue; fi
    
  
