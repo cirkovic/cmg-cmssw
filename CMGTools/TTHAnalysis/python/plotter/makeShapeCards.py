@@ -14,7 +14,7 @@ parser.add_option("--mass-int-algo", dest="massIntAlgo", type="string", default=
 parser.add_option("--asimov", dest="asimov", action="store_true", help="Asimov")
 
 (options, args) = parser.parse_args()
-options.weight = True
+options.weight = False
 options.final  = True
 options.allProcesses  = True
 

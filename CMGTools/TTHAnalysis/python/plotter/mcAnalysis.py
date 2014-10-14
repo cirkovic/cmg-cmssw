@@ -86,8 +86,12 @@ class MCAnalysis:
             if "data" not in field[0]:
                 pckobj  = pickle.load(open(pckfile,'r'))
                 counters = dict(pckobj)
-                nevt = counters['All Events']
-                scale = "%s/%g" % (field[2], 0.001*nevt)
+                if ('Sum Weights' in counters) and options.weight:
+                    nevt = counters['Sum Weights']
+                    scale = "genWeight*%s/%g" % (field[2], 0.001*nevt)
+                else:
+                    nevt = counters['All Events']
+                    scale = "%s/%g" % (field[2], 0.001*nevt)
                 if len(field) == 4: scale += "*("+field[3]+")"
                 tty.setScaleFactor(scale)
             elif len(field) == 3:
