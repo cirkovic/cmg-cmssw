@@ -85,13 +85,8 @@ class MCAnalysis:
             else                        : self._allData[field[0]] =     [tty]
             if "data" not in field[0]:
                 pckobj  = pickle.load(open(pckfile,'r'))
-                counters = dict(pckobj)
-                if ('Sum Weights' in counters) and options.weight:
-                    nevt = counters['Sum Weights']
-                    scale = "genWeight*%s/%g" % (field[2], 0.001*nevt)
-                else:
-                    nevt = counters['All Events']
-                    scale = "%s/%g" % (field[2], 0.001*nevt)
+                nevt = dict(pckobj)['All Events']
+                scale = "%s/%g" % (field[2], 0.001*nevt)
                 if len(field) == 4: scale += "*("+field[3]+")"
                 tty.setScaleFactor(scale)
             elif len(field) == 3:
@@ -234,35 +229,34 @@ class MCAnalysis:
         nfmtX = "  %8.4f" if self._options.weight else nfmtL
 
         if self._options.errors:
-            nfmtS+=u" %7.2f"
-            nfmtX+=u" %7.4f"
-            nfmtL+=u" %7.2f"
-            fmtlen+=9
+            nfmtS+=u"%7.2f"
+            nfmtX+=u"%7.4f"
+            nfmtL+=u"%7.2f"
+            fmtlen+=8
         if self._options.fractions:
-            nfmtS+=" %7.1f%%"
-            nfmtX+=" %7.1f%%"
-            nfmtL+=" %7.1f%%"
+            nfmtS+="%7.1f%%"
+            nfmtX+="%7.1f%%"
+            nfmtL+="%7.1f%%"
             fmtlen+=8
 
-        if self._options.txtfmt == "text":
-            print "CUT".center(clen),
-            for h,r in table: print ("   "+h).center(fmtlen),
+        print "CUT".center(clen),
+        for h,r in table: print ("   "+h).center(fmtlen),
+        print ""
+        print "-"*((fmtlen+1)*len(table)+clen)
+        for i,(cut,dummy) in enumerate(table[0][1]):
+            print cfmt % cut,
+            for name,report in table:
+                (nev,err) = report[i][1]
+                den = report[i-1][1][0] if i>0 else 0
+                fraction = nev/float(den) if den > 0 else 1
+                if self._options.nMinusOne: 
+                    fraction = report[-1][1][0]/nev if nev > 0 else 1
+                toPrint = (nev,)
+                if self._options.errors:    toPrint+=(err,)
+                if self._options.fractions: toPrint+=(fraction*100,)
+                if self._options.weight and nev < 1000: print ( nfmtS if nev > 0.2 else nfmtX) % toPrint,
+                else                                  : print nfmtL % toPrint,
             print ""
-            print "-"*((fmtlen+1)*len(table)+clen)
-            for i,(cut,dummy) in enumerate(table[0][1]):
-                print cfmt % cut,
-                for name,report in table:
-                    (nev,err) = report[i][1]
-                    den = report[i-1][1][0] if i>0 else 0
-                    fraction = nev/float(den) if den > 0 else 1
-                    if self._options.nMinusOne: 
-                        fraction = report[-1][1][0]/nev if nev > 0 else 1
-                    toPrint = (nev,)
-                    if self._options.errors:    toPrint+=(err,)
-                    if self._options.fractions: toPrint+=(fraction*100,)
-                    if self._options.weight and nev < 1000: print ( nfmtS if nev > 0.2 else nfmtX) % toPrint,
-                    else                                  : print nfmtL % toPrint,
-                print ""
     def _getYields(self,ttylist,cuts):
         return mergeReports([tty.getYields(cuts) for tty in ttylist])
     def __str__(self):
