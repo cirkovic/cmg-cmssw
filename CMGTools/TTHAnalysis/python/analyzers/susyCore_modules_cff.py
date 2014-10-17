@@ -172,8 +172,9 @@ ttHJetAna = cfg.Analyzer(
     relaxJetId = False,  
     doPuId = False, # Not commissioned in 7.0.X
     recalibrateJets = False,
-    shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
-    #shiftJEC = 1, # set to +1 or -1 to get +/-1 sigma shifts
+    #shiftJEC = 0, # set to +1 or -1 to get  0 sigma shift
+    #shiftJEC = 1, # set to +1 or -1 to get +1 sigma shift
+    shiftJEC = -1, # set to +1 or -1 to get -1 sigma shift
     cleanJetsFromTaus = False,
     )
 
