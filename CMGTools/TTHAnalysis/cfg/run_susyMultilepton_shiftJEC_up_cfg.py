@@ -8,7 +8,7 @@ from CMGTools.RootTools.fwlite.Config import printComps
 from CMGTools.RootTools.RootTools import *
 
 #Load all analyzers
-from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import * 
+from CMGTools.TTHAnalysis.analyzers.susyCore_modules_shiftJEC_up_cff import * 
 
 # Redefine what I need
 
