@@ -1,0 +1,41 @@
+# --- ttH split by decay mode (with proper sigma*BR for 125.7)
+
+#ttH_htt+     : TTH : 0.5085 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+#ttH_hzz+     : TTH : 0.5085 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+#ttH_hww+     : TTH : 0.5085 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+
+ttH+     : TTH : 0.5085 * 0.0620/0.0722: GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+10
+ttH+     : TTH : 0.5085 * 0.0281/0.0276: GenHiggsDecayMode == 23 ; FillColor=ROOT.kOrange+10
+ttH+     : TTH : 0.5085 * 0.2262/0.2171: GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10
+
+
+# --- TT+W/Z/WW (TTWW usually quite negligible)
+TTW 	 : TTWJets:    13/14 * 0.590    ;  FillColor=ROOT.kGreen-5,  NormSystematic=0.2, Label="ttW"
+TTZ 	 : TTZJets:    13/14 * 0.910     ;  FillColor=ROOT.kSpring+2, NormSystematic=0.2, Label="ttZ/\#gamma*"
+
+
+TT 	 : TTJets:     2.73 * 809.1   ;  FillColor=ROOT.kGray, NormSystematic=0.2
+
+# ---- These below are only for systematics and datacards, and won't be included in the plots ----
+ttH_htt_JES_Up   : TTH_JES_Up  : 0.5085 * 0.0620/0.0722: GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+ttH_hzz_JES_Up   : TTH_JES_Up  : 0.5085 * 0.0281/0.0276: GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+ttH_hww_JES_Up   : TTH_JES_Up  : 0.5085 * 0.2262/0.2171: GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+ttH_htt_JES_Dn   : TTH_JES_Down: 0.5085 * 0.0620/0.0722: GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+ttH_hzz_JES_Dn   : TTH_JES_Down: 0.5085 * 0.0281/0.0276: GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+ttH_hww_JES_Dn   : TTH_JES_Down: 0.5085 * 0.2262/0.2171: GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+
+
+#ttH_JER_Up : TTH_JER_Up   : 0.5085 : GenHiggsDecayMode > 0  ; FillColor=222,  Label="ttH JER Up", SkipMe=True
+#ttH_JER_Dn : TTH_JER_Down : 0.5085 : GenHiggsDecayMode > 0  ; FillColor=209,  Label="ttH JER Dn", SkipMe=True
+
+TTW_JES_Up : TTWJets_JES_Up   : 13/14 * 0.590  ; FillColor=206,  Label="TTW JES Up", SkipMe=True
+TTW_JES_Dn : TTWJets_JES_Down : 13/14 * 0.590  ; FillColor=61,   Label="TTW JES Dn", SkipMe=True
+#TTW_JER_Up : TTWJets_JER_Up   : 13/14 * 0.590  ; FillColor=222,  Label="TTW JER Up", SkipMe=True
+#TTW_JER_Dn : TTWJets_JER_Down : 13/14 * 0.590  ; FillColor=209,  Label="TTW JER Dn", SkipMe=True
+
+TTZ_JES_Up : TTZJets_JES_Up   : 13/14 * 0.910  ; FillColor=206,  Label="TTZ JES Up", SkipMe=True
+TTZ_JES_Dn : TTZJets_JES_Down : 13/14 * 0.910  ; FillColor=61,   Label="TTZ JES Dn", SkipMe=True
+#TTZ_JER_Up : TTZJets_JER_Up   : 13/14 * 0.910  ; FillColor=222,  Label="TTZ JER Up", SkipMe=True
+#TTZ_JER_Dn : TTZJets_JER_Down : 13/14 * 0.910  ; FillColor=209,  Label="TTZ JER Dn", SkipMe=True
+
+

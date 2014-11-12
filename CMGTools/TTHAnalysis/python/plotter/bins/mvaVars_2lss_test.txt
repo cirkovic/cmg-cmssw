@@ -1,0 +1,2 @@
+#MVA_2LSS_4j_6var:  MVA_2LSS_4j_6var  : 12,-0.8,0.8 ; XTitle="BDT output", Legend='TL',MoreY=1.6
+nJet25 : nJet25 : [3.5,4.5,5.5,6.5,7.5] ; XTitle='N(jet)', XNDiv=505
