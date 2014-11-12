@@ -175,6 +175,7 @@ class ttHLepAnalyzerSusy( Analyzer ):
         allelectrons = map( Electron, self.handles['electrons'].product() )
 
         ## Duplicate removal for fast sim (to be checked if still necessary in latest greatest 5.3.X releases)
+        print 'CIRKOVIC: ## Duplicate removal for fast sim (to be checked if still necessary in latest greatest 5.3.X releases)'
         allelenodup = []
         for e in allelectrons:
             dup = False
