@@ -43,7 +43,7 @@ void trainLeptonID(TString name, TString train="GoodvsBad") {
         factory->AddVariable("hasSV", 'D');   allvars += ":hasSV";
         factory->AddVariable("svRedPt := min(max( svRedPt, -10),100)", 'D');   allvars += ":svRedPt";
         factory->AddVariable("svRedM := min(max( svRedM, -1),6)", 'D');   allvars += ":svRedM";
-        factory->AddVariable("svM := min(max( svM, -1),6)", 'D');   allvars += ":svM";
+        factory->AddVariable("svMass := min(max( svMass, -1),6)", 'D');   allvars += ":svMass";
         factory->AddVariable("svPt := min(max( svPt, -10),100)", 'D');   allvars += ":svPt";
         factory->AddVariable("svSip3d := min(max( svSip3d, -10),100)", 'D');   allvars += ":svSip3d";
         factory->AddVariable("svLepSip3d := min(max( svLepSip3d, -10),5)", 'D');   allvars += ":svLepSip3d";

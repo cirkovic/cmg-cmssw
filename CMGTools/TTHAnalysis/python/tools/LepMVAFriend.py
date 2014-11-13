@@ -64,7 +64,7 @@ _SVVars = [
     MVAVar("hasSV", lambda x: x.hasSV),
     MVAVar("svRedPt := min(max( svRedPt, -10),100)", lambda x : min(max( x.svRedPt, -10),100)),
     MVAVar("svRedM := min(max( svRedM, -1),6)", lambda x : min(max( x.svRedM, -1),6)),
-    MVAVar("svM := min(max( svM, -1),6)", lambda x : min(max( x.svM, -1),6)),
+    MVAVar("svMass := min(max( svMass, -1),6)", lambda x : min(max( x.svMass, -1),6)),
     MVAVar("svPt := min(max( svPt, -10),100)", lambda x : min(max( x.svPt, -10),100)),
     MVAVar("svSip3d := min(max( svSip3d, -10),100)", lambda x : min(max( x.svSip3d, -10),100)),
     MVAVar("svLepSip3d := min(max( svLepSip3d, -10),5)", lambda x : min(max( x.svLepSip3d, -10),5)),
