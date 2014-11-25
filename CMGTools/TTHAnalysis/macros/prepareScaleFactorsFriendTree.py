@@ -6,13 +6,13 @@ import os.path
 MODULES = []
 
 from CMGTools.TTHAnalysis.tools.btagSFs_POG import bTagSFEvent3WPErrs as btagSFEvent
-#MODULES += [ ('btag', btagSFEvent) ]
+MODULES += [ ('btag', btagSFEvent) ]
 
 from CMGTools.TTHAnalysis.tools.lepMVA_SF import AllLepSFs
 MODULES += [ ('lep',AllLepSFs())  ]
 
 from CMGTools.TTHAnalysis.tools.lepTrigger_SF import LepTriggerSF_Event
-#MODULES += [ ('trig2l', LepTriggerSF_Event())  ]
+MODULES += [ ('trig2l', LepTriggerSF_Event())  ]
 
 from CMGTools.TTHAnalysis.tools.metLD_reshape import MetLDReshaper
 #MODULES += [ ('metLD', MetLDReshaper()) ]

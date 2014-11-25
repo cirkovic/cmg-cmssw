@@ -4,54 +4,73 @@ from CMGTools.TTHAnalysis.tools.mvaTool import *
 class FinalMVA_2LSS:
     def __init__(self):
         self._MVAs = {}
-        self._vars_1_6 = [ 
-                #MVAVar("lep2AbsEta", func = lambda ev : min(abs(ev.LepGood1_eta),abs(ev.LepGood2_eta))),
-                MVAVar("lep2AbsEta", func = lambda ev : abs(ev.LepGood2_eta)),
-                MVAVar("lep2Pt",     func = lambda ev : ev.LepGood2_pt),
-                MVAVar("MHT",        func = lambda ev : ev.mhtJet25),
-                MVAVar("mindr_lep2_jet", func = lambda ev : ev.mindr_lep2_jet),
-                MVAVar("MT_met_lep1",    func = lambda ev : ev.MT_met_lep1),
-                MVAVar("sum_pt",         func = lambda ev : ev.htJet25) 
+        self._vars_23j_6var = [
+                MVAVar("htJet25-(sum_abspz-abs(sum_sgnpz)) := htJet25-(sum_abspz-abs(sum_sgnpz))", func = lambda ev : ev.htJet25-(ev.sum_abspz-abs(ev.sum_sgnpz))),
+                MVAVar("m_tlvb := min(m_tlvb, 330)", func = lambda ev : min(ev.m_tlvb, 330)),
+                MVAVar("mindr_lep1_jet := mindr_lep1_jet", func = lambda ev : ev.mindr_lep1_jet),
+                MVAVar("ht2l := min(LepGood_pt[0]+LepGood_pt[1],300)", func = lambda ev : min(ev.LepGood_pt[0]+ev.LepGood_pt[1],300)),
+                MVAVar("MHT := mhtJet25", func = lambda ev : ev.mhtJet25),
+                MVAVar("Jet_pt2 := min((Jet_pt[0])if(nJet>0)else(0),(Jet_pt[1])if(nJet>1)else(0))", func = lambda ev : min((ev.Jet_pt[0])if(ev.nJet>0)else(0),(ev.Jet_pt[1])if(ev.nJet>1)else(0))),
         ]
-        self._vars_7_9 = [
-                MVAVar("avg_dr_jets",      func = lambda ev : ev.avg_dr_jet),
-                MVAVar("mindr_lep1_jet",   func = lambda ev : ev.mindr_lep1_jet),
-                MVAVar("MT_met_leplep",    func = lambda ev : ev.MT_met_leplep),
+        self._vars_4j_6var = [
+                MVAVar("m_tlvb := min(m_tlvb, 330)", func = lambda ev : min(ev.m_tlvb, 330)),
+                MVAVar("htJet25-(sum_abspz-abs(sum_sgnpz)) := htJet25-(sum_abspz-abs(sum_sgnpz))", func = lambda ev : ev.htJet25-(ev.sum_abspz-abs(ev.sum_sgnpz))),
+                MVAVar("MHT := mhtJet25", func = lambda ev : ev.mhtJet25),
+                MVAVar("Jet2_btagCSV := max((Jet_btagCSV[1])if(nJet>1)else(-1),0)", func = lambda ev : max((ev.Jet_btagCSV[1])if(ev.nJet>1)else(-1),0)),
+                MVAVar("mindr_lep1_jet := mindr_lep1_jet", func = lambda ev : ev.mindr_lep1_jet),
+                MVAVar("max_Lep_eta := max(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", func = lambda ev : max(abs(ev.LepGood_eta[0]),abs(ev.LepGood_eta[1]))),
         ]
-        self._var_10 = [
-                MVAVar("numJets_float",    func = lambda ev : ev.nJet25)
+        self._vars_5j_6var = [
+                MVAVar("htJet25-(sum_abspz-abs(sum_sgnpz)) := htJet25-(sum_abspz-abs(sum_sgnpz))", func = lambda ev : ev.htJet25-(ev.sum_abspz-abs(ev.sum_sgnpz))),
+                MVAVar("m_tlvb := min(m_tlvb, 330)", func = lambda ev : min(ev.m_tlvb, 330)),
+                MVAVar("MT_met_lep1 := MT_met_lep1", func = lambda ev : ev.MT_met_lep1),
+                MVAVar("m_tjjb := min(m_tjjb, 330)", func = lambda ev : min(ev.m_tjjb, 330)),
+                MVAVar("avg_dr_jet := avg_dr_jet", func = lambda ev : ev.avg_dr_jet),
+                MVAVar("MHT := mhtJet25", func = lambda ev : ev.mhtJet25),
         ]
-        self._vars_11_15 = [
-                MVAVar("b1_jet_pt",      func = lambda ev : ev.Jet1_pt),
-                MVAVar("b2_jet_pt",      func = lambda ev : ev.Jet2_pt),
-                MVAVar("lep1Pt",         func = lambda ev : ev.LepGood1_pt),
-                MVAVar("sum_pt-(sum_pz-abs(pz_of_everything))",    func = lambda ev : ev.htJet25 - (ev.sum_abspz - abs(ev.sum_sgnpz))),
-                MVAVar("sum_pt/sum_pz",    func = lambda ev : ev.htJet25/ev.sum_abspz),
+        self._vars_6j_6var = [
+                MVAVar("m_tjjb := min(m_tjjb, 330)", func = lambda ev : min(ev.m_tjjb, 330)),
+                MVAVar("MHT := mhtJet25", func = lambda ev : ev.mhtJet25),
+                MVAVar("Jet2_btagCSV := max((Jet_btagCSV[1])if(nJet>1)else(-1),0)", func = lambda ev : max((ev.Jet_btagCSV[1])if(ev.nJet>1)else(-1),0)),
+                MVAVar("avg_dr_jet := avg_dr_jet", func = lambda ev : ev.avg_dr_jet),
+                MVAVar("mindr_lep1_jet := mindr_lep1_jet", func = lambda ev : ev.mindr_lep1_jet),
+                MVAVar("min_Lep_eta := min(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", func = lambda ev : min(abs(ev.LepGood_eta[0]),abs(ev.LepGood_eta[1]))),
         ]
-        P="/afs/cern.ch/user/a/abrinke1/public/MultiLepton/BDT_weights/";
-        self._MVAs["MVA_2LSS_23j_6var"] = MVATool("MVA_2LSS_23j_6var", 
-            P+"SS_eq3jge1t_useSide_2_6var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6)
-        self._MVAs["MVA_2LSS_23j_9var"] = MVATool("MVA_2LSS_23j_9var", 
-            P+"SS_eq3jge1t_useSide_2_9var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9)
-        self._MVAs["MVA_2LSS_4j_6var"] = MVATool("MVA_2LSS_4j_6var", 
-            P+"SS_ge4jge1t_useSide_2_6var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6)
-        self._MVAs["MVA_2LSS_4j_10var"] = MVATool("MVA_2LSS_4j_10var", 
-            P+"SS_ge4jge1t_useSide_2_10var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9 + self._var_10)
-        self._MVAs["MVA_2LSS_4j_15var"] = MVATool("MVA_2LSS_4j_15var", 
-            P+"SS_ge4jge1t_useSide_2_15var_test/TMVAClassification_BDTG.weights.xml",
-            self._vars_1_6 + self._vars_7_9 + self._var_10 + self._vars_11_15)
-        self._MVAs["MVA_2LSS_4j_6var_cat"] = CategorizedMVA(
-            [ ( lambda ev: abs(ev.LepGood1_pdgId) == 11 and abs(ev.LepGood2_pdgId) == 11,
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_TwoEle/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ),
-              ( lambda ev: abs(ev.LepGood1_pdgId) == 13 and abs(ev.LepGood2_pdgId) == 13,
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_TwoMuon/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ),
-              ( lambda ev: abs(ev.LepGood1_pdgId) != abs(ev.LepGood2_pdgId),
-                    MVATool("ee", P+"SS_ge4jge1t_useSide_2_6var_MuonEle/TMVAClassification_BDTG.weights.xml", self._vars_1_6) ) ]
-        )
+        self._vars_7j_6var = [
+                MVAVar("htJet25-(sum_abspz-abs(sum_sgnpz)) := htJet25-(sum_abspz-abs(sum_sgnpz))", func = lambda ev : ev.htJet25-(ev.sum_abspz-abs(ev.sum_sgnpz))),
+                MVAVar("lep2AbsEta := abs(LepGood_eta[1])", func = lambda ev : abs(ev.LepGood_eta[1])),
+                MVAVar("Lep1_Q_eta := LepGood_eta[0]*LepGood_charge[0]", func = lambda ev : ev.LepGood_eta[0]*ev.LepGood_charge[0]),
+                MVAVar("max_Lep_eta := max(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", func = lambda ev : max(abs(ev.LepGood_eta[0]),abs(ev.LepGood_eta[1]))),
+                MVAVar("min_Lep_eta := min(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", func = lambda ev : min(abs(ev.LepGood_eta[0]),abs(ev.LepGood_eta[1]))),
+                MVAVar("MT_met_lep1 := MT_met_lep1", func = lambda ev : ev.MT_met_lep1),
+        ]
+        self._vars_8Lj_6var = [
+                MVAVar("Jet2_btagCSV := max((Jet_btagCSV[1])if(nJet>1)else(-1),0)", func = lambda ev : max((ev.Jet_btagCSV[1])if(ev.nJet>1)else(-1),0)),
+                MVAVar("MT_met_lep1 := MT_met_lep1", func = lambda ev : ev.MT_met_lep1),
+                MVAVar("max_Lep_eta := max(abs(LepGood_eta[0]),abs(LepGood_eta[1]))", func = lambda ev : max(abs(ev.LepGood_eta[0]),abs(ev.LepGood_eta[1]))),
+                MVAVar("m_tlvb := min(m_tlvb, 330)", func = lambda ev : min(ev.m_tlvb, 330)),
+                MVAVar("mindr_lep2_jet := mindr_lep2_jet", func = lambda ev : ev.mindr_lep2_jet),
+                MVAVar("mindr_lep1_jet := mindr_lep1_jet", func = lambda ev : ev.mindr_lep1_jet),
+        ]
+        P="/afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/finalMVA/2lss/";
+        self._MVAs["MVA_2LSS_23j_6var"] = MVATool("MVA_2LSS_23j_6var",
+            P+"ttbar_23j/weights/ttbar_23j_BDTG.weights.xml",
+            self._vars_23j_6var)
+        self._MVAs["MVA_2LSS_4j_6var"] = MVATool("MVA_2LSS_4j_6var",
+            P+"ttbar_4j/weights/ttbar_4j_BDTG.weights.xml",
+            self._vars_4j_6var)
+        self._MVAs["MVA_2LSS_5j_6var"] = MVATool("MVA_2LSS_5j_6var",
+            P+"ttbar_5j/weights/ttbar_5j_BDTG.weights.xml",
+            self._vars_5j_6var)
+        self._MVAs["MVA_2LSS_6j_6var"] = MVATool("MVA_2LSS_6j_6var",
+            P+"ttbar_6j/weights/ttbar_6j_BDTG.weights.xml",
+            self._vars_6j_6var)
+        self._MVAs["MVA_2LSS_7j_6var"] = MVATool("MVA_2LSS_7j_6var",
+            P+"ttbar_7j/weights/ttbar_7j_BDTG.weights.xml",
+            self._vars_7j_6var)
+        self._MVAs["MVA_2LSS_8Lj_6var"] = MVATool("MVA_2LSS_8Lj_6var",
+            P+"ttbar_8Lj/weights/ttbar_8Lj_BDTG.weights.xml",
+            self._vars_8Lj_6var)
     def listBranches(self):
         return self._MVAs.keys()
     def __call__(self,event):

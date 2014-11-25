@@ -34,6 +34,18 @@ elif [[ "$1" == "chargeBCat" ]]; then
         #                ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_nJet_neg.card.txt > ttH_2lss_${X}BCat_QnJet.card.txt
         combineCards.py ss_${X/mumu/mm}_pos=ttH_2lss_${X}BCat_MVA_pos.card.txt \
                         ss_${X/mumu/mm}_neg=ttH_2lss_${X}BCat_MVA_neg.card.txt > ttH_2lss_${X}BCat_QMVA.card.txt
+        combineCards.py ss_23j_${X/mumu/mm}_pos=ttH_2lss_${X}_23j_BCat_MVA_pos.card.txt \
+                        ss_23j_${X/mumu/mm}_neg=ttH_2lss_${X}_23j_BCat_MVA_neg.card.txt > ttH_2lss_${X}_23j_BCat_QMVA.card.txt
+        combineCards.py ss_4j_${X/mumu/mm}_pos=ttH_2lss_${X}_4j_BCat_MVA_pos.card.txt \
+                        ss_4j_${X/mumu/mm}_neg=ttH_2lss_${X}_4j_BCat_MVA_neg.card.txt > ttH_2lss_${X}_4j_BCat_QMVA.card.txt
+        combineCards.py ss_5j_${X/mumu/mm}_pos=ttH_2lss_${X}_5j_BCat_MVA_pos.card.txt \
+                        ss_5j_${X/mumu/mm}_neg=ttH_2lss_${X}_5j_BCat_MVA_neg.card.txt > ttH_2lss_${X}_5j_BCat_QMVA.card.txt
+        combineCards.py ss_6j_${X/mumu/mm}_pos=ttH_2lss_${X}_6j_BCat_MVA_pos.card.txt \
+                        ss_6j_${X/mumu/mm}_neg=ttH_2lss_${X}_6j_BCat_MVA_neg.card.txt > ttH_2lss_${X}_6j_BCat_QMVA.card.txt
+        combineCards.py ss_7j_${X/mumu/mm}_pos=ttH_2lss_${X}_7j_BCat_MVA_pos.card.txt \
+                        ss_7j_${X/mumu/mm}_neg=ttH_2lss_${X}_7j_BCat_MVA_neg.card.txt > ttH_2lss_${X}_7j_BCat_QMVA.card.txt
+        combineCards.py ss_8Lj_${X/mumu/mm}_pos=ttH_2lss_${X}_8Lj_BCat_MVA_pos.card.txt \
+                        ss_8Lj_${X/mumu/mm}_neg=ttH_2lss_${X}_8Lj_BCat_MVA_neg.card.txt > ttH_2lss_${X}_8Lj_BCat_QMVA.card.txt
     done
     #combineCards.py .=ttH_2lss_eeBCat_QnJet.card.txt   \
     #                .=ttH_2lss_mumuBCat_QnJet.card.txt \
@@ -41,13 +53,31 @@ elif [[ "$1" == "chargeBCat" ]]; then
     combineCards.py .=ttH_2lss_eeBCat_QMVA.card.txt   \
                     .=ttH_2lss_mumuBCat_QMVA.card.txt \
                     .=ttH_2lss_emBCat_QMVA.card.txt     > ttH_2lssBCat_QMVA.card.txt
+    combineCards.py .=ttH_2lss_ee_23j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_23j_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_23j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_ee_4j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_4j_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_4j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_ee_5j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_5j_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_5j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_ee_6j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_6j_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_6j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_ee_7j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_7j_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_7j_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_ee_8Lj_BCat_QMVA.card.txt   \
+                    .=ttH_2lss_mumu_8Lj_BCat_QMVA.card.txt \
+                    .=ttH_2lss_em_8Lj_BCat_QMVA.card.txt     > ttH_2lss_all_cat_BCat_QMVA.card.txt
 
     #combineCards.py tl_pos=ttH_3lBCat_nJet_pos.card.txt \
     #                tl_neg=ttH_3lBCat_nJet_neg.card.txt > ttH_3lBCat_QnJet.card.txt
-    combineCards.py tl_pos=ttH_3lBCat_MVA_pos.card.txt \
-                    tl_neg=ttH_3lBCat_MVA_neg.card.txt > ttH_3lBCat_QMVA.card.txt
+#    combineCards.py tl_pos=ttH_3lBCat_MVA_pos.card.txt \
+#                    tl_neg=ttH_3lBCat_MVA_neg.card.txt > ttH_3lBCat_QMVA.card.txt
     #combineCards.py .=ttH_2lssBCat_QnJet.card.txt .=ttH_3lBCat_QnJet.card.txt ql=ttH_4l_nJet.card.txt > combBCat_QnJet.card.txt
-    combineCards.py .=ttH_2lssBCat_QMVA.card.txt  .=ttH_3lBCat_QMVA.card.txt  ql=ttH_4l_nJet.card.txt > combBCat_QMVA.card.txt
+#    combineCards.py .=ttH_2lssBCat_QMVA.card.txt  .=ttH_3lBCat_QMVA.card.txt  ql=ttH_4l_nJet.card.txt > combBCat_QMVA.card.txt
 elif [[ "$1" == "BCat" ]]; then
     combineCards.py .=ttH_2lss_eeBCat_nJet.card.txt   \
                     .=ttH_2lss_mumuBCat_nJet.card.txt \
