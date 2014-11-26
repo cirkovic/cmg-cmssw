@@ -1,0 +1,11 @@
+#
+entry point: 1
+>= 2 good leptons: nLepGood >= 2
+mu mu:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13
+same-sign: LepGood1_charge*LepGood2_charge > 0
+pt2020: LepGood1_pt>20 && LepGood2_pt>20
+lep MVA: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.7
+tight-charge: LepGood1_tightCharge && LepGood2_tightCharge
+#muon chargeFlip: LepGood1_chargeFlip && LepGood2_chargeFlip
+2b: nBJetLoose25 >= 2
+4j: nJet25>=4

@@ -32,20 +32,12 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHHeavyFlavourHadronAnalyzer)
 
 
-from CMGTools.TTHAnalysis.samples.samples_8TeV_v517 import triggers_mumu, triggers_ee, triggers_mue, triggers_1mu
 # Tree Producer
 treeProducer = cfg.Analyzer(
     'treeProducerSusyMultilepton',
     vectorTree = True,
     saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
     PDFWeights = PDFWeights,
-    triggerBits = {
-            'SingleMu' : triggers_1mu,
-            'DoubleMu' : triggers_mumu,
-            'DoubleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5" not in t ],
-            'TripleEl' : [ t for t in triggers_ee if "Ele15_Ele8_Ele5"     in t ],
-            'MuEG'     : [ t for t in triggers_mue if "Mu" in t and "Ele" in t ]
-        }
     )
 
 
@@ -54,7 +46,7 @@ treeProducer = cfg.Analyzer(
 #-------- SEQUENCE
 from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14 import * 
 
-selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsM50_PU20bx25, TTJets_PUS14 ]
+selectedComponents = [ TTH_sync ]
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
@@ -66,15 +58,15 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = TTHToWW_PUS14
-    comp.files = comp.files[:1]
+    comp = TTH_sync
+    comp.files = comp.files[:]
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 1
-        comp.files = comp.files[:1]
+        comp.splitFactor = 100
+        comp.files = comp.files[:]
 
 
 
