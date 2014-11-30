@@ -103,13 +103,13 @@ ttHLepAna = cfg.Analyzer(
     # loose electron selection
     loose_electron_id     = "POG_MVA_ID_NonTrig_full5x5",
     loose_electron_pt     = 7,
-    loose_electron_eta    = 2.4,
+    loose_electron_eta    = 2.5,
     loose_electron_dxy    = 0.05,
     loose_electron_dz     = 0.2,
     loose_electron_relIso = 0.4,
     loose_electron_lostHits = 1.0,
     # electron isolation correction method (can be "rhoArea" or "deltaBeta")
-    ele_isoCorr = "rhoArea" ,
+    ele_isoCorr = "deltaBeta" ,
     ele_tightId = "MVA" ,
     # minimum deltaR between a loose electron and a loose muon (on overlaps, discard the electron)
     min_dr_electron_muon = 0.02
@@ -170,7 +170,7 @@ ttHJetAna = cfg.Analyzer(
     jetLepDR = 0.4,
     minLepPt = 10,
     relaxJetId = False,  
-    doPuId = False, # Not commissioned in 7.0.X
+    doPuId = True, # Not commissioned in 7.0.X
     recalibrateJets = False,
     shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
     cleanJetsFromTaus = False,
