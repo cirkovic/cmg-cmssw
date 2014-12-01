@@ -345,7 +345,7 @@ class TreeToYield:
                
                self._o_txt = open(self._options.outDir+'/cut'+str(self._file_i)+'.txt', 'wb')
                self._o_csv = open(self._options.outDir+'/cut'+str(self._file_i)+'.csv', 'wb')
-               varTitles = ['evt', 'LepGood1_charge', 'LepGood1_convVeto', 'LepGood1_lostHits', 'LepGood1_mvaTTH', 'LepGood1_pdgId', 'LepGood1_pt', 'LepGood1_tightCharge', 'LepGood2_charge', 'LepGood2_convVeto', 'LepGood2_lostHits', 'LepGood2_mvaTTH', 'LepGood2_pdgId', 'LepGood2_pt', 'LepGood2_tightCharge', 'met_pt', 'mhtJet25', 'minMllAFAS', 'nBJetLoose25', 'nBJetMedium25', 'nJet25', 'nLepGood10']
+               varTitles = ['evt', 'LepGood1_charge', 'LepGood2_charge', 'LepGood1_convVeto', 'LepGood2_convVeto', 'LepGood1_lostHits', 'LepGood2_lostHits', 'LepGood1_mvaTTH', 'LepGood2_mvaTTH', 'LepGood1_pdgId', 'LepGood2_pdgId', 'LepGood1_pt', 'LepGood2_pt', 'LepGood1_tightCharge', 'LepGood2_tightCharge', 'met_pt', 'mhtJet25', 'minMllAFAS', 'nBJetLoose25', 'nBJetMedium25', 'nJet25', 'nLepGood10']
                self._o_txt.write(varTitles[0])
                self._o_csv.write(varTitles[0])
                self._txt_delimiter = ' '
