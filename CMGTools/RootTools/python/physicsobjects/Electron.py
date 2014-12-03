@@ -16,16 +16,28 @@ class Electron( Lepton ):
         self._mvaTrigV0     = {True:None, False:None}
         self._mvaTrigNoIPV0 = {True:None, False:None}
 
-    def electronID( self, id, vertex=None, rho=None ):
+    def electronID( self, id, vertex=None, rho=None, wtuple=()):
         if id is None or id == "": return True
         if vertex == None and hasattr(self,'associatedVertex') and self.associatedVertex != None: vertex = self.associatedVertex
         if rho == None and hasattr(self,'rho') and self.rho != None: rho = self.rho
-        if   id == "POG_MVA_ID_NonTrig":  return self.mvaIDLoose()
+        if   id == "POG_MVA_ID_NonTrig":  return self.mvaIDLoose(tuple=tuple)
         elif id == "POG_MVA_ID_Trig":     return self.mvaIDTight()
-        elif id == "POG_MVA_ID_NonTrig_full5x5":  return self.mvaIDLoose(full5x5=True)
+        elif id == "POG_MVA_ID_NonTrig_full5x5":  return self.mvaIDLoose(full5x5=True, wtuple=wtuple)
         elif id == "POG_MVA_ID_Trig_full5x5":     return self.mvaIDTight(full5x5=True)
         elif id.startswith("POG_Cuts_ID_"): 
                 return self.cutBasedId(id.replace("POG_Cuts_ID_","POG_")) 
+        raise RuntimeError, "Electron id '%s' not yet implemented in Electron.py" % id
+
+    def electronID1( self, id, vertex=None, rho=None, wtuple=()):
+        if id is None or id == "": return True
+        if vertex == None and hasattr(self,'associatedVertex') and self.associatedVertex != None: vertex = self.associatedVertex
+        if rho == None and hasattr(self,'rho') and self.rho != None: rho = self.rho
+        if   id == "POG_MVA_ID_NonTrig":  return self.mvaIDLoose1(tuple=tuple)
+        elif id == "POG_MVA_ID_Trig":     return self.mvaIDTight()
+        elif id == "POG_MVA_ID_NonTrig_full5x5":  return self.mvaIDLoose1(full5x5=True, wtuple=wtuple)
+        elif id == "POG_MVA_ID_Trig_full5x5":     return self.mvaIDTight(full5x5=True)
+        elif id.startswith("POG_Cuts_ID_"):
+                return self.cutBasedId(id.replace("POG_Cuts_ID_","POG_"))
         raise RuntimeError, "Electron id '%s' not yet implemented in Electron.py" % id
 
     def cutBasedId(self, wp, showerShapes="auto"):
@@ -112,16 +124,65 @@ class Electron( Lepton ):
                 elif (eta < 1.479): return self.mvaTrigV0(full5x5) > +0.85;
                 else              : return self.mvaTrigV0(full5x5) > +0.92;
 
-    def mvaIDLoose(self, full5x5=False):
+    def mvaIDLoose(self, full5x5=False, wtuple=()):
             eta = abs(self.superCluster().eta())
+            case = 0
+            ret = False
             if self.pt() < 10:
-                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > +0.47;
-                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > +0.004;
-                else              : return self.mvaNonTrigV0(full5x5) > +0.295;
+                if   (eta < 0.8)  :
+                    case = 1
+                    ret = self.mvaNonTrigV0(full5x5) > +0.47;
+                elif (eta < 1.479):
+                    case = 2
+                    ret = self.mvaNonTrigV0(full5x5) > +0.004;
+                else              :
+                    case = 3
+                    ret = self.mvaNonTrigV0(full5x5) > +0.295;
             else:
-                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > -0.34;
-                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > -0.65;
-                else              : return self.mvaNonTrigV0(full5x5) > +0.60;
+                if   (eta < 0.8)  :
+                    case = 4
+                    ret = self.mvaNonTrigV0(full5x5) > +0.50;
+                elif (eta < 1.479):
+                    case = 5
+                    ret = self.mvaNonTrigV0(full5x5) > +0.12;
+                else              :
+                    case = 6
+                    ret = self.mvaNonTrigV0(full5x5) > +0.60;
+            if wtuple<>() and wtuple<>'':
+               with open(str(wtuple[0]), 'a') as f:
+                  f.write('  {0:8.3f}{1:+8.3f}{2:2}{3:2}'.format(eta, self.mvaNonTrigV0(full5x5), case, ret))
+            return ret
+
+    def mvaIDLoose1(self, full5x5=False, wtuple=()):
+            eta = abs(self.superCluster().eta())
+            case = 0
+            ret = False
+            if self.pt() < 10:
+                if   (eta < 0.8)  :
+                    case = 1
+                    ret = self.mvaNonTrigV0(full5x5) > +0.47;
+                elif (eta < 1.479):
+                    case = 2
+                    ret = self.mvaNonTrigV0(full5x5) > +0.004;
+                else              :
+                    case = 3
+                    ret = self.mvaNonTrigV0(full5x5) > +0.295;
+            else:
+                if   (eta < 0.8)  :
+                    case = 4
+                    ret = self.mvaNonTrigV0(full5x5) > +0.50;
+                elif (eta < 1.479):
+                    case = 5
+                    ret = self.mvaNonTrigV0(full5x5) > +0.12;
+                else              :
+                    case = 6
+                    ret = self.mvaNonTrigV0(full5x5) > +0.60;
+            if wtuple<>():
+              wtuple[0].scEta = eta
+              wtuple[0].mvaNTV0 = self.mvaNonTrigV0(full5x5)
+              wtuple[0].case = case
+              wtuple[0].ret = ret
+            return ret
 
     def mvaIDZZ(self):
         return self.mvaIDLoose() and (self.gsfTrack().trackerExpectedHitsInner().numberOfLostHits()<=1)

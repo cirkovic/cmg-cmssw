@@ -121,9 +121,10 @@ class Looper(object):
                 if iEv%100 ==0:
                     if iEv == 100:
                         print 'event', iEv
-                        self.start_time = time.time()
+#                        self.start_time = time.time()
                     elif iEv > 100:
-                        print 'event %d (%.1f ev/s)' % (iEv, (iEv-100)/float(time.time() - self.start_time))
+#                        print 'event %d (%.1f ev/s)' % (iEv, (iEv-100)/float(time.time() - self.start_time))
+                        print 'event %d' % iEv
                 self.process( iEv )
                 if iEv<self.nPrint:
                     print self.event
