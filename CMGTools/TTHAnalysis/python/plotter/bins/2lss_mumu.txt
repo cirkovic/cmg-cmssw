@@ -1,11 +1,13 @@
-== 2 good leptons: nLepGood10 == 2
-cleanup: minMllAFAS > 12
-pt2010: LepGood1_pt>20 && LepGood2_pt>10
-pt2020_htllv100 : LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met > 100
+#
+#entry point: 1
+#tt zz ww : GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24
+#>= 2 good leptons: nLepGood >= 2
+>= 2 good leptons: (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && nLepGood >= 2
+#mu mu:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13
+#same-sign: LepGood1_charge*LepGood2_charge > 0
+mu mu SS:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13 && LepGood1_charge*LepGood2_charge > 0
+pt2020: LepGood1_pt>20 && LepGood2_pt>20
 lep MVA: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.7
-mu mu:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13
-same-sign: LepGood1_charge*LepGood2_charge > 0
-tight-charge: LepGood1_tightCharge && LepGood2_tightCharge
+tight-charge: LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1
+2b loose: nBJetLoose25 >= 2
 4j: nJet25>=4
-2b loose: nBJetLoose25 >= 2 || nBJetMedium25 >= 1
-2B tight: nBJetMedium25 >= 2

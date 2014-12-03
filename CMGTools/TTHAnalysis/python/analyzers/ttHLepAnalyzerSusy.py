@@ -102,6 +102,8 @@ class ttHLepAnalyzerSusy( Analyzer ):
         allelectrons = self.makeAllElectrons(event)
 
         looseMuons = event.selectedLeptons[:]
+        with open('prompt_debug_bdt.txt', 'a') as f:
+            f.write('{0:6}{1:6}{2:10}\n'.format(event.run, event.lumi, event.eventId))
         for ele in allelectrons:
             ## remove muons if muForEleCrossCleaning is not empty
             ## apply selection
@@ -124,6 +126,7 @@ class ttHLepAnalyzerSusy( Analyzer ):
                 else:
                     event.otherLeptons.append(ele)
                     ele.looseIdSusy = False
+        with open('prompt_debug_bdt.txt', 'a') as f: f.write('\n')
 
         event.otherLeptons.sort(key = lambda l : l.pt(), reverse = True)
         event.selectedLeptons.sort(key = lambda l : l.pt(), reverse = True)

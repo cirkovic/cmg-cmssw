@@ -17,6 +17,8 @@ from copy import *
 from CMGTools.TTHAnalysis.plotter.mcCorrections import *
 from CMGTools.TTHAnalysis.plotter.fakeRate import *
 
+from ROOT import *
+
 if "/functions_cc.so" not in ROOT.gSystem.GetLibraries(): 
     ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
 
@@ -205,6 +207,7 @@ class TreeToYield:
             self._friends.append(tf)
         self._isInit = True
     def getYields(self,cuts,noEntryLine=False):
+        self._file_i = 0
         if not self._isInit: self._init()
         report = []; cut = ""
         cutseq = [ ['entry point','1'] ]
@@ -261,6 +264,26 @@ class TreeToYield:
             if self._weight and nev < 1000: print nfmtS % toPrint,
             else                          : print nfmtL % toPrint,
             print ""
+    def _printArr(self, title, arr, last=False, ndecs=2):
+        i = 0
+        for e in arr:
+            if i > 0:
+               self._o_txt.write(self._txt_delimiter+str(round(e, ndecs)))
+               self._o_csv.write(self._csv_delimiter+str(round(e, ndecs)))
+            else:
+               self._o_txt.write(str(round(e, ndecs)))
+               self._o_csv.write(str(round(e, ndecs)))
+            i += 1
+        if not last:
+           self._o_txt.write(self._txt_delimiter)
+           self._o_csv.write(self._csv_delimiter)
+    def _printArrEl(self, arr, index=0, prefix='', form='', sufix='', first=False):
+        form = prefix+'{0:'+form+'}'+sufix
+        self._o_txt.write(form.format(arr[index]))
+        if not first:
+           self._o_csv.write(self._csv_delimiter+form.format(arr[index]))
+        else:
+           self._o_csv.write(form.format(arr[index]))
     def _getYield(self,tree,cut):
         if self._weight:
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
@@ -270,11 +293,133 @@ class TreeToYield:
             ROOT.gROOT.cd()
             if ROOT.gROOT.FindObject("dummy") != None: ROOT.gROOT.FindObject("dummy").Delete()
             histo = ROOT.TH1F("dummy","dummy",1,0.0,1.0); histo.Sumw2()
+            x = array('i',[0])
+            tree.SetBranchAddress( "evt", x )
+            i = 0
+            while tree.GetEntry(i):
+               #print cut, "\tnLepGood: ", x[0]
+               print "evt: ", x[0]
+               i += 1
             nev = tree.Draw("0.5>>dummy", cut, "goff")
             return [ histo.GetBinContent(1), histo.GetBinError(1) ]
         else: 
             if self._options.doS2V:
                 cut  = scalarToVector(cut)
+            
+#            if self._file_i >= 2:
+#            if True:
+#            if False:
+            if self._options.prtVars:
+               tree1 = tree.Clone()
+               elname = 'elist_cut'+str(self._file_i)
+               tree1.Draw('>>'+elname,self.adaptExpr(cut,cut=True))
+               elist = gDirectory.Get(elname)
+               elist.Print()
+               tree1.SetEventList(elist)
+               tree2 = tree1.CopyTree("")
+               
+               b_run = array('i',[0])
+               b_lumi = array('i',[0])
+               b_evt = array('i',[0])
+               #b_LepGood_charge = array('i',[0, 0])
+               #b_LepGood_convVeto = array('i',[0, 0])
+               #b_LepGood_lostHits = array('i',[0, 0])
+               #b_LepGood_mvaTTH = array('f',[0, 0])
+               b_LepGood_pdgId = array('i',[0, 0])
+               b_LepGood_pt = array('f',[0, 0])
+               b_LepGood_eta = array('f',[0, 0])
+               b_LepGood_phi = array('f',[0, 0])
+               #b_LepGood_tightCharge = array('i',[0, 0])
+               b_met_pt = array('f',[0])
+               #b_mhtJet25 = array('f',[0])
+               #b_minMllAFAS = array('f',[0])
+               #b_nBJetLoose25 = array('i',[0])
+               #b_nBJetMedium25 = array('i',[0])
+               #b_nJet25 = array('i',[0])
+               #b_nLepGood10 = array('i',[0])
+               b_met_phi = array('f',[0])
+               b_nJet25 = array('i',[0])
+
+               tree2.SetBranchAddress("run", b_run)
+               tree2.SetBranchAddress("lumi", b_lumi)
+               tree2.SetBranchAddress("evt", b_evt)
+               #tree2.SetBranchAddress("LepGood_charge", b_LepGood_charge)
+               #tree2.SetBranchAddress("LepGood_convVeto", b_LepGood_convVeto)
+               #tree2.SetBranchAddress("LepGood_lostHits", b_LepGood_lostHits)
+               #tree2.SetBranchAddress("LepGood_mvaTTH", b_LepGood_mvaTTH)
+               tree2.SetBranchAddress("LepGood_pdgId", b_LepGood_pdgId)
+               tree2.SetBranchAddress("LepGood_pt", b_LepGood_pt)
+               tree2.SetBranchAddress("LepGood_eta", b_LepGood_eta)
+               tree2.SetBranchAddress("LepGood_phi", b_LepGood_phi)
+               #tree2.SetBranchAddress("LepGood_tightCharge", b_LepGood_tightCharge)
+               tree2.SetBranchAddress("met_pt", b_met_pt)
+               #tree2.SetBranchAddress("mhtJet25", b_mhtJet25)
+               #tree2.SetBranchAddress("minMllAFAS", b_minMllAFAS)
+               #tree2.SetBranchAddress("nBJetLoose25", b_nBJetLoose25)
+               #tree2.SetBranchAddress("nBJetMedium25", b_nBJetMedium25)
+               #tree2.SetBranchAddress("nJet25", b_nJet25)
+               #tree2.SetBranchAddress("nLepGood10", b_nLepGood10)
+               tree2.SetBranchAddress("met_phi", b_met_phi)
+               tree2.SetBranchAddress("nJet25", b_nJet25)
+               
+               self._o_txt = open(self._options.outDir+'/cut'+str(self._file_i)+'.txt', 'wb')
+               self._o_csv = open(self._options.outDir+'/cut'+str(self._file_i)+'.csv', 'wb')
+               #varTitles = ['evt', 'LepGood1_charge', 'LepGood2_charge', 'LepGood1_convVeto', 'LepGood2_convVeto', 'LepGood1_lostHits', 'LepGood2_lostHits', 'LepGood1_mvaTTH', 'LepGood2_mvaTTH', 'LepGood1_pdgId', 'LepGood2_pdgId', 'LepGood1_pt', 'LepGood2_pt', 'LepGood1_eta', 'LepGood2_eta', 'LepGood1_phi', 'LepGood2_phi', 'LepGood1_tightCharge', 'LepGood2_tightCharge', 'met_pt', 'mhtJet25', 'minMllAFAS', 'nBJetLoose25', 'nBJetMedium25', 'nJet25', 'nLepGood10']
+               #varTitles = ['evt', 'LepGood1_pdgId', 'LepGood2_pdgId', 'LepGood1_pt', 'LepGood2_pt', 'LepGood1_eta', 'LepGood2_eta', 'LepGood1_phi', 'LepGood2_phi', 'met_pt']
+               #varTitles = ['evt', 'LepGood1_pdgId', 'LepGood1_pt', 'LepGood1_eta', 'LepGood1_phi', 'LepGood2_pdgId', 'LepGood2_pt', 'LepGood2_eta', 'LepGood2_phi', 'met_pt']
+               #self._o_txt.write(varTitles[0])
+               #self._o_csv.write(varTitles[0])
+               self._txt_delimiter = ' '
+               self._csv_delimiter = ','
+               #for title in varTitles[1:]:
+               #   self._o_txt.write(self._txt_delimiter+title)
+               #   self._o_csv.write(self._csv_delimiter+title)
+               #self._o_txt.write('\n')
+               #self._o_csv.write('\n')
+               
+               i = 0
+               while tree2.GetEntry(i):
+                  '''
+                  self._printArr("evt", b_evt)
+                  #self._printArr("LepGood_charge", b_LepGood_charge)
+                  #self._printArr("LepGood_convVeto", b_LepGood_convVeto)
+                  #self._printArr("LepGood_lostHits", b_LepGood_lostHits)
+                  #self._printArr("LepGood_mvaTTH", b_LepGood_mvaTTH)
+                  self._printArr("LepGood_pdgId", b_LepGood_pdgId)
+                  self._printArr("LepGood_pt", b_LepGood_pt, ndecs=2)
+                  self._printArr("LepGood_eta", b_LepGood_eta, ndecs=2)
+                  self._printArr("LepGood_phi", b_LepGood_phi, ndecs=1)
+                  #self._printArr("LepGood_tightCharge", b_LepGood_tightCharge)
+                  self._printArr("met_pt", b_met_pt)
+                  #self._printArr("mhtJet25", b_mhtJet25)
+                  #self._printArr("minMllAFAS", b_minMllAFAS)
+                  #self._printArr("nBJetLoose25", b_nBJetLoose25)
+                  #self._printArr("nBJetMedium25", b_nBJetMedium25)
+                  #self._printArr("nJet25", b_nJet25)
+                  #self._printArr("nLepGood10", b_nLepGood10, last=True)
+                  '''
+                  self._printArrEl(b_run, form='6', first=True)
+                  self._printArrEl(b_lumi, form='7')
+                  self._printArrEl(b_evt, form='11')
+                  self._printArrEl(b_LepGood_pdgId, 0, form='+5')
+                  self._printArrEl(b_LepGood_pt, 0, form='8.2f')
+                  self._printArrEl(b_LepGood_eta, 0, form='+6.2f')
+                  self._printArrEl(b_LepGood_phi, 0, form='+6.2f')
+                  self._printArrEl(b_LepGood_pdgId, 1, form='+6')
+                  self._printArrEl(b_LepGood_pt, 1, form='8.2f')
+                  self._printArrEl(b_LepGood_eta, 1, form='+6.2f')
+                  self._printArrEl(b_LepGood_phi, 1, form='+6.2f')
+                  self._printArrEl(b_met_pt, form='10.1f')
+                  self._printArrEl(b_met_phi, form='+7.2f')
+                  self._printArrEl(b_nJet25, prefix='    ', form='<2')
+                  self._o_txt.write('\n')
+                  self._o_csv.write('\n')
+                  i += 1
+               self._o_txt.close()
+               self._o_csv.close()
+
+            self._file_i += 1
+               
             npass = tree.Draw("1",self.adaptExpr(cut,cut=True),"goff");
             return [ npass, sqrt(npass) ]
     def _stylePlot(self,plot,spec):
@@ -414,6 +559,8 @@ def addTreeToYieldOptions(parser):
     parser.add_option("--mcc", "--mc-corrections",    dest="mcCorrs",  action="append", default=[], nargs=1, help="Load the following file of mc to data corrections") 
     parser.add_option("--s2v", "--scalar2vector",     dest="doS2V",    action="store_true", default=False, help="Do scalar to vector conversion") 
     parser.add_option("--neg", "--allow-negative-results",     dest="allowNegative",    action="store_true", default=False, help="If the total yield is negative, keep it so rather than truncating it to zero") 
+    parser.add_option("--pV", "--printVariables",     dest="prtVars",    action="store_true", default=False, help="Print values of the variables relevant for the mcAnalysis cuts")
+    parser.add_option("--oD", "--output-directory", dest="outDir",  type="string", default=None, help="Path to the output directory")
 
 def mergeReports(reports):
     import copy

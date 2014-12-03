@@ -114,13 +114,15 @@ class Electron( Lepton ):
 
     def mvaIDLoose(self, full5x5=False):
             eta = abs(self.superCluster().eta())
+            with open('prompt_debug_bdt.txt', 'a') as f:
+                f.write('                     {0:10.3f}{1:+8.3f}{2:+8.3f}{3:+8.3f}{4:+8.3f}\n'.format(self.pt(), self.eta(), eta, self.phi(), self.mvaNonTrigV0(full5x5)))
             if self.pt() < 10:
                 if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > +0.47;
                 elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > +0.004;
                 else              : return self.mvaNonTrigV0(full5x5) > +0.295;
             else:
-                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > -0.34;
-                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > -0.65;
+                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > +0.50;
+                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > +0.12;
                 else              : return self.mvaNonTrigV0(full5x5) > +0.60;
 
     def mvaIDZZ(self):
