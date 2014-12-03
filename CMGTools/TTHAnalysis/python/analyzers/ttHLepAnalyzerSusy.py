@@ -6,7 +6,7 @@ from CMGTools.RootTools.physicsobjects.Electron import Electron
 from CMGTools.RootTools.physicsobjects.Muon import Muon
 from CMGTools.TTHAnalysis.tools.EfficiencyCorrector import EfficiencyCorrector
 
-from CMGTools.RootTools.utils.DeltaR import bestMatch
+from CMGTools.RootTools.utils.DeltaR import bestMatch, bestMatch1, bestMatchPrint
 from CMGTools.RootTools.physicsobjects.RochesterCorrections import rochcor
 from CMGTools.RootTools.physicsobjects.MuScleFitCorrector   import MuScleFitCorr
 from CMGTools.RootTools.physicsobjects.ElectronCalibrator import EmbeddedElectronCalibrator
@@ -75,10 +75,15 @@ class ttHLepAnalyzerSusy( Analyzer ):
         event.selectedMuons = []
         event.selectedElectrons = []
         event.otherLeptons = []
+        
+#        with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+#            f.write('{0:6}{1:6}{2:10}\n'.format(event.run, event.lumi, event.eventId))
+        with open('prompt_bestMatch.txt', 'a') as f:
+             f.write('{0:6}{1:6}{2:10}\n'.format(event.run, event.lumi, event.eventId))
+        event.myLeptons = []
 
         #muons
         allmuons = self.makeAllMuons(event)
-
         for mu in allmuons:
             # inclusive, very loose, selection
             if (mu.track().isNonnull() and mu.muonID(self.cfg_ana.inclusive_muon_id) and 
@@ -86,6 +91,35 @@ class ttHLepAnalyzerSusy( Analyzer ):
                     abs(mu.dxy())<self.cfg_ana.inclusive_muon_dxy and abs(mu.dz())<self.cfg_ana.inclusive_muon_dz):
                 event.inclusiveLeptons.append(mu)
                 # basic selection
+                cut0_passed = mu.muonID(self.cfg_ana.loose_muon_id)
+                cut1_passed = mu.pt() > self.cfg_ana.loose_muon_pt
+                cut2_passed = abs(mu.eta()) < self.cfg_ana.loose_muon_eta
+                cut3_passed = abs(mu.dxy()) < self.cfg_ana.loose_muon_dxy
+                cut4_passed = abs(mu.dz()) < self.cfg_ana.loose_muon_dz
+                cut5_passed = mu.relIso03 < self.cfg_ana.loose_muon_relIso
+                cut6_passed = mu.absIso03 < (self.cfg_ana.loose_muon_absIso if hasattr(self.cfg_ana,'loose_muon_absIso') else 9e99)
+                myMu = mu
+                myMu.cut0_passed = cut0_passed
+                myMu.cut1_passed = cut1_passed
+                myMu.cut2_passed = cut2_passed
+                myMu.cut3_passed = cut3_passed
+                myMu.cut4_passed = cut4_passed
+                myMu.cut5_passed = cut5_passed
+                myMu.cut6_passed = cut6_passed
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+#                    f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.4f}{7:8.4f}      '.format(mu.pdgId(), mu.pt(), mu.eta(), mu.phi(), mu.dxy(), mu.dz(), mu.relIso03, mu.absIso03))
+#                    f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}    '.format(cut0_passed, cut1_passed, cut2_passed, cut3_passed, cut4_passed, cut5_passed, cut6_passed))
+#                mu.muonID(self.cfg_ana.loose_muon_id, wtuple=('prompt_debug_bdt_passing_mu_el_cuts.txt',))
+                mu.muonID1(self.cfg_ana.loose_muon_id, wtuple=(myMu,))
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f: f.write('\n')
+
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+#                    f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.4f}{7:8.4f}      '.format(myMu.pdgId(), myMu.pt(), myMu.eta(), myMu.phi(), myMu.dxy(), myMu.dz(), myMu.relIso03, myMu.absIso03))
+#                    f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}    '.format(myMu.cut0_passed, myMu.cut1_passed, myMu.cut2_passed, myMu.cut3_passed, myMu.cut4_passed, myMu.cut5_passed, myMu.cut6_passed))
+#                    f.write('              {0:8}'.format(myMu.id))
+#                    f.write('\n')
+                event.myLeptons.append(myMu)
+
                 if (mu.muonID(self.cfg_ana.loose_muon_id) and 
                         mu.pt() > self.cfg_ana.loose_muon_pt and abs(mu.eta()) < self.cfg_ana.loose_muon_eta and 
                         abs(mu.dxy()) < self.cfg_ana.loose_muon_dxy and abs(mu.dz()) < self.cfg_ana.loose_muon_dz and
@@ -111,25 +145,104 @@ class ttHLepAnalyzerSusy( Analyzer ):
                     ele.gsfTrack().trackerExpectedHitsInner().numberOfLostHits()<=self.cfg_ana.inclusive_electron_lostHits ):
                 event.inclusiveLeptons.append(ele)
                 # basic selection
+                cut0_passed = ele.electronID(self.cfg_ana.loose_electron_id)
+                cut1_passed = ele.pt()>self.cfg_ana.loose_electron_pt
+                cut2_passed = abs(ele.eta())<self.cfg_ana.loose_electron_eta
+                cut3_passed = abs(ele.dxy()) < self.cfg_ana.loose_electron_dxy
+                cut4_passed = abs(ele.dz())<self.cfg_ana.loose_electron_dz
+                cut5_passed = ele.relIso03 <= self.cfg_ana.loose_electron_relIso
+                cut6_passed = ele.absIso03 < (self.cfg_ana.loose_electron_absIso if hasattr(self.cfg_ana,'loose_electron_absIso') else 9e99)
+                cut7_passed = ele.gsfTrack().trackerExpectedHitsInner().numberOfLostHits() <= self.cfg_ana.loose_electron_lostHits
+                cut8_passed = True if (hasattr(self.cfg_ana,'notCleaningElectrons') and self.cfg_ana.notCleaningElectrons) else (bestMatchPrint(ele, looseMuons)[1] > self.cfg_ana.min_dr_electron_muon)
+                myEl = ele
+                myEl.cut0_passed = cut0_passed
+                myEl.cut1_passed = cut1_passed
+                myEl.cut2_passed = cut2_passed
+                myEl.cut3_passed = cut3_passed
+                myEl.cut4_passed = cut4_passed
+                myEl.cut5_passed = cut5_passed
+                myEl.cut6_passed = cut6_passed
+                myEl.cut7_passed = cut7_passed
+                myEl.cut8_passed = cut8_passed
+
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+#                    f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.3f}{7:8.3f}{8:6}'.format(ele.pdgId(), ele.pt(), ele.eta(), ele.phi(), ele.dxy(), ele.dz(), ele.absIso03, ele.relIso03, ele.gsfTrack().trackerExpectedHitsInner().numberOfLostHits()))
+#                    f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}{7:2}{8:2}'.format(cut0_passed, cut1_passed, cut2_passed, cut3_passed, cut4_passed, cut5_passed, cut6_passed, cut7_passed, cut8_passed))
+#                ele.electronID(self.cfg_ana.loose_electron_id, wtuple=('prompt_debug_bdt_passing_mu_el_cuts.txt',))
+                ele.electronID1(self.cfg_ana.loose_electron_id, wtuple=(myEl,))
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f: f.write('\n')
+
+#                with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+#                    f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.3f}{7:8.3f}{8:6}'.format(myEl.pdgId(), myEl.pt(), myEl.eta(), myEl.phi(), myEl.dxy(), myEl.dz(), myEl.absIso03, myEl.relIso03, myEl.gsfTrack().trackerExpectedHitsInner().numberOfLostHits()))
+#                    f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}{7:2}{8:2}'.format(myEl.cut0_passed, myEl.cut1_passed, myEl.cut2_passed, myEl.cut3_passed, myEl.cut4_passed, myEl.cut5_passed, myEl.cut6_passed, myEl.cut7_passed, myEl.cut8_passed))
+#                    f.write('  {0:8.3f}{1:+8.3f}{2:2}{3:2}'.format(myEl.scEta, myEl.mvaNTV0, myEl.case, myEl.ret))
+#                    f.write('\n')
+                event.myLeptons.append(myEl)
+
                 if (ele.electronID(self.cfg_ana.loose_electron_id) and
                          ele.pt()>self.cfg_ana.loose_electron_pt and abs(ele.eta())<self.cfg_ana.loose_electron_eta and 
                          abs(ele.dxy()) < self.cfg_ana.loose_electron_dxy and abs(ele.dz())<self.cfg_ana.loose_electron_dz and 
                          ele.relIso03 <= self.cfg_ana.loose_electron_relIso and
                          ele.absIso03 < (self.cfg_ana.loose_electron_absIso if hasattr(self.cfg_ana,'loose_electron_absIso') else 9e99) and
                          ele.gsfTrack().trackerExpectedHitsInner().numberOfLostHits() <= self.cfg_ana.loose_electron_lostHits and
-                         ( True if (hasattr(self.cfg_ana,'notCleaningElectrons') and self.cfg_ana.notCleaningElectrons) else (bestMatch(ele, looseMuons)[1] > self.cfg_ana.min_dr_electron_muon) )):
+                         ( True if (hasattr(self.cfg_ana,'notCleaningElectrons') and self.cfg_ana.notCleaningElectrons) else (bestMatch1(ele, looseMuons)[1] > self.cfg_ana.min_dr_electron_muon) )):
                     event.selectedLeptons.append(ele)
                     event.selectedElectrons.append(ele)
                     ele.looseIdSusy = True
                 else:
                     event.otherLeptons.append(ele)
                     ele.looseIdSusy = False
+#        with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f: f.write('\n')
 
         event.otherLeptons.sort(key = lambda l : l.pt(), reverse = True)
         event.selectedLeptons.sort(key = lambda l : l.pt(), reverse = True)
         event.selectedMuons.sort(key = lambda l : l.pt(), reverse = True)
         event.selectedElectrons.sort(key = lambda l : l.pt(), reverse = True)
         event.inclusiveLeptons.sort(key = lambda l : l.pt(), reverse = True)
+
+        event.myLeptons.sort(key = lambda l : l.pt(), reverse = True)
+        
+        event.myGoodLeptons = []
+        event.myNonGoodLeptons = []
+        
+        if event.genHiggsDecayMode == 15 or event.genHiggsDecayMode == 23 or event.genHiggsDecayMode == 24:
+            with open('prompt_debug_bdt_passing_mu_el_cuts.txt', 'a') as f:
+                f.write('{0:6}{1:6}{2:10}'.format(event.run, event.lumi, event.eventId))
+                ngood = 0
+                for myLep in event.myLeptons:
+                    if ((abs(myLep.pdgId()) == 13) and myLep.cut0_passed and myLep.cut1_passed and myLep.cut2_passed and myLep.cut3_passed and myLep.cut4_passed and myLep.cut5_passed and myLep.cut6_passed) or ((abs(myLep.pdgId()) == 11) and myLep.cut0_passed and myLep.cut1_passed and myLep.cut2_passed and myLep.cut3_passed and myLep.cut4_passed and myLep.cut5_passed and myLep.cut6_passed and myLep.cut7_passed and myLep.cut8_passed):
+                        event.myGoodLeptons.append(myLep)
+                        ngood += 1
+                    else:
+                        event.myNonGoodLeptons.append(myLep)
+                is2l          = True if ngood >= 2 else False
+                is2lss        = is2l and (True if event.myGoodLeptons[0].charge()*event.myGoodLeptons[1].charge() > 0 else False)
+                is2lss_mumu   = True if is2lss and abs(event.myGoodLeptons[0].pdgId()) == 13 and abs(event.myGoodLeptons[1].pdgId()) == 13 else False
+                is2lss_ee     = True if is2lss and abs(event.myGoodLeptons[0].pdgId()) == 11 and abs(event.myGoodLeptons[1].pdgId()) == 11 else False
+                is2lss_em     = True if is2lss and abs(event.myGoodLeptons[0].pdgId()) <> abs(event.myGoodLeptons[1].pdgId()) else False
+                ispt2020_mumu = True if is2lss_mumu and (event.myGoodLeptons[0].pt()>20 and event.myGoodLeptons[1].pt()>20) else False
+                ispt2020_ee   = True if is2lss_ee and (event.myGoodLeptons[0].pt()>20 and event.myGoodLeptons[1].pt()>20) else False
+#                isLepMVA_mumu = True if ispt2020_mumu and (min(event.myGoodLeptons[0].mvaTTH, event.myGoodLeptons[1].mvaTTH) > 0.7) else False
+#                isLepMVA_ee   = True if ispt2020_ee and (min(event.myGoodLeptons[0].mvaTTH, event.myGoodLeptons[1].mvaTTH) > 0.7) else False
+#                isTghChr_mumu = True if isLepMVA_mumu and (event.myGoodLeptons[0].tightCharge > 1 and event.myGoodLeptons[0].tightCharge > 1) else False
+#                isTghChr_ee   = True if isLepMVA_ee and (event.myGoodLeptons[0].tightCharge > 1 and event.myGoodLeptons[1].tightCharge > 1) and (event.myGoodLeptons[0].convVeto>0 and event.myGoodLeptons[1].convVeto>0) and (event.myGoodLeptons[0].lostHits == 0 and event.myGoodLeptons[1].lostHits == 0) else False
+#                is2bLoose_mumu = True if isTghChr_mumu and event.nBJetLoose25 >= 2 else False
+#                is2bLoose_ee   = True if isTghChr_ee and event.nBJetLoose25 >= 2 else False
+#                is4j_mumu      = True if is2bLoose_mumu and event.nJet25>=4 else False
+#                is4j_ee        = True if is2bLoose_ee and event.nJet25>=4 else False
+#                f.write('                                                                                                             {0:3}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}{7:2}\n'.format(ngood, is2l, is2lss, is2lss_mumu, is2lss_ee, is2lss_em, ispt2020_mumu, ispt2020_ee))
+                f.write('                                                                                                             {0:3}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}\n'.format(ngood, is2l, is2lss, is2lss_mumu, is2lss_ee, ispt2020_mumu, ispt2020_ee))
+                for myLep in (event.myGoodLeptons + event.myNonGoodLeptons):
+                    if   abs(myLep.pdgId()) == 13:
+                        f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.4f}{7:8.4f}      '.format(myLep.pdgId(), myLep.pt(), myLep.eta(), myLep.phi(), myLep.dxy(), myLep.dz(), myLep.relIso03, myLep.absIso03))
+                        f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}    '.format(myLep.cut0_passed, myLep.cut1_passed, myLep.cut2_passed, myLep.cut3_passed, myLep.cut4_passed, myLep.cut5_passed, myLep.cut6_passed))
+                        f.write('              {0:8}               '.format(myLep.id))
+                    elif abs(myLep.pdgId()) == 11:
+                        f.write('                          {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:+8.3f}{5:+8.3f}{6:8.3f}{7:8.3f}{8:6}'.format(myLep.pdgId(), myLep.pt(), myLep.eta(), myLep.phi(), myLep.dxy(), myLep.dz(), myLep.absIso03, myLep.relIso03, myLep.gsfTrack().trackerExpectedHitsInner().numberOfLostHits()))
+                        f.write('  {0:2}{1:2}{2:2}{3:2}{4:2}{5:2}{6:2}{7:2}{8:2}'.format(myLep.cut0_passed, myLep.cut1_passed, myLep.cut2_passed, myLep.cut3_passed, myLep.cut4_passed, myLep.cut5_passed, myLep.cut6_passed, myLep.cut7_passed, myLep.cut8_passed))
+                        f.write('  {0:8.3f}{1:+8.3f}{2:2}{3:2}               '.format(myLep.scEta, myLep.mvaNTV0, myLep.case, myLep.ret))
+                    f.write('\n')
+                f.write('\n')
 
         for lepton in event.selectedLeptons:
             if hasattr(self,'efficiency'):

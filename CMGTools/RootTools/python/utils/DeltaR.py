@@ -85,6 +85,40 @@ def bestMatch( object, matchCollection):
     return bm, deltaR2Min
 
 
+def bestMatch1( object, matchCollection):
+    '''Return the best match to object in matchCollection, which is the closest object in delta R'''
+    deltaRMin = float('+inf')
+    bm = None
+    for match in matchCollection:
+        dR2 = deltaR( object.eta(), object.phi(),
+                       match.eta(), match.phi() )
+        if dR2 < deltaRMin:
+            deltaRMin = dR2
+            bm = match
+    return bm, deltaRMin
+
+
+def bestMatchPrint( object, matchCollection):
+    '''Return the best match to object in matchCollection, which is the closest object in delta R'''
+    deltaRMin = float('+inf')
+    bm = None
+    with open('prompt_bestMatch.txt', 'a') as f:
+        f.write('                          el: {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}\n'.format(object.pdgId(), object.pt(), object.eta(), object.phi()))
+    for match in matchCollection:
+        dR2 = deltaR( object.eta(), object.phi(),
+                       match.eta(), match.phi() )
+        if dR2 < deltaRMin:
+            deltaRMin = dR2
+            bm = match
+        with open('prompt_bestMatch.txt', 'a') as f:
+            f.write('                              mu: {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:8.3f}\n'.format(match.pdgId(), match.pt(), match.eta(), match.phi(), deltaRMin))
+    with open('prompt_bestMatch.txt', 'a') as f:
+        if bm is not None:
+            f.write('                          mu: {0:+5}{1:8.2f}{2:+6.2f}{3:+6.2f}{4:8.3f}\n\n'.format(bm.pdgId(), bm.pt(), bm.eta(), bm.phi(), deltaRMin))
+        else:
+            f.write('                          mu: None                             \n\n')
+    return bm, deltaRMin
+
 def matchObjectCollection( objects, matchCollection, deltaR2Max):
     pairs = {}
     if len(objects)==0:

@@ -33,7 +33,7 @@ def runLoop( comp, outDir, config, options):
     fullName = '/'.join( [outDir, comp.name ] )
     # import pdb; pdb.set_trace()
     loop = Looper( fullName, comp, config.sequence,
-                   options.nevents, 0, 
+                   options.nevents, options.startEvent, 
                    nPrint = options.nprint)
     print loop
     if options.iEvent is None:
@@ -163,6 +163,11 @@ if __name__ == '__main__':
                       dest="nevents", 
                       help="number of events to process",
                       default=None)
+    parser.add_option("-S", "--startEvent",
+                      dest="startEvent",
+                      type="int",
+                      help="number of the first event to process",
+                      default=0)
     parser.add_option("-p", "--nprint", 
                       dest="nprint", 
                       help="number of events to print at the beginning",
