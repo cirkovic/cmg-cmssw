@@ -10,7 +10,8 @@ elif [[ "$HOSTNAME" == "lxbse14c09.cern.ch" ]]; then
     T="/var/ssdtest/gpetrucc/TREES_250513_HADD";
     J=5;
 else
-    T="/afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/cfg/OUTPUT";
+    #T="/afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/cfg/OUTPUT";
+    T="/afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/cfg/OUTPUT_complete";
     J=4;
 fi
 
@@ -23,20 +24,23 @@ if [[ "$SCENARIO" != "" ]]; then
 else
     OPTIONS=" -P $T -j $J -l 19.5 -f  --od cards/paper-195-sfv3 --tree treeProducerSusyMultilepton --asimov ";
     #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/new196";
-    OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
+    #OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
 fi
 #OPTIONS=" -P $T -j $J -l 19.6 -f  --od cards/mva/ "
-#OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
+OPTIONS="${OPTIONS} --masses masses.txt --mass-int-algo=noeff"
 #SYSTS="systsEnv.txt ../../macros/systematics/btagSysts2.txt"
+#SYSTS="systsEnv_shiftJEC.txt" #../../macros/systematics/btagSysts2.txt"
 BLoose=" -I 2B "
 BAny=" -X 2B --s2v "
 BTight="  "
 
 if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
-    OPTIONS="${OPTIONS} --FM sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_SF/sfFriend_{cname}.root --xp FR_data_.* "
+    #OPTIONS="${OPTIONS} --FM sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_SF/sfFriend_{cname}.root --xp FR_data_.* "
+    OPTIONS="${OPTIONS} --FM sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT_SF_complete/sfFriend_{cname}.root --xp FR_data_.* "
     #OPT_2L="${OPTIONS} -W puWeight*LepEff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l_new"
     OPT_2L="${OPTIONS} -W puWeight*LepEff_2lep*SF_btag*SF_LepMVATight_2l*SF_LepTightCharge_2l*SF_trig2l"
-    MVA_2L="-F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT1/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2_default/evVarFriend_{cname}.root "
+    #MVA_2L="-F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT1/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2_default/evVarFriend_{cname}.root "
+    MVA_2L="-F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT1_complete/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2_complete/evVarFriend_{cname}.root -F sf/t /afs/cern.ch/work/c/cirkovic/Milos_21-11-2014/CMSSW_7_0_6_patch1/src/CMGTools/TTHAnalysis/macros/OUTPUT2_default_complete/evVarFriend_{cname}.root "
     POS=" -A pt2010 positive LepGood1_charge>0 "
     NEG=" -A pt2010 negative LepGood1_charge<0 "
     for X in 2lss_{mumu,ee,em}; do 
@@ -44,6 +48,7 @@ if [[ "$1" == "" ]] || echo $1 | grep -q 2lss; then
         echo $X; #~gpetrucc/sh/bann $X
         # ---- MVA separated by charge (for nominal result) ----
         python makeShapeCards.py mca-CSA14.txt bins/${X}.txt 'MVA_2LSS_4j_6var_default'  '6,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_pos $MVA_2L $POS $BAny;
+        #exit;
         python makeShapeCards.py mca-CSA14.txt bins/${X}.txt 'MVA_2LSS_4j_6var_default'  '4,-0.8,0.8' $SYSTS $OPT_2L -o ${X}BCat_MVA_neg $MVA_2L $NEG $BAny;
 
         # ---- n(jet) separated by charge (for crosscheck) ----

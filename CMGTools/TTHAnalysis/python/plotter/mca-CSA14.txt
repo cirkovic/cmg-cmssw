@@ -5,7 +5,7 @@
 ttH_hww+   : TTHnlo_S14 : 0.5085 : GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10, Label="ttH WW"
 ttH_hzz+   : TTHnlo_S14 : 0.5085 : GenHiggsDecayMode == 23 ; FillColor=ROOT.kPink+9, Label="ttH ZZ"
 ttH_htt+   : TTHnlo_S14 : 0.5085 : GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+4, Label="ttH \#tau\#tau"
-#ttH     : TTHnlo_S14 : 0.5085 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+#ttH+     : TTHnlo_S14 : 0.5085 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
 
 # cross sections are from 13 TeV MG5_aMC@NLO v2.2.1, NNPDF 2.3nlo, fixed scale = mtop + 0.5*mv
 TTW : TTWJets_S14 : 0.6647 ; FillColor=ROOT.kGreen-5, Label="ttW", NormSystematic=0.2 
@@ -13,4 +13,22 @@ TTZ : TTZJets_S14 : 0.8565 ; FillColor=ROOT.kSpring+2, Label="ttZ", NormSystemat
 
 # -- Backgrounds
 TT 	 : TTJets_PUS14 : 809.1 ; FillColor=ROOT.kGray, Label="tt", NormSystematic=0.2
+
+# -- shiftJEC
+ttH_htt_JES_Up : TTHnlo_S14_shiftJECUp    : 0.5085: GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Up", SkipMe=True
+ttH_hzz_JES_Up : TTHnlo_S14_shiftJECUp    : 0.5085: GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Up", SkipMe=True
+ttH_hww_JES_Up : TTHnlo_S14_shiftJECUp    : 0.5085: GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Up", SkipMe=True
+
+ttH_htt_JES_Dn : TTHnlo_S14_shiftJECDown  : 0.5085: GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Dn", SkipMe=True
+ttH_hzz_JES_Dn : TTHnlo_S14_shiftJECDown  : 0.5085: GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Dn", SkipMe=True
+ttH_hww_JES_Dn : TTHnlo_S14_shiftJECDown  : 0.5085: GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Dn", SkipMe=True
+
+#ttH_JES_Up : TTHnlo_S14_shiftJECUp    : 0.5085 ; FillColor=206,  Label="ttH JES Up", SkipMe=True
+#ttH_JES_Dn : TTHnlo_S14_shiftJECDown  : 0.5085 ; FillColor=206,  Label="ttH JES Dn", SkipMe=True
+
+TTW_JES_Up     : TTWJets_S14_shiftJECUp   : 0.6647  ; FillColor=206,  Label="TTW JES Up", SkipMe=True
+TTW_JES_Dn     : TTWJets_S14_shiftJECDown : 0.6647  ; FillColor=61,   Label="TTW JES Dn", SkipMe=True
+
+TTZ_JES_Up     : TTZJets_S14_shiftJECUp   : 0.8565  ; FillColor=206,  Label="TTZ JES Up", SkipMe=True
+TTZ_JES_Dn     : TTZJets_S14_shiftJECDown : 0.8565  ; FillColor=61,   Label="TTZ JES Dn", SkipMe=True
 
