@@ -1,0 +1,1 @@
+ttH+     : TTH_sync : 1 ; FillColor=ROOT.kOrange+1, Label="ttH"

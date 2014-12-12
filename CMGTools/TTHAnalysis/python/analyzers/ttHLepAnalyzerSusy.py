@@ -7,6 +7,7 @@ from CMGTools.RootTools.physicsobjects.Muon import Muon
 from CMGTools.TTHAnalysis.tools.EfficiencyCorrector import EfficiencyCorrector
 
 from CMGTools.RootTools.utils.DeltaR import bestMatch
+import math
 from CMGTools.RootTools.physicsobjects.RochesterCorrections import rochcor
 from CMGTools.RootTools.physicsobjects.MuScleFitCorrector   import MuScleFitCorr
 from CMGTools.RootTools.physicsobjects.ElectronCalibrator import EmbeddedElectronCalibrator
@@ -117,7 +118,7 @@ class ttHLepAnalyzerSusy( Analyzer ):
                          ele.relIso03 <= self.cfg_ana.loose_electron_relIso and
                          ele.absIso03 < (self.cfg_ana.loose_electron_absIso if hasattr(self.cfg_ana,'loose_electron_absIso') else 9e99) and
                          ele.gsfTrack().trackerExpectedHitsInner().numberOfLostHits() <= self.cfg_ana.loose_electron_lostHits and
-                         ( True if (hasattr(self.cfg_ana,'notCleaningElectrons') and self.cfg_ana.notCleaningElectrons) else (bestMatch(ele, looseMuons)[1] > self.cfg_ana.min_dr_electron_muon) )):
+                         ( True if (hasattr(self.cfg_ana,'notCleaningElectrons') and self.cfg_ana.notCleaningElectrons) else (bestMatch(ele, looseMuons)[1] > math.pow(self.cfg_ana.min_dr_electron_muon, 2)) )):
                     event.selectedLeptons.append(ele)
                     event.selectedElectrons.append(ele)
                     ele.looseIdSusy = True

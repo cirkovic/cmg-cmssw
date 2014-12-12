@@ -119,8 +119,8 @@ class Electron( Lepton ):
                 elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > +0.004;
                 else              : return self.mvaNonTrigV0(full5x5) > +0.295;
             else:
-                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > -0.34;
-                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > -0.65;
+                if   (eta < 0.8)  : return self.mvaNonTrigV0(full5x5) > +0.50;
+                elif (eta < 1.479): return self.mvaNonTrigV0(full5x5) > +0.12;
                 else              : return self.mvaNonTrigV0(full5x5) > +0.60;
 
     def mvaIDZZ(self):
