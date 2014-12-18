@@ -86,6 +86,10 @@ class ttHJetMCMatchAnalyzer( Analyzer ):
  
     def smearJets(self, event):
         # https://twiki.cern.ch/twiki/bin/viewauth/CMS/TWikiTopRefSyst#Jet_energy_resolution
+
+       ## define by how much the MET should be changed because of jet smearing
+       event.deltaMetFromJetSmearing = [0, 0]
+
        for jet in event.cleanJetsAll:
             gen = jet.mcJet 
             if gen != None:
@@ -108,9 +112,6 @@ class ttHJetMCMatchAnalyzer( Analyzer ):
             #else: print "jet with pt %.1d, eta %.2f is unmatched" % (jet.pt(), jet.eta())
 
     def process(self, iEvent, event):
-        ## define by how much the MET should be changed because of jet smearing
-        event.deltaMetFromJetSmearing = [0, 0]
-
         ## if not MC, nothing to do
         if not self.cfg_comp.isMC: 
             return True
