@@ -211,7 +211,7 @@ ttHJetAna = cfg.Analyzer(
 # Jet MC Match Analyzer (generic)
 ttHJetMCAna = cfg.Analyzer(
     'ttHJetMCMatchAnalyzer',
-    smearJets = True,
+    smearJets = False,
     shiftJER = 0, # set to +1 or -1 to get +/-1 sigma shifts
     )
 
