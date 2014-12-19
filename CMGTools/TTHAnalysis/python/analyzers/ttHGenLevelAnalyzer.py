@@ -199,7 +199,14 @@ class ttHGenLevelAnalyzer( Analyzer ):
                 print "More than one higgs? \n%s\n" % higgsBosons
 
             event.genHiggsBoson = GenParticle(higgsBosons[-1])
-            event.genHiggsDecayMode = abs( event.genHiggsBoson.daughter(0).pdgId() )
+            if event.genHiggsBoson.daughter(0) <> None and event.genHiggsBoson.daughter(1) <> None and event.genHiggsBoson.daughter(2) == None and abs(event.genHiggsBoson.daughter(0).pdgId()) == abs(event.genHiggsBoson.daughter(1).pdgId()) and (abs(event.genHiggsBoson.daughter(0).pdgId()) == 15 or abs(event.genHiggsBoson.daughter(0).pdgId()) == 23 or abs(event.genHiggsBoson.daughter(0).pdgId()) == 24): # by definition given above
+                event.genHiggsDecayMode = abs( event.genHiggsBoson.daughter(0).pdgId() )
+                if event.genHiggsBoson.daughter(0).pdgId() == event.genHiggsBoson.daughter(1).pdgId():
+                    event.genHiggsDecayMode = -event.genHiggsDecayMode
+            elif event.genHiggsBoson.daughter(0) <> None and event.genHiggsBoson.daughter(1) <> None and event.genHiggsBoson.daughter(2) <> None:
+                event.genHiggsDecayMode = abs( event.genHiggsBoson.daughter(0).pdgId() )
+            else:
+                event.genHiggsDecayMode = 0
             self.fillTopQuarks( event )
             self.countBPartons( event )
             self.fillWZQuarks(   event, event.genHiggsBoson )
