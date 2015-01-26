@@ -71,7 +71,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 test = 1
 if test == 1:
-    comp = TTH; comp.name = "TTH"
+    comp = TTH_sync; comp.name = "TTH_sync"
     #comp = SMS_T1tttt_2J_mGl1500_mLSP100
     comp.files = comp.files[:1]
     comp.splitFactor = 1
