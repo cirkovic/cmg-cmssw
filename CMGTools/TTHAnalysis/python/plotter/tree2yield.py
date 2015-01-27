@@ -278,21 +278,21 @@ class TreeToYield:
         for e in arr:
             if i > 0:
                self._o_txt.write(self._txt_delimiter+str(round(e, ndecs)))
-               self._o_csv.write(self._csv_delimiter+str(round(e, ndecs)))
+               #self._o_csv.write(self._csv_delimiter+str(round(e, ndecs)))
             else:
                self._o_txt.write(str(round(e, ndecs)))
-               self._o_csv.write(str(round(e, ndecs)))
+               #self._o_csv.write(str(round(e, ndecs)))
             i += 1
         if not last:
            self._o_txt.write(self._txt_delimiter)
-           self._o_csv.write(self._csv_delimiter)
+           #self._o_csv.write(self._csv_delimiter)
     def _printArrEl(self, arr, index=0, prefix='', form='', sufix='', first=False):
         form = prefix+'{0:'+form+'}'+sufix
         self._o_txt.write(form.format(arr[index]))
-        if not first:
-           self._o_csv.write(self._csv_delimiter+form.format(arr[index]))
-        else:
-           self._o_csv.write(form.format(arr[index]))
+        #if not first:
+           #self._o_csv.write(self._csv_delimiter+form.format(arr[index]))
+        #else:
+           #self._o_csv.write(form.format(arr[index]))
     def _getYield(self,tree,cut):
         if self._weight:
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
@@ -321,29 +321,51 @@ class TreeToYield:
 #            if True:
 #            if False:
             if self._options.prtVars:
-               tree1 = tree.Clone()
+               f_dummy = TFile.Open('f_dummy.root','RECREATE')
+               tree1 = tree.CloneTree()
                elname = 'elist_cut'+str(self._file_i)
-               tree1.Draw('>>'+elname,self.adaptExpr(cut,cut=True))
+               #tree1.Draw('>>'+elname,self.adaptExpr(cut,cut=True))
+               tree1.Draw('>>'+elname,cut)
                elist = gDirectory.Get(elname)
                elist.Print()
                tree1.SetEventList(elist)
-#               f_dummy = TFile.Open('f_dummy.root','RECREATE')
+               f_dummy.Write()
+               tree1.SetBranchStatus("*",0)
+               tree1.SetBranchStatus("run",1);
+               tree1.SetBranchStatus("lumi",1);
+               tree1.SetBranchStatus("evt",1);
+               tree1.SetBranchStatus("GenHiggsDecayMode",1);
+               tree1.SetBranchStatus("nLepGood",1);
+               tree1.SetBranchStatus("LepGood_pdgId",1);
+               tree1.SetBranchStatus("LepGood_pt",1);
+               tree1.SetBranchStatus("LepGood_eta",1);
+               tree1.SetBranchStatus("LepGood_phi",1);
+               tree1.SetBranchStatus("LepGood_charge",1);
+               tree1.SetBranchStatus("LepGood_mvaSusy",1);
+               tree1.SetBranchStatus("nBJetLoose25",1);
+               tree1.SetBranchStatus("met_genPt",1);
+               tree1.SetBranchStatus("met_genPhi",1);
+               tree1.SetBranchStatus("nJet25",1);
                tree2 = tree1.CopyTree("")
-#               tree2.ResetBranchAddresses()
-               
+               f_dummy.Write()
                b_run = array('i',[0])
                b_lumi = array('i',[0])
                b_evt = array('i',[0])
                #b_LepGood_charge = array('i',[0, 0])
                #b_LepGood_convVeto = array('i',[0, 0])
                #b_LepGood_lostHits = array('i',[0, 0])
-               #b_LepGood_mvaTTH = array('f',[0, 0])
-               b_LepGood_pdgId = array('i',[0, 0])
-               b_LepGood_pt = array('f',[0, 0])
-               b_LepGood_eta = array('f',[0, 0])
-               b_LepGood_phi = array('f',[0, 0])
+               #b_LepGood_mvaSusy = array('f',[0, 0])
+               b_LepGood_pdgId = array('i',[0]*2)
+               b_LepGood_pt = array('d',[0.0]*8)
+               b_LepGood_eta = array('d',[0.0]*8)
+               b_LepGood_phi = array('d',[0.0]*8)
+               b_met_genPt = array('d',[0.0])
+               b_met_genPhi = array('d',[0.0])
+               b_nJet25 = array('i',[0])
+
                #b_LepGood_tightCharge = array('i',[0, 0])
 #               b_met_pt = array('f',[0])
+               '''
                b_met_genPt = array('f',[0])
                #b_mhtJet25 = array('f',[0])
                #b_minMllAFAS = array('f',[0])
@@ -355,26 +377,26 @@ class TreeToYield:
                b_met_genPhi = array('f',[0])
                b_nJet25 = array('i',[0])
 #               b_GenHiggsDecayMode = array('i', [0])
-               b_LepGood_mvaTTH = array('f',[0, 0])
+               b_LepGood_mvaSusy = array('f',[0, 0])
                b_LepGood_convVeto = array('i',[0, 0])
                b_LepGood_lostHits = array('i',[0, 0])
                b_LepGood_tightCharge = array('i',[0, 0])
                b_nBJetLoose25 = array('i',[0])
-
+               '''
                tree2.SetBranchAddress("run", b_run)
                tree2.SetBranchAddress("lumi", b_lumi)
                tree2.SetBranchAddress("evt", b_evt)
                #tree2.SetBranchAddress("LepGood_charge", b_LepGood_charge)
                #tree2.SetBranchAddress("LepGood_convVeto", b_LepGood_convVeto)
                #tree2.SetBranchAddress("LepGood_lostHits", b_LepGood_lostHits)
-               #tree2.SetBranchAddress("LepGood_mvaTTH", b_LepGood_mvaTTH)
+               #tree2.SetBranchAddress("LepGood_mvaSusy", b_LepGood_mvaSusy)
                tree2.SetBranchAddress("LepGood_pdgId", b_LepGood_pdgId)
                tree2.SetBranchAddress("LepGood_pt", b_LepGood_pt)
                tree2.SetBranchAddress("LepGood_eta", b_LepGood_eta)
                tree2.SetBranchAddress("LepGood_phi", b_LepGood_phi)
                #tree2.SetBranchAddress("LepGood_tightCharge", b_LepGood_tightCharge)
 #               tree2.SetBranchAddress("met_pt", b_met_pt)
-               tree2.SetBranchAddress("metNoPU_pt", b_met_genPt)
+               tree2.SetBranchAddress("met_genPt", b_met_genPt)
                #tree2.SetBranchAddress("mhtJet25", b_mhtJet25)
                #tree2.SetBranchAddress("minMllAFAS", b_minMllAFAS)
                #tree2.SetBranchAddress("nBJetLoose25", b_nBJetLoose25)
@@ -382,17 +404,18 @@ class TreeToYield:
                #tree2.SetBranchAddress("nJet25", b_nJet25)
                #tree2.SetBranchAddress("nLepGood10", b_nLepGood10)
 #               tree2.SetBranchAddress("met_phi", b_met_phi)
-               tree2.SetBranchAddress("metNoPU_phi", b_met_genPhi)
+               tree2.SetBranchAddress("met_genPhi", b_met_genPhi)
                tree2.SetBranchAddress("nJet25", b_nJet25)
 #               tree2.SetBranchAddress("GenHiggsDecayMode", b_GenHiggsDecayMode)
-               tree2.SetBranchAddress("LepGood_mvaTTH", b_LepGood_mvaTTH)
+               '''
+               tree2.SetBranchAddress("LepGood_mvaSusy", b_LepGood_mvaSusy)
                tree2.SetBranchAddress("LepGood_convVeto", b_LepGood_convVeto)
                tree2.SetBranchAddress("LepGood_lostHits", b_LepGood_lostHits)
                tree2.SetBranchAddress("LepGood_tightCharge", b_LepGood_tightCharge)
                tree2.SetBranchAddress("nBJetLoose25", b_nBJetLoose25)
-               
+               '''
                self._o_txt = open(self._options.outDir+'/cut'+str(self._file_i)+'.txt', 'wb')
-               self._o_csv = open(self._options.outDir+'/cut'+str(self._file_i)+'.csv', 'wb')
+               #self._o_csv = open(self._options.outDir+'/cut'+str(self._file_i)+'.csv', 'wb')
                #varTitles = ['evt', 'LepGood1_charge', 'LepGood2_charge', 'LepGood1_convVeto', 'LepGood2_convVeto', 'LepGood1_lostHits', 'LepGood2_lostHits', 'LepGood1_mvaTTH', 'LepGood2_mvaTTH', 'LepGood1_pdgId', 'LepGood2_pdgId', 'LepGood1_pt', 'LepGood2_pt', 'LepGood1_eta', 'LepGood2_eta', 'LepGood1_phi', 'LepGood2_phi', 'LepGood1_tightCharge', 'LepGood2_tightCharge', 'met_pt', 'mhtJet25', 'minMllAFAS', 'nBJetLoose25', 'nBJetMedium25', 'nJet25', 'nLepGood10']
                #varTitles = ['evt', 'LepGood1_pdgId', 'LepGood2_pdgId', 'LepGood1_pt', 'LepGood2_pt', 'LepGood1_eta', 'LepGood2_eta', 'LepGood1_phi', 'LepGood2_phi', 'met_pt']
                #varTitles = ['evt', 'LepGood1_pdgId', 'LepGood1_pt', 'LepGood1_eta', 'LepGood1_phi', 'LepGood2_pdgId', 'LepGood2_pt', 'LepGood2_eta', 'LepGood2_phi', 'met_pt']
@@ -405,15 +428,15 @@ class TreeToYield:
                #   self._o_csv.write(self._csv_delimiter+title)
                #self._o_txt.write('\n')
                #self._o_csv.write('\n')
-               
+
                i = 0
-               while tree2.GetEntry(i):
+               while tree2.GetEntry(i, 0):
                   '''
-                  self._printArr("evt", b_evt)
+                  #self._printArr("evt", b_evt)
                   #self._printArr("LepGood_charge", b_LepGood_charge)
                   #self._printArr("LepGood_convVeto", b_LepGood_convVeto)
                   #self._printArr("LepGood_lostHits", b_LepGood_lostHits)
-                  #self._printArr("LepGood_mvaTTH", b_LepGood_mvaTTH)
+                  #self._printArr("LepGood_mvaSusy", b_LepGood_mvaSusy)
                   self._printArr("LepGood_pdgId", b_LepGood_pdgId)
                   self._printArr("LepGood_pt", b_LepGood_pt, ndecs=2)
                   self._printArr("LepGood_eta", b_LepGood_eta, ndecs=2)
@@ -445,20 +468,20 @@ class TreeToYield:
                   self._printArrEl(b_nJet25, prefix='    ', form='<2')
 #                  self._printArrEl(b_GenHiggsDecayMode, form='5')
                   if self._options.extPrt == True:
-                      self._printArrEl(b_LepGood_mvaTTH, 0, prefix='    ', form='+6.2f')
+                      self._printArrEl(b_LepGood_mvaSusy, 0, prefix='    ', form='+6.2f')
                       self._printArrEl(b_LepGood_convVeto, 0, form='6')
                       self._printArrEl(b_LepGood_lostHits, 0, form='6')
                       self._printArrEl(b_LepGood_tightCharge, 0, form='6')
-                      self._printArrEl(b_LepGood_mvaTTH, 1, prefix='    ', form='+6.2f')
+                      self._printArrEl(b_LepGood_mvaSusy, 1, prefix='    ', form='+6.2f')
                       self._printArrEl(b_LepGood_convVeto, 1, form='6')
                       self._printArrEl(b_LepGood_lostHits, 1, form='6')
                       self._printArrEl(b_LepGood_tightCharge, 1, form='6')
                       self._printArrEl(b_nBJetLoose25, prefix='    ', form='<2')
                   self._o_txt.write('\n')
-                  self._o_csv.write('\n')
+                  #self._o_csv.write('\n')
                   i += 1
                self._o_txt.close()
-               self._o_csv.close()
+               #self._o_csv.close()
 
             self._file_i += 1
 

@@ -73,7 +73,7 @@ test = 1
 if test == 1:
     comp = TTH_sync; comp.name = "TTH_sync"
     #comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = comp.files[:1]
+    comp.files = comp.files[:]
     comp.splitFactor = 1
     comp.fineSplitFactor = 4
     selectedComponents = [ comp ]

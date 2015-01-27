@@ -171,7 +171,8 @@ TTH = kreator.makeMCComponent("TTH", "/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauol
 #TTH_sync = kreator.makeMCComponent("TTH", "", "CMS", "/store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root",0.5085)
 #TTH_sync = kreator.makeMCComponent("TTH_sync", "/store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root", "CMS", ".*root")
 #TTH_sync = kreator.makeMCComponentFromEOS('TTH_sync', '/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/Phys14DR-PU40bx25_PHYS14_25_V1-v1/MINIAODSIM', '/store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/%s',"EC51B40A-0F77-E411-AB65-002590A831AA.root", 0.5085)
-TTH_sync = kreator.makeMCComponent("TTH", "/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/Phys14DR-PU40bx25_PHYS14_25_V1-v1/MINIAODSIM", "CMS", "EC51B40A-0F77-E411-AB65-002590A831AA.root",0.5085)
+#TTH_sync = kreator.makeMCComponent("TTH", "/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/Phys14DR-PU40bx25_PHYS14_25_V1-v1/MINIAODSIM", "CMS", "EC51B40A-0F77-E411-AB65-002590A831AA.root",0.5085)
+TTH_sync = kreator.makeMCComponent("TTH", "/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/Phys14DR-PU40bx25_PHYS14_25_V1-v1/MINIAODSIM", "CMS", "EC51B40A-0F77-E411-AB65-002590A831AA.root",1)
 
 # cross section from StandardModelCrossSectionsat13TeV (NLO MCFM, mll > 12) times BR=(3*0.108)*(3*0.0337)
 WZJetsTo3LNu = kreator.makeMCComponent("WZJetsTo3LNu", "/WZJetsTo3LNu_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root",2.165)
