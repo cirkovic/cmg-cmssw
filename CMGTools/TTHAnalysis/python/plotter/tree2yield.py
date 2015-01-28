@@ -342,6 +342,12 @@ class TreeToYield:
                tree1.SetBranchStatus("LepGood_phi",1);
                tree1.SetBranchStatus("LepGood_charge",1);
                tree1.SetBranchStatus("LepGood_mvaSusy",1);
+               tree1.SetBranchStatus("LepGood_relIso03",1);
+               tree1.SetBranchStatus("LepGood_tightId",1);
+               tree1.SetBranchStatus("LepGood_sip3d",1);
+               tree1.SetBranchStatus("LepGood_convVeto",1);
+               tree1.SetBranchStatus("LepGood_lostHits",1);
+               tree1.SetBranchStatus("LepGood_tightCharge",1);
                tree1.SetBranchStatus("nBJetLoose25",1);
                tree1.SetBranchStatus("met_genPt",1);
                tree1.SetBranchStatus("met_genPhi",1);

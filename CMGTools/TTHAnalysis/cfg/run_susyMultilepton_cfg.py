@@ -62,7 +62,7 @@ treeProducer = cfg.Analyzer(
 #-------- SEQUENCE
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 
-selectedComponents = [ SMS_T1tttt_2J_mGl1200_mLSP800  ]
+selectedComponents = [ TTH ]
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
@@ -71,16 +71,18 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 test = 1
 if test == 1:
-    comp = TTH_sync; comp.name = "TTH_sync"
+    comp = TTH; comp.name = "TTH_sync"
     #comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = comp.files[:]
+    comp.files = '/store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root'
     comp.splitFactor = 1
-    comp.fineSplitFactor = 4
-    selectedComponents = [ comp ]
+    #comp.fineSplitFactor = 4
+    #selectedComponents = [ comp ]
 elif test == 2:
     for comp in selectedComponents:
-        comp.files = comp.files[:1]
+        #comp.files = comp.files[:1]
+        comp.files = 'root://eoscms//store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root'
         comp.splitFactor = 1
+        comp.fineSplitFactor = 2
 elif test == 3:
     comp = TTJets
     comp.files = comp.files[:1]
