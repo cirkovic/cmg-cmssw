@@ -23,6 +23,6 @@ cut based id: (max(LepGood1_relIso03,LepGood2_relIso03) < 0.1) && (LepGood1_tigh
 #tight-charge: LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1
 #conv veto:LepGood1_convVeto>0 && LepGood2_convVeto>0
 #lost hits:LepGood1_lostHits == 0 && LepGood2_lostHits == 0
-#tight-charge: (LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1) && (LepGood1_convVeto>0 && LepGood2_convVeto>0) && (LepGood1_lostHits == 0 && LepGood2_lostHits == 0)
+tight-charge: (LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1) && (LepGood1_convVeto>0 && LepGood2_convVeto>0) && (LepGood1_lostHits == 0 && LepGood2_lostHits == 0)
 2b loose: nBJetLoose25 >= 2
 4j: nJet25>=4

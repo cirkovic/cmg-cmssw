@@ -20,6 +20,6 @@ pt2020: LepGood1_pt>20 && LepGood2_pt>20
 #
 cut based id: (max(LepGood1_relIso03,LepGood2_relIso03) < 0.1) && (LepGood1_tightId > (abs(LepGood1_pdgId) == 11) && LepGood2_tightId > (abs(LepGood2_pdgId) == 11)) && (max(LepGood1_sip3d,LepGood2_sip3d) < 4) && ((abs(LepGood1_pdgId) == 13 || (LepGood1_convVeto && LepGood1_lostHits == 0 && LepGood1_tightCharge > 1)) && (abs(LepGood2_pdgId) == 13 || (LepGood2_convVeto && LepGood2_lostHits == 0 && LepGood2_tightCharge > 1)))
 #
-#tight-charge: LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1
+tight-charge: LepGood1_tightCharge > 1 && LepGood2_tightCharge > 1
 2b loose: nBJetLoose25 >= 2
 4j: nJet25>=4
