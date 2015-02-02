@@ -1,0 +1,7 @@
+#>= 2 loose leptons:
+#>= 2 loose leptons: (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && (nLepGood + nLepOther >= 2) && ((LepGood1_pfMuonId || LepOther1_pfMuonId) && (LepGood2_pfMuonId || LepOther2_pfMuonId)) && ((LepGood1_pfMuonId || LepOther1_pfMuonId || LepGood1_eleCutId2012_full5x5 == 2 || LepOther1_eleCutId2012_full5x5 == 2) && (LepGood2_pfMuonId || LepOther2_pfMuonId || LepGood2_eleCutId2012_full5x5 == 2 || LepOther2_eleCutId2012_full5x5 == 2))
+>= 2 loose leptons: (max(LepGood1_relIso03,LepGood2_relIso03) < 0.5) && (LepGood1_pfMuonId > (abs(LepGood1_pdgId) == 11) && LepGood2_pfMuonId > (abs(LepGood2_pdgId) == 11)) && ((abs(LepGood1_pdgId) == 13 || (LepGood1_convVeto && LepGood1_lostHits == 0 && LepGood1_tightCharge > 1)) && (abs(LepGood2_pdgId) == 13 || (LepGood2_convVeto && LepGood2_lostHits == 0 && LepGood2_tightCharge > 1)))
+mumu SS:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13 && LepGood1_charge*LepGood2_charge > 0
+pt2020: LepGood1_pt>20 && LepGood2_pt>20
+2b loose: nBJetLoose25 >= 2
+4j: nJet25>=4
