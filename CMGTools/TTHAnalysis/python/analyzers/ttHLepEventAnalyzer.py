@@ -1,7 +1,6 @@
 from PhysicsTools.Heppy.analyzers.core.Analyzer import Analyzer
 from PhysicsTools.HeppyCore.utils.deltar import deltaR
 
-
         
 class ttHLepEventAnalyzer( Analyzer ):
     def __init__(self, cfg_ana, cfg_comp, looperName ):
@@ -57,4 +56,9 @@ class ttHLepEventAnalyzer( Analyzer ):
         self.makeHadTopDecays(event)
 
         self.counters.counter('events').inc('accepted events')
+
+        iJetByBtag = [ij[0] for ij in sorted(enumerate(event.cleanJets), key=lambda x: x[1].btag('combinedInclusiveSecondaryVertexV2BJetTags'), reverse = True)]
+        for i,j in enumerate(event.cleanJets):
+            j._iJetByCSV = iJetByBtag[i]
+
         return True
