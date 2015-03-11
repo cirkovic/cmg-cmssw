@@ -45,6 +45,20 @@ class ttHLepEventAnalyzer( Analyzer ):
                             event.bestMTopHad = mtop
                             event.bestMTopHadPt = tp4.Pt()
 
+    def getIJetsByCSV(self, jets):
+        btag = [j.btag('combinedInclusiveSecondaryVertexV2BJetTags') for j in jets]
+        iJetByCSV = [i for i in xrange(len(jets))]
+        for ij in xrange(len(jets)):
+           for jj in xrange(ij+1, len(jets)):
+              if btag[ij] < btag[jj]:
+                 tmpb          = btag[ij]
+                 tmpi          = iJetByCSV[ij]
+                 btag[ij]      = btag[jj]
+                 iJetByCSV[ij] = iJetByCSV[jj]
+                 btag[jj]      = tmpb
+                 iJetByCSV[jj] = tmpi
+        return iJetByCSV
+
     def process(self, event):
         self.readCollections( event.input )
         self.counters.counter('events').inc('all events')
@@ -57,4 +71,7 @@ class ttHLepEventAnalyzer( Analyzer ):
         self.makeHadTopDecays(event)
 
         self.counters.counter('events').inc('accepted events')
+
+        event._iJetByCSV = self.getIJetsByCSV(event.cleanJets)
+
         return True
