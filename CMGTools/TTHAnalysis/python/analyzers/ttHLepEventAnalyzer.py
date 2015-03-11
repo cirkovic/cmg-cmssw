@@ -57,4 +57,8 @@ class ttHLepEventAnalyzer( Analyzer ):
         self.makeHadTopDecays(event)
 
         self.counters.counter('events').inc('accepted events')
+
+        ind_cleanJets_byBtag = sorted(enumerate(event.cleanJets), key=lambda x: x[1].btag('combinedInclusiveSecondaryVertexV2BJetTags'), reverse = True)
+        event._iJetByCSV = [ij[0] for ij in ind_cleanJets_byBtag]
+
         return True

@@ -150,6 +150,6 @@ susyMultilepton_collections.update({
             "genDHadrons"  : NTupleCollection("GenDHad", heavyFlavourHadronType, 20, mcOnly=True, help="Gen-level D hadrons"),
             ##------------------------------------------------
             "jetsNonTauIdx" : NTupleCollection("JetNoTauIdx",objectInt, 10, help="index of jets not associated to taus"),
-
+            "_iJetByCSV"    : NTupleCollection("iJetByCSV",objectInt, 10, help="Position of the most b-tagged jet in order in the collection of jets sorted by pt."),
 
 })
