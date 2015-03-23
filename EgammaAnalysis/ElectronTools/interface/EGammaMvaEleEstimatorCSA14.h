@@ -71,11 +71,11 @@ class EGammaMvaEleEstimatorCSA14{
                       const reco::Vertex& vertex, 
                       const TransientTrackBuilder& transientTrackBuilder,
                       noZS::EcalClusterLazyTools myEcalCluster,
-                      bool printDebug = kFALSE);
+                      bool printDebug = kFALSE, std::ostream& out = std::cout);
 
 
     Double_t mvaValue(const pat::Electron& ele,
-                      bool printDebug);
+                      bool printDebug, std::ostream& out = std::cout);
 
 
  

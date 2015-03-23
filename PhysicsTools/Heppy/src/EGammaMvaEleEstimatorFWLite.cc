@@ -63,11 +63,21 @@ float EGammaMvaEleEstimatorFWLite::mvaValue(const pat::Electron& ele,
                 const reco::Vertex& vertex,
                 double rho,
                 bool full5x5,
-                bool printDebug)
+                bool printDebug,
+                const char *outfname)
 {
-    if (estimator_) return estimator_->mvaValue(ele,vertex,rho,full5x5,printDebug);
-    else if (estimatorCSA14_) return estimatorCSA14_->mvaValue(ele,printDebug);
-    else throw cms::Exception("LogicError", "You must call unitialize before mvaValue\n");
+    if (outfname) {
+         std::ofstream out(outfname, std::ofstream::app);
+         if (estimator_) return estimator_->mvaValue(ele,vertex,rho,full5x5,printDebug,out);
+         else if (estimatorCSA14_) return estimatorCSA14_->mvaValue(ele,printDebug,out);
+         else throw cms::Exception("LogicError", "You must call unitialize before mvaValue\n");
+         out.close();
+    }
+    else {
+         if (estimator_) return estimator_->mvaValue(ele,vertex,rho,full5x5,printDebug);
+         else if (estimatorCSA14_) return estimatorCSA14_->mvaValue(ele,printDebug);
+         else throw cms::Exception("LogicError", "You must call unitialize before mvaValue\n");
+    }
 }
 
 }

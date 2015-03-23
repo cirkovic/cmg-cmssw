@@ -27,6 +27,12 @@ lepAna.miniIsolationVetoLeptons = None # use 'inclusive' to veto inclusive lepto
 # Lepton Preselection
 lepAna.loose_electron_id = "POG_MVA_ID_Run2_NonTrig_Loose"
 
+# Jet cleaning
+jetAna.doPuId = True
+
+# Electron tight Id
+lepAna.ele_tightId = "MVA" # with: ele.tightIdResult = ele.electronID("POG_MVA_ID_Run2_NonTrig_Tight") in $CMSSW_BASE/src/PhysicsTools/Heppy/python/analyzers/objects/LeptonAnalyzer.py
+
 isolation = "relIso03"
 #isolation = "ptRel"
 if isolation == "ptRel": 
@@ -158,7 +164,6 @@ selectedComponents = [
 #    comp.splitFactor = 1
 #    comp.fineSplitFactor = 40
 
-    
 #-------- SEQUENCE -----------
 
 sequence = cfg.Sequence(susyCoreSequence+[
@@ -171,8 +176,16 @@ sequence = cfg.Sequence(susyCoreSequence+[
 #-------- HOW TO RUN -----------
 
 from PhysicsTools.HeppyCore.framework.heppy import getHeppyOption
-test = getHeppyOption('test')
-if test == '1':
+#test = getHeppyOption('test')
+test = '0'
+if test == '0':
+    comp = TTH; comp.name = "TTH_sync"
+    comp.files = [ 'root://eoscms.cern.ch//store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root' ]
+    comp.splitFactor = 1
+    comp.fineSplitFactor = 1 #1|10
+    #comp.fineSplitFactor = 32 #1|10
+    selectedComponents = [ comp ]
+elif test == '1':
     comp = TTH
     if getHeppyOption('T1tttt'):
         comp = SMS_T1tttt_2J_mGl1500_mLSP100
@@ -237,6 +250,7 @@ from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 from CMGTools.TTHAnalysis.tools.EOSEventsWithDownload import EOSEventsWithDownload
 event_class = EOSEventsWithDownload
 if getHeppyOption("nofetch"):
+#if True:
     event_class = Events 
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
