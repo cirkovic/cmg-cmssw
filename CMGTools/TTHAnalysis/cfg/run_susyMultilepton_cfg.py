@@ -26,6 +26,7 @@ lepAna.miniIsolationVetoLeptons = None # use 'inclusive' to veto inclusive lepto
     
 # Lepton Preselection
 lepAna.loose_electron_id = "POG_MVA_ID_Run2_NonTrig_Loose"
+lepAna.loose_electron_pt = 10
 
 # Jet cleaning
 jetAna.doPuId = True
@@ -249,8 +250,8 @@ outputService.append(output_service)
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 from CMGTools.TTHAnalysis.tools.EOSEventsWithDownload import EOSEventsWithDownload
 event_class = EOSEventsWithDownload
-if getHeppyOption("nofetch"):
-#if True:
+#if getHeppyOption("nofetch"):
+if True:
     event_class = Events 
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,

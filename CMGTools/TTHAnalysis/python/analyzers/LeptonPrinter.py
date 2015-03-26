@@ -66,8 +66,8 @@ class LeptonPrinter( Analyzer ):
         self.estimator4.initialize("BDT4", self.estimator4.kTrigCSA14, False, self.sxmls)
 
         with open(self.cfg_ana.fname, 'w') as f:
-            #f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,\n')
-            f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,isLooseMuon\n')
+            f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,\n')
+            #f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,isLooseMuon\n')
 
     def declareHandles(self):
         super(LeptonPrinter, self).declareHandles()
@@ -98,21 +98,24 @@ class LeptonPrinter( Analyzer ):
                   sline += "%6.6g," % ele.relIso03
                   sline += "%6.6g," % ele.sip3D()
                   #sline += ","
-                  #sline += "%6.6g," % ele.mvaRun2("NonTrigPhys14")
-                  sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, True, self.cfg_ana.fname)
-                  #sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, True, self.cfg_ana.fname)
+                  sline += "%6.6g," % ele.mvaValueTTH
+                  sline += "%6.6g," % ele.mvaRun2("NonTrigPhys14")
+#                  sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, True, self.cfg_ana.fname)
+#                  sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, True, self.cfg_ana.fname)
+ #                 sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, True)
+ #                 sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, True)
                   #sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
-                  #sline += "%6.6g," % self.estimator1.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
-                  #sline += "%6.6g," % self.estimator1.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
-                  #sline += "%6.6g," % self.estimator2.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
-                  #sline += "%6.6g," % self.estimator2.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
-                  #sline += "%6.6g," % self.estimator3.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
-                  #sline += "%6.6g," % self.estimator3.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
-                  #sline += "%6.6g," % self.estimator4.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
-                  #sline += "%6.6g," % self.estimator4.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
+ #                 sline += "%6.6g," % self.estimator1.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
+ #                 sline += "%6.6g," % self.estimator1.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
+ #                 sline += "%6.6g," % self.estimator2.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
+ #                 sline += "%6.6g," % self.estimator2.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
+ #                 sline += "%6.6g," % self.estimator3.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
+ #                 sline += "%6.6g," % self.estimator3.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
+ #                 sline += "%6.6g," % self.estimator4.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, False)
+ #                 sline += "%6.6g," % self.estimator4.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, False)
                   #sline += ","
                   #sline += "%6.6g," % ele.mvaIDRun2("NonTrigPhys14","Loose")
-                  sline += "%6.6g," % ele.electronID("POG_MVA_ID_Run2_NonTrig_Loose") #POG_MVA_ID_NonTrig_full5x5
+ #                 sline += "%6.6g," % ele.electronID("POG_MVA_ID_Run2_NonTrig_Loose") #POG_MVA_ID_NonTrig_full5x5
                   #sline += "%6.6g," % ele.mvaNonTrigV0(False)
                   #  sline += "%6.6g," % ele.mvaNonTrigV0(full5x5=True) #POG_MVA_ID_NonTrig_full5x5
                   #sline += "%6.6g," % ele.mvaIDLoose()
@@ -140,15 +143,19 @@ class LeptonPrinter( Analyzer ):
                   sline = sline.replace(" ", "")
                   #f.write(sline)
                   #slines.append(sline)
-                  f = open(self.cfg_ana.fname, "r")
-                  contents = f.readlines()
-                  f.close()
+#                 f = open(self.cfg_ana.fname, "r")
+#                 contents = f.readlines()
+#                 f.close()
 
-                  contents.insert(-3, sline)
+#                 contents.insert(-3, sline)
 
-                  f = open(self.cfg_ana.fname, "w")
-                  contents = "".join(contents)
-                  f.write(contents)
+#                 f = open(self.cfg_ana.fname, "w")
+#                 contents = "".join(contents)
+#                 f.write(contents)
+#                 f.close()
+
+                  f = open(self.cfg_ana.fname, "a")
+                  f.write(sline)
                   f.close()
 
         for mu in event.selectedMuons:
@@ -169,8 +176,9 @@ class LeptonPrinter( Analyzer ):
                   sline += "%6.6g," % mu.sip3D()
                   #sline += "%6.6g," % mu.muonID("POG_ID_Medium")
                   #sline += "%6.6g," % mu.physObj.isLooseMuon()
-                  sline += "%6.6g," % mu.segmentCompatibility()
+                  #sline += "%6.6g," % mu.segmentCompatibility()
                   #sline += "%6.6g," % mu.mvaRun2("NonTrigPhys14")
+                  sline += "%6.6g," % mu.mvaValueTTH
                   sline += "%d,"% mu.isPFMuon()
                   sline += "%d,"% mu.isGlobalMuon()
                   sline += "%6.6g," % (mu.innerTrack().ptError()/mu.innerTrack().pt())
@@ -179,8 +187,8 @@ class LeptonPrinter( Analyzer ):
                   sline += "%6.6g," % mu.combinedQuality().chi2LocalPosition
                   sline += "%6.6g," % mu.combinedQuality().trkKink
                   sline += "%6.6g," % mu.innerTrack().validFraction()
-                  sline += "%6.6g," % mu.segmentCompatibility()
-                  sline += "%6.6g" % mu.physObj.isLooseMuon()
+                  sline += "%6.6g" % mu.segmentCompatibility()
+                  #sline += "%6.6g" % mu.physObj.isLooseMuon()
                   sline += "\n"
                   sline = sline.replace(" ", "")
                   #f.write(sline)

@@ -364,7 +364,7 @@ susyCoreSequence = [
     susyScanAna,
     vertexAna,
     lepAna,
-    leptonPrinter,
+#    leptonPrinter,
     ttHLepSkim,
     #ttHLepMCAna,
     photonAna,
@@ -375,6 +375,7 @@ susyCoreSequence = [
     #ttHSVAna, # out of core sequence for now
     metAna,
     ttHCoreEventAna,
+    leptonPrinter,
     #ttHJetMETSkim
     triggerFlagsAna,
     eventFlagsAna,
