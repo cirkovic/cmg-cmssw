@@ -687,13 +687,68 @@ class PlotMaker:
                             dump.close()
                         else:
                             if "TH2" in total.ClassName() or "TProfile2D" in total.ClassName():
+                                c = array('i', [])
+                                v = array('f', [])
+                                v1 = array('f', [])
+                                v2 = array('f', [])
+                                v3 = array('f', [])
+                                v4 = array('f', [])
+                                names = [array('c', 'MVA_2D_2LSS_TT\0'), array('c', 'MVA_2D_2LSS_WZ\0'), array('c', 'MVA_2D_2LSS_TTZ\0'), array('c', 'MVA_2D_2LSS_TTW\0'), array('c', 'MVA_2D_2LSS_signal\0')]
+                                a = array('l', map( lambda x: x.buffer_info()[0], names))
                                 for p in mca.listSignals(allProcs=True) + mca.listBackgrounds(allProcs=True) + ["signal", "background"]:
                                     if p not in pmap: continue
                                     plot = pmap[p]
                                     c1.SetRightMargin(0.20)
                                     plot.SetContour(100)
                                     plot.Draw("COLZ")
+                                    print plot.GetName(), plot.GetTitle(), plot.Integral()
+                                    if (plot.GetName() in ["MVA_2D_2LSS_TT", "MVA_2D_2LSS_WZ", "MVA_2D_2LSS_TTZ", "MVA_2D_2LSS_TTW", "MVA_2D_2LSS_signal"]):
+                                        c.append(plot.GetFillColor())
+                                        v.append(plot.Integral())
+                                        v1.append(plot.Integral(0, plot.GetXaxis().GetNbins()/2, plot.GetYaxis().GetNbins()/2+1, plot.GetYaxis().GetNbins()+1))
+                                        v2.append(plot.Integral(plot.GetXaxis().GetNbins()/2+1, plot.GetXaxis().GetNbins()+1, plot.GetYaxis().GetNbins()/2+1, plot.GetYaxis().GetNbins()+1))
+                                        v3.append(plot.Integral(0, plot.GetXaxis().GetNbins()/2, 0, plot.GetYaxis().GetNbins()/2))
+                                        v4.append(plot.Integral(plot.GetXaxis().GetNbins()/2+1, plot.GetXaxis().GetNbins()+1, 0, plot.GetYaxis().GetNbins()/2))
                                     c1.Print("%s/%s_%s.%s" % (fdir, pspec.name, p, ext))
+                                c2 = ROOT.TCanvas()
+                                pie = ROOT.TPie("ThePie", "ThePie", len(v1), v, c, a)
+                                pie.SetRadius(.2)
+                                pie.SetLabelsOffset(0.01)
+                                pie.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
+                                pie.Draw("nol <")
+                                c2.Print("%s/%s.%s" % (fdir, "ThePie", ext))
+
+                                c21 = ROOT.TCanvas()
+                                pie1 = ROOT.TPie("ThePie", "ThePie", len(v1), v1, c, a)
+                                pie1.SetRadius(.2)
+                                pie1.SetLabelsOffset(0.01)
+                                pie1.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
+                                pie1.Draw("nol <")
+                                c21.Print("%s/%s.%s" % (fdir, "ThePie1", ext))
+
+                                c22 = ROOT.TCanvas()
+                                pie2 = ROOT.TPie("ThePie", "ThePie", len(v1), v2, c, a)
+                                pie2.SetRadius(.2)
+                                pie2.SetLabelsOffset(0.01)
+                                pie2.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
+                                pie2.Draw("nol <")
+                                c22.Print("%s/%s.%s" % (fdir, "ThePie2", ext))
+
+                                c23 = ROOT.TCanvas()
+                                pie3 = ROOT.TPie("ThePie", "ThePie", len(v1), v3, c, a)
+                                pie3.SetRadius(.2)
+                                pie3.SetLabelsOffset(0.01)
+                                pie3.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
+                                pie3.Draw("nol <")
+                                c23.Print("%s/%s.%s" % (fdir, "ThePie3", ext))
+
+                                c24 = ROOT.TCanvas()
+                                pie4 = ROOT.TPie("ThePie", "ThePie", len(v1), v4, c, a)
+                                pie4.SetRadius(.2)
+                                pie4.SetLabelsOffset(0.01)
+                                pie4.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
+                                pie4.Draw("nol <")
+                                c24.Print("%s/%s.%s" % (fdir, "ThePie4", ext))
                             else:
                                 c1.Print("%s/%s.%s" % (fdir, pspec.name, ext))
                 c1.Close()

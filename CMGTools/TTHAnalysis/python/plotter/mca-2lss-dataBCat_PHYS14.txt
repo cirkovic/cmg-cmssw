@@ -1,0 +1,40 @@
+# --- 50 ns ---------------
+
+# --- ttH inclusive
+ttH_hww+   : TTH : 0.5085 : GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10, Label="ttH WW"
+ttH_hzz+   : TTH : 0.5085 : GenHiggsDecayMode == 23 ; FillColor=ROOT.kPink+9, Label="ttH ZZ"
+ttH_htt+   : TTH : 0.5085 : GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+4, Label="ttH \#tau\#tau"
+#ttH     : TTH : 0.5085 ; FillColor=ROOT.kOrange+1, Label="ttH", NormSystematic=0.2
+
+# cross sections are from 13 TeV MG5_aMC@NLO v2.2.1, NNPDF 2.3nlo, fixed scale = mtop + 0.5*mv
+TTW : TTWJets : 0.6647 ; FillColor=ROOT.kGreen-5, Label="ttW", NormSystematic=0.2 
+TTZ : TTZJets : 0.8565 ; FillColor=ROOT.kSpring+2, Label="ttZ", NormSystematic=0.2
+WZ  : WZJets  : 2.165  ; FillColor=ROOT.kViolet-4, Label="WZ", NormSystematic=0.2
+
+# -- Backgrounds
+TT 	 : TTJets : 809.1 ; FillColor=ROOT.kGray+1, Label="tt", NormSystematic=0.5
+
+## ---- These below are only for systematics and datacards, and won't be included in the plots ----
+#ttH_htt_JES_Up   : TTH_JES_Up  : 0.5085 : GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+#ttH_hzz_JES_Up   : TTH_JES_Up  : 0.5085 : GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+#ttH_hww_JES_Up   : TTH_JES_Up  : 0.5085 : GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Up", SkipMe=True 
+#ttH_htt_JES_Dn   : TTH_JES_Down: 0.5085 : GenHiggsDecayMode == 15; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+#ttH_hzz_JES_Dn   : TTH_JES_Down: 0.5085 : GenHiggsDecayMode == 23; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+#ttH_hww_JES_Dn   : TTH_JES_Down: 0.5085 : GenHiggsDecayMode == 24; FillColor=206,  Label="ttH JES Dn", SkipMe=True 
+##ttH_JER_Up : TTH_JER_Up   : 0.5085 : GenHiggsDecayMode > 0  ; FillColor=222,  Label="ttH JER Up", SkipMe=True
+##ttH_JER_Dn : TTH_JER_Down : 0.5085 : GenHiggsDecayMode > 0  ; FillColor=209,  Label="ttH JER Dn", SkipMe=True
+
+#TTW_JES_Up : TTWJets_JES_Up   : 0.6647  ; FillColor=206,  Label="TTW JES Up", SkipMe=True
+#TTW_JES_Dn : TTWJets_JES_Down : 0.6647  ; FillColor=61,   Label="TTW JES Dn", SkipMe=True
+##TTW_JER_Up : TTWJets_JER_Up   : 0.6647  ; FillColor=222,  Label="TTW JER Up", SkipMe=True
+##TTW_JER_Dn : TTWJets_JER_Down : 0.6647  ; FillColor=209,  Label="TTW JER Dn", SkipMe=True
+
+#TTZ_JES_Up : TTZJets_JES_Up   : 0.8565  ; FillColor=206,  Label="TTZ JES Up", SkipMe=True
+#TTZ_JES_Dn : TTZJets_JES_Down : 0.8565  ; FillColor=61,   Label="TTZ JES Dn", SkipMe=True
+##TTZ_JER_Up : TTZJets_JER_Up   : 0.8565  ; FillColor=222,  Label="TTZ JER Up", SkipMe=True
+##TTZ_JER_Dn : TTZJets_JER_Down : 0.8565  ; FillColor=209,  Label="TTZ JER Dn", SkipMe=True
+
+#WZ_JES_Up : WZJets_JES_Up   : 2.165  ; FillColor=ROOT.kViolet-4,  Label="WZ JES Up", SkipMe=True
+#WZ_JES_Dn : WZJets_JES_Down : 2.165  ; FillColor=ROOT.kViolet-4,   Label="WZ JES Dn", SkipMe=True
+##WZ_JER_Up : WZJets_JER_Up   : 2.165  ; FillColor=ROOT.kViolet-4,  Label="WZ JER Up", SkipMe=True
+##WZ_JER_Dn : WZJets_JER_Down : 2.165  ; FillColor=ROOT.kViolet-4,  Label="WZ JER Dn", SkipMe=True

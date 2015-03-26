@@ -2,6 +2,7 @@
 #include "CMGTools/TTHAnalysis/interface/DistributionRemapper.h"
 #include "CMGTools/TTHAnalysis/interface/PdfWeightProducerTool.h"
 #include "CMGTools/TTHAnalysis/interface/IgProfHook.h"
+#include "CMGTools/TTHAnalysis/interface/TPieE.h"
 
 namespace {
     struct dictionary {
@@ -9,5 +10,6 @@ namespace {
         DistributionRemapper remapper;
         PdfWeightProducerTool pdfw;
         SetupIgProfDumpHook hook;
+        TPieE tpie;
     };
 }
