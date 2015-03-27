@@ -1,5 +1,7 @@
 from PhysicsTools.Heppy.analyzers.core.Analyzer import Analyzer
 #from PhysicsTools.HeppyCore.utils.deltar import deltaR
+from CMGTools.TTHAnalysis.leptonMVA import LeptonMVA
+import os
 import ROOT
 
         
@@ -65,6 +67,12 @@ class LeptonPrinter( Analyzer ):
         #self.estimator4.initialize("BDT4", self.estimator4.kTrigCSA14, True, self.sxmls)
         self.estimator4.initialize("BDT4", self.estimator4.kTrigCSA14, False, self.sxmls)
 
+        self.leptonMVAKindTTH = getattr(self.cfg_ana, "leptonMVAKindTTH", "Susy")
+        #self.leptonMVAKindTTH = "SusyWithBoost" # --- <FATAL> BDTG                     : You declared 12 variables in the Reader while there are 9 variables declared in the file
+        self.leptonMVAPathTTH = getattr(self.cfg_ana, "leptonMVAPathTTH", "CMGTools/TTHAnalysis/data/leptonMVA/tth/%s_BDTG.weights.xml")
+        if self.leptonMVAPathTTH[0] != "/": self.leptonMVAPathTTH = "%s/src/%s" % ( os.environ['CMSSW_BASE'], self.leptonMVAPathTTH)
+        self.leptonMVATTH = LeptonMVA(self.leptonMVAKindTTH, self.leptonMVAPathTTH, self.cfg_comp.isMC, self.cfg_ana.fname)
+
         with open(self.cfg_ana.fname, 'w') as f:
             f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,\n')
             #f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,isLooseMuon\n')
@@ -98,7 +106,9 @@ class LeptonPrinter( Analyzer ):
                   sline += "%6.6g," % ele.relIso03
                   sline += "%6.6g," % ele.sip3D()
                   #sline += ","
-                  sline += "%6.6g," % ele.mvaValueTTH
+                  #sline += "%6.6g," % ele.mvaValueTTH
+                  #sline += "%6.6g," % ele.mvaValueSusy
+                  sline += "%6.6g," % self.leptonMVATTH(ele)
                   sline += "%6.6g," % ele.mvaRun2("NonTrigPhys14")
 #                  sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, True, True, self.cfg_ana.fname)
 #                  sline += "%6.6g," % self.estimator.mvaValue(ele.physObj, ele.associatedVertex, ele.rho, False, True, self.cfg_ana.fname)
@@ -143,20 +153,20 @@ class LeptonPrinter( Analyzer ):
                   sline = sline.replace(" ", "")
                   #f.write(sline)
                   #slines.append(sline)
-#                 f = open(self.cfg_ana.fname, "r")
-#                 contents = f.readlines()
-#                 f.close()
-
-#                 contents.insert(-3, sline)
-
-#                 f = open(self.cfg_ana.fname, "w")
-#                 contents = "".join(contents)
-#                 f.write(contents)
-#                 f.close()
-
-                  f = open(self.cfg_ana.fname, "a")
-                  f.write(sline)
+                  f = open(self.cfg_ana.fname, "r")
+                  contents = f.readlines()
                   f.close()
+
+                  contents.insert(-3, sline)
+
+                  f = open(self.cfg_ana.fname, "w")
+                  contents = "".join(contents)
+                  f.write(contents)
+                  f.close()
+
+#                  f = open(self.cfg_ana.fname, "a")
+#                  f.write(sline)
+#                  f.close()
 
         for mu in event.selectedMuons:
              #if (event.genHiggsDecayMode in [15, 23, 24]) and len(event.selectedLeptons) == 2:
@@ -178,7 +188,9 @@ class LeptonPrinter( Analyzer ):
                   #sline += "%6.6g," % mu.physObj.isLooseMuon()
                   #sline += "%6.6g," % mu.segmentCompatibility()
                   #sline += "%6.6g," % mu.mvaRun2("NonTrigPhys14")
-                  sline += "%6.6g," % mu.mvaValueTTH
+                  #sline += "%6.6g," % mu.mvaValueTTH
+                  #sline += "%6.6g," % mu.mvaValueSusy
+                  sline += "%6.6g," % self.leptonMVATTH(mu)
                   sline += "%d,"% mu.isPFMuon()
                   sline += "%d,"% mu.isGlobalMuon()
                   sline += "%6.6g," % (mu.innerTrack().ptError()/mu.innerTrack().pt())
@@ -193,9 +205,21 @@ class LeptonPrinter( Analyzer ):
                   sline = sline.replace(" ", "")
                   #f.write(sline)
                   #slines.append(sline)
-                  f = open(self.cfg_ana.fname, "a")
-                  f.write(sline)
+
+                  f = open(self.cfg_ana.fname, "r")
+                  contents = f.readlines()
                   f.close()
+
+                  contents.insert(-3, sline)
+
+                  f = open(self.cfg_ana.fname, "w")
+                  contents = "".join(contents)
+                  f.write(contents)
+                  f.close()
+
+#                  f = open(self.cfg_ana.fname, "a")
+#                  f.write(sline)
+#                  f.close()
 
         #with open(self.cfg_ana.fname, 'a') as f:
 #             for sline in slines:
