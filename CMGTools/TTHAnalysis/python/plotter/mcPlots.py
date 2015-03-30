@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #from mcAnalysis import *
 from CMGTools.TTHAnalysis.plotter.mcAnalysis import *
+from math import *
+from ROOT import *
 
 SAFE_COLOR_LIST=[
 ROOT.kBlack, ROOT.kRed, ROOT.kGreen+2, ROOT.kBlue, ROOT.kMagenta+1, ROOT.kOrange+7, ROOT.kCyan+1, ROOT.kGray+2, ROOT.kViolet+5, ROOT.kSpring+5, ROOT.kAzure+1, ROOT.kPink+7, ROOT.kOrange+3, ROOT.kBlue+3, ROOT.kMagenta+3, ROOT.kRed+2,
@@ -687,7 +689,7 @@ class PlotMaker:
                             dump.close()
                         else:
                             if "TH2" in total.ClassName() or "TProfile2D" in total.ClassName():
-                                nCats = 3
+                                nCats = options.matrixSize
                                 c = array('i', [])
                                 v = array('f', [])
                                 v1 = array('f', [])
@@ -735,7 +737,7 @@ class PlotMaker:
                                 pie.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
                                 pie.Draw("nol <")
                                 c2.Print("%s/%s.%s" % (fdir, "ThePie", ext))
-
+                                
                                 if nCats >= 2:
                                     c21 = ROOT.TCanvas()
                                     pie1 = ROOT.TPie("ThePie", "ThePie", len(v1), v1, c, a)
@@ -768,6 +770,9 @@ class PlotMaker:
                                     pie4.SetLabelFormat("#splitline{%val (%perc)}{%txt}")
                                     pie4.Draw("nol <")
                                     c24.Print("%s/%s.%s" % (fdir, "ThePie_4", ext))
+
+                                    V = [v1, v2, v3, v4]
+                                    nbins = 4
 
                                 if nCats >= 3:
                                     c25 = ROOT.TCanvas()
@@ -810,6 +815,63 @@ class PlotMaker:
                                     pie9.Draw("nol <")
                                     c29.Print("%s/%s.%s" % (fdir, "ThePie_9", ext))
 
+                                    V = V + [v5, v6, v7, v8, v9]
+                                    nbins += 5
+
+                                SB = []
+                                logSB = []
+                                for n in xrange(len(V)):
+                                    for m in xrange(len(V[n])):
+                                        sys.stdout.write("%6.6g " % V[n][m])
+                                    #print " ", V[n][-1] #/sum(V[n][0:-1])
+                                    sb = V[n][-1]/sum(V[n][0:-1])*100
+                                    SB.append(sb)
+                                    logSB.append(log10(sb) if sb > 0 else sb)
+                                    #print " %6.3g %6.3g" % (sb, log10(sb))
+                                    print " %6.3g %6.3g" % (sb, log10(sb) if sb > 0 else sb)
+                                print
+                                
+                                iSB  = zip(xrange(len(V)), V, SB, logSB)
+                                iSBs = sorted(iSB, key = lambda x: x[3])
+                                iSBs1 = zip(*iSBs)
+
+                                for n in xrange(len(iSBs1[0])):
+                                    sys.stdout.write("%d " % iSBs1[0][n])
+                                    for m in xrange(len(iSBs1[1][n])):
+                                        sys.stdout.write("%6.6g " % iSBs1[1][n][m])
+                                        #sys.stdout.write("(%d, %d) " % (n, m))
+                                    print " %6.3g %6.3g" % (iSBs1[2][n], iSBs1[3][n])
+                                print
+                                
+                                V = map(list, zip(*iSBs1[1]))
+                                SB = iSBs1[3]
+                                #SB             = array('f', [     0.704    ,   0.76   ,   1.14   ,  1.38     ])
+                                #binning_vector = array('f', [ 0.5   ,    0.732   ,   0.95   ,  1.26   ,  1.4 ])
+
+                                hs = THStack()
+                                h = []
+                                for n,v in enumerate(V):
+                                    nam = "".join(names[n])
+                                    h.append(TH1F(nam, nam, 4, 0.5, 1.5))
+                                    #h = TH1F(nam, nam, 4, binning_vector)
+                                    for i,b in enumerate(v):
+                                        h[n].Fill(SB[i],b)
+                                    h[n].SetFillColor(c[n])
+                                    hs.Add(h[n])
+
+                                c3 = ROOT.TCanvas()
+                                hs.Draw()
+                                c3.Print("%s/%s.%s" % (fdir, "TheStack", ext))
+
+                                '''
+                                H = []
+                                for i,v in enumerate(iSBs1[1]):
+                                    H.append(TH1F(names[i], names[i], len(iSBs1[3]), array('f', [0.5, 0.732, 0.95, 1.26, 1.4])))
+                                
+                                for i,v in enumerate(iSBs1[1]):
+                                    for val in v:
+                                        H[i].Fill(iSBs1[3][i], val)
+                                '''
                             else:
                                 c1.Print("%s/%s.%s" % (fdir, pspec.name, ext))
                 c1.Close()
@@ -841,6 +903,7 @@ def addPlotMakerOptions(parser):
     parser.add_option("--exclude-plot", "--xP", dest="plotexclude", action="append", default=[], help="Exclude these plots from the full file")
     parser.add_option("--legendWidth", dest="legendWidth", type="float", default=0.25, help="Width of the legend")
     parser.add_option("--flagDifferences", dest="flagDifferences", action="store_true", default=False, help="Flag plots that are different (when using only two processes, and plotmode nostack")
+    parser.add_option("--matrix-size", dest="matrixSize", type="int", default="2", help="Matrix size 2x2 (2) or 3x3 (3).")
 
 if __name__ == "__main__":
     from optparse import OptionParser
