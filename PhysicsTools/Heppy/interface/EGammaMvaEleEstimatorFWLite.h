@@ -7,6 +7,7 @@ namespace reco { struct Vertex; }
 namespace pat { struct Electron; }
 #include <vector>
 #include <string>
+#include <iostream>
 
 namespace heppy {
 
@@ -33,7 +34,8 @@ class EGammaMvaEleEstimatorFWLite {
                 const reco::Vertex& vertex,
                 double rho,
                 bool full5x5,
-                bool printDebug = false);
+                bool printDebug = false,
+                const char *outfname = 0);
     private:
         EGammaMvaEleEstimator *estimator_;
         EGammaMvaEleEstimatorCSA14 *estimatorCSA14_;

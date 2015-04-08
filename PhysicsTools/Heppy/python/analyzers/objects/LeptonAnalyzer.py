@@ -331,7 +331,8 @@ class LeptonAnalyzer( Analyzer ):
         # Set tight MVA id
         for ele in allelectrons:
             if self.cfg_ana.ele_tightId=="MVA" :
-                 ele.tightIdResult = ele.electronID("POG_MVA_ID_Trig_full5x5")
+                 #ele.tightIdResult = ele.electronID("POG_MVA_ID_Trig_full5x5")
+                 ele.tightIdResult = ele.electronID("POG_MVA_ID_Run2_NonTrig_Tight")
             elif self.cfg_ana.ele_tightId=="Cuts_2012" :
                  ele.tightIdResult = -1 + 1*ele.electronID("POG_Cuts_ID_2012_Veto_full5x5") + 1*ele.electronID("POG_Cuts_ID_2012_Loose_full5x5") + 1*ele.electronID("POG_Cuts_ID_2012_Medium_full5x5") + 1*ele.electronID("POG_Cuts_ID_2012_Tight_full5x5")
             else :

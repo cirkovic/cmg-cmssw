@@ -1,0 +1,6 @@
+# --- ttH inclusive
+#ttH_hww+   : TTH_sync : 1 : GenHiggsDecayMode == 24 ; FillColor=ROOT.kOrange+10, Label="ttH WW"
+#ttH_hzz+   : TTH_sync : 1 : GenHiggsDecayMode == 23 ; FillColor=ROOT.kPink+9, Label="ttH ZZ"
+#ttH_htt+   : TTH_sync : 1 : GenHiggsDecayMode == 15 ; FillColor=ROOT.kOrange+4, Label="ttH \#tau\#tau"
+#ttH+     : TTH_sync : 1 ; FillColor=ROOT.kOrange+1, Label="ttH" #, NormSystematic=0.2
+ttH+     : TTH_sync : 1 ; FillColor=ROOT.kOrange+1, Label="ttH" #, NormSystematic=0.2

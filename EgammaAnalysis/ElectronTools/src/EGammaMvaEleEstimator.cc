@@ -478,7 +478,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 					Double_t ip3d,
 					Double_t eta,
 					Double_t pt,
-					Bool_t printDebug) {
+					Bool_t printDebug,
+                         std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -530,8 +531,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
   }
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -553,7 +554,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 	 << " ip3d " << fMVAVar_ip3d  
 	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 
@@ -583,7 +584,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 					 Double_t PreShowerOverRaw,
 					 Double_t eta,
 					 Double_t pt,
-					 Bool_t printDebug) {
+					 Bool_t printDebug,
+                          std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -633,8 +635,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
   }
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -655,7 +657,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 	 << " PreShowerOverRaw " << fMVAVar_PreShowerOverRaw  
        	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 
@@ -687,7 +689,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 					//Double_t EoPout,
 					Double_t eta,
 					Double_t pt,
-					Bool_t printDebug) {
+					Bool_t printDebug,
+                         std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -739,8 +742,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -760,7 +763,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(Double_t fbrem,
 	 << " PreShowerOverRaw " << fMVAVar_PreShowerOverRaw  
 	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 
@@ -1000,7 +1003,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
 					const reco::Vertex& vertex, 
 					const TransientTrackBuilder& transientTrackBuilder,					
 					EcalClusterLazyTools myEcalCluster,
-					bool printDebug) {
+					bool printDebug,
+                         std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -1098,8 +1102,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
 
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -1120,7 +1124,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
 	 << " ip3d " << fMVAVar_ip3d  
 	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 
@@ -1135,7 +1139,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
 					 double rho,
 					 //const TransientTrackBuilder& transientTrackBuilder,
 					 EcalClusterLazyTools myEcalCluster,
-					 bool printDebug) {
+					 bool printDebug,
+                          std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -1208,8 +1213,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
 
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -1232,7 +1237,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(const reco::GsfElectron& ele,
       // << " EoPout " << fMVAVar_EoPout  
 	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 
@@ -1245,7 +1250,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
                                          const reco::Vertex& vertex,
                                          double rho,
                                          bool useFull5x5,
-                                         bool printDebug) {
+                                         bool printDebug,
+                                         std::ostream& out) {
 
   if (!fisInitialized) {
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n";
@@ -1333,8 +1339,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
   }
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem
+    out << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
+    out << " fbrem " <<  fMVAVar_fbrem
          << " kfchi2 " << fMVAVar_kfchi2
          << " mykfhits " << fMVAVar_kfhits
          << " gsfchi2 " << fMVAVar_gsfchi2
@@ -1359,7 +1365,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
          << " ip3d " << fMVAVar_ip3d
          << " eta " << fMVAVar_eta
          << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
   return mva;
@@ -1369,7 +1375,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
 // for kTrigNoIP algorithm only.
 Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele, 
 					 double rho,
-					 bool printDebug) {
+					 bool printDebug,
+                          std::ostream& out) {
   
   if (!fisInitialized) { 
     std::cout << "Error: EGammaMvaEleEstimator not properly initialized.\n"; 
@@ -1440,8 +1447,8 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
 
 
   if(printDebug) {
-    cout << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
-    cout << " fbrem " <<  fMVAVar_fbrem  
+    out << " *** Inside the class fMethodname " << fMethodname << " fMVAType " << fMVAType << endl;
+    out << " fbrem " <<  fMVAVar_fbrem  
       	 << " kfchi2 " << fMVAVar_kfchi2  
 	 << " mykfhits " << fMVAVar_kfhits  
 	 << " gsfchi2 " << fMVAVar_gsfchi2  
@@ -1464,7 +1471,7 @@ Double_t EGammaMvaEleEstimator::mvaValue(const pat::Electron& ele,
       // << " EoPout " << fMVAVar_EoPout  
 	 << " eta " << fMVAVar_eta  
 	 << " pt " << fMVAVar_pt << endl;
-    cout << " ### MVA " << mva << endl;
+    out << " ### MVA " << mva << endl;
   }
 
 

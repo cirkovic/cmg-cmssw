@@ -129,7 +129,9 @@ lepAna = cfg.Analyzer(
     LeptonAnalyzer, name="leptonAnalyzer",
     # input collections
     muons='slimmedMuons',
+    #muons='patMuons', #selectedPatMuons, cleanPatMuons
     electrons='slimmedElectrons',
+    #electrons='patElectrons', #selectedPatElectrons, cleanPatElectrons
     rhoMuon= 'fixedGridRhoFastjetAll',
     rhoElectron = 'fixedGridRhoFastjetAll',
     # energy scale corrections and ghost muon suppression (off by default)
@@ -344,6 +346,11 @@ ttHCoreEventAna = cfg.Analyzer(
 #    nBJet     = ('CSVv2IVFM', 0, "jet.pt() > 30"),     # require at least 0 jets passing CSV medium and pt > 30
 #    )
 
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter",
+    fname = 'preselEventDump_CERN.csv'
+    )
 
 # Core sequence of all common modules
 susyCoreSequence = [
@@ -359,6 +366,7 @@ susyCoreSequence = [
     susyScanAna,
     vertexAna,
     lepAna,
+#    leptonPrinter,
     ttHLepSkim,
     #ttHLepMCAna,
     photonAna,
@@ -369,6 +377,7 @@ susyCoreSequence = [
     #ttHSVAna, # out of core sequence for now
     metAna,
     ttHCoreEventAna,
+    leptonPrinter,
     #ttHJetMETSkim
     triggerFlagsAna,
     eventFlagsAna,

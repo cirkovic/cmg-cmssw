@@ -69,7 +69,8 @@ class EGammaMvaEleEstimator{
                       const reco::Vertex& vertex, 
                       const TransientTrackBuilder& transientTrackBuilder,
                       EcalClusterLazyTools myEcalCluster,
-                      bool printDebug = kFALSE);
+                      bool printDebug = kFALSE,
+                      std::ostream& out = std::cout);
 
     // for kTrigNoIP algorithm
     Double_t mvaValue(const reco::GsfElectron& ele, 
@@ -77,18 +78,21 @@ class EGammaMvaEleEstimator{
 		      double rho,
 		      //const TransientTrackBuilder& transientTrackBuilder,
                       EcalClusterLazyTools myEcalCluster,
-                      bool printDebug = kFALSE);
+                      bool printDebug = kFALSE,
+                      std::ostream& out = std::cout);
 
     Double_t mvaValue(const pat::Electron& ele, 
 		      double rho,
-		      bool printDebug = kFALSE);
+		      bool printDebug = kFALSE,
+                std::ostream& out = std::cout);
 
     // for kTrig, kNonTrig and kTrigNoIP algorithm
     Double_t mvaValue(const pat::Electron& ele,
 		      const reco::Vertex& vertex,
 		      double rho,
                       bool useFull5x5 = kFALSE,
-		      bool printDebug = kFALSE);
+		      bool printDebug = kFALSE,
+                std::ostream& out = std::cout);
     
     Double_t isoMvaValue(const reco::GsfElectron& ele, 
                          const reco::Vertex& vertex, 
@@ -153,7 +157,8 @@ class EGammaMvaEleEstimator{
                       Double_t ip3d,
                       Double_t eta,
                       Double_t pt,
-                      Bool_t printDebug = kFALSE );
+                      Bool_t printDebug = kFALSE,
+                      std::ostream& out = std::cout );
  
     // for kTrigNoIP algo
     Double_t mvaValue(Double_t fbrem, 
@@ -177,7 +182,8 @@ class EGammaMvaEleEstimator{
                       Double_t PreShowerOverRaw,
                       Double_t eta,
                       Double_t pt,
-                      Bool_t printDebug = kFALSE );
+                      Bool_t printDebug = kFALSE,
+                      std::ostream& out = std::cout );
 
     // for kNonTrig algo
     Double_t mvaValue(Double_t fbrem, 
@@ -200,7 +206,8 @@ class EGammaMvaEleEstimator{
                       Double_t PreShowerOverRaw,
                       Double_t eta,
                       Double_t pt,
-                      Bool_t printDebug = kFALSE );
+                      Bool_t printDebug = kFALSE,
+                      std::ostream& out = std::cout );
  
     Double_t IDIsoCombinedMvaValue(Double_t fbrem, 
                                    Double_t kfchi2,

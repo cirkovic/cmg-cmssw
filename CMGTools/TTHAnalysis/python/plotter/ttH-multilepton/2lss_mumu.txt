@@ -1,11 +1,23 @@
-== 2 good leptons: nLepGood10 == 2
-cleanup: minMllAFAS > 12
-pt2010: LepGood1_pt>20 && LepGood2_pt>10
-pt2020_htllv100 : LepGood2_pt > 20 && LepGood1_pt+LepGood2_pt+met_pt > 100
-lep MVA: min(LepGood1_mvaTTH,LepGood2_mvaTTH) > 0.9
-mu mu:  abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13
-same-sign: LepGood1_charge*LepGood2_charge > 0
-tight-charge: LepGood1_tightCharge && LepGood2_tightCharge
-4j: nJet25>=2
-2b loose: nBJetLoose25 >= 2 || nBJetMedium25 >= 1
-#2B tight: nBJetMedium25 >= 2
+>= 2 loose leptons : (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && nLepGood >= 2
+
+mu mu SS: (abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13) && (LepGood1_charge*LepGood2_charge > 0)
+
+pt2020: LepGood1_pt>20 && LepGood2_pt>20
+
+## By Charlie
+##relative isolation (R=0.3,rho*EA) < 0.1
+#lep iso: max(LepGood1_relIso03,LepGood2_relIso03) < 0.1
+##sip3D < 4
+#lep dxy: max(LepGood1_sip3d,LepGood2_sip3d) < 4
+##Medium ID described on slide3 here
+#lep id:  LepGood1_mediumMuonId == 1 && LepGood2_mediumMuonId == 1
+##track.pt/error in track.pt < 0.2
+#lep tightCharge: LepGood1_tightCharge >= 1 && LepGood2_tightCharge >= 1
+
+2 cut-selection leptons: (max(LepGood1_relIso03,LepGood2_relIso03) < 0.1) && (max(LepGood1_sip3d,LepGood2_sip3d) < 4) && (LepGood1_mediumMuonId == 1 && LepGood2_mediumMuonId == 1) && (LepGood1_tightCharge >= 1 && LepGood2_tightCharge >= 1)
+
+#2b loose: nBJetLoose25 >= 2
+
+
+#4j: nJet25>=4
+

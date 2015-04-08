@@ -17,6 +17,8 @@ from copy import *
 from CMGTools.TTHAnalysis.plotter.mcCorrections import *
 from CMGTools.TTHAnalysis.plotter.fakeRate import *
 
+from ROOT import *
+
 if "/functions_cc.so" not in ROOT.gSystem.GetLibraries(): 
     ROOT.gROOT.ProcessLine(".L %s/src/CMGTools/TTHAnalysis/python/plotter/functions.cc+" % os.environ['CMSSW_BASE']);
 
@@ -214,6 +216,7 @@ class TreeToYield:
         if not self._isInit: self._init()
         return self._tree
     def getYields(self,cuts,noEntryLine=False):
+        self._file_i = 0
         if not self._isInit: self._init()
         report = []; cut = ""
         cutseq = [ ['entry point','1'] ]
@@ -270,6 +273,26 @@ class TreeToYield:
             if self._weight and nev < 1000: print nfmtS % toPrint,
             else                          : print nfmtL % toPrint,
             print ""
+    def _printArr(self, title, arr, last=False, ndecs=2):
+        i = 0
+        for e in arr:
+            if i > 0:
+               self._o_txt.write(self._txt_delimiter+str(round(e, ndecs)))
+               #self._o_csv.write(self._csv_delimiter+str(round(e, ndecs)))
+            else:
+               self._o_txt.write(str(round(e, ndecs)))
+               #self._o_csv.write(str(round(e, ndecs)))
+            i += 1
+        if not last:
+           self._o_txt.write(self._txt_delimiter)
+           #self._o_csv.write(self._csv_delimiter)
+    def _printArrEl(self, arr, index=0, prefix='', form='', sufix='', first=False):
+        form = prefix+'{0:'+form+'}'+sufix
+        self._o_txt.write(form.format(arr[index]))
+        #if not first:
+           #self._o_csv.write(self._csv_delimiter+form.format(arr[index]))
+        #else:
+           #self._o_csv.write(form.format(arr[index]))
     def _getYield(self,tree,cut):
         if self._weight:
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
@@ -286,6 +309,82 @@ class TreeToYield:
             cut = self.adaptExpr(cut,cut=True)
             if self._options.doS2V:
                 cut  = scalarToVector(cut)
+            
+            if self._options.prtVars and self._file_i > 0:
+               f_dummy1 = TFile.Open('f_dummy1.root','RECREATE')
+               tree1 = tree.CloneTree()
+               f_dummy1.Write()
+               elname = 'elist_cut'+str(self._file_i)
+               tree1.Draw('>>'+elname,cut)
+               elist = gDirectory.Get(elname)
+               elist.Print()
+               tree1.SetEventList(elist)
+               f_dummy2 = TFile.Open('f_dummy2.root','RECREATE')
+               tree2 = tree1.CopyTree("")
+               f_dummy2.Write()
+               self._o_txt = open(self._options.outDir+'/cut'+str(self._file_i)+'.txt', 'wb')
+               self._txt_delimiter = ' '
+               self._csv_delimiter = ','
+               for ev in tree2:
+                  self._o_txt.write("{0:6}".format(ev.run))
+                  self._o_txt.write("{0:7}".format(ev.lumi))
+                  self._o_txt.write("{0:11}".format(ev.evt))
+                  self._o_txt.write("{0:+5}".format(ev.LepGood_pdgId[0]))
+                  self._o_txt.write("{0:8.2f}".format(ev.LepGood_pt[0]))
+                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_eta[0]))
+                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_phi[0]))
+                  self._o_txt.write("{0:+6}".format(ev.LepGood_pdgId[1]))
+                  self._o_txt.write("{0:8.2f}".format(ev.LepGood_pt[1]))
+                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_eta[1]))
+                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_phi[1]))
+                  self._o_txt.write("{0:10.1f}".format(ev.met_pt))
+                  self._o_txt.write("{0:+7.2f}".format(ev.met_phi))
+                  self._o_txt.write("    {0:<2}".format(ev.nJet25))
+
+                  if self._file_i == 0 and self._options.extPrt:
+                      self._o_txt.write("    {0:6}".format(ev.GenHiggsDecayMode))
+                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_relIso03[0]))
+                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_tightId[0]))
+                      self._o_txt.write("{0:+10.2f}".format(ev.LepGood_sip3d[0]))
+                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dxy[0]))
+                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dz[0]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_convVeto[0]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_lostHits[0]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_tightCharge[0]))
+                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_relIso03[1]))
+                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_tightId[1]))
+                      self._o_txt.write("{0:+10.2f}".format(ev.LepGood_sip3d[1]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_convVeto[1]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_lostHits[1]))
+                      self._o_txt.write("{0:6}".format(ev.LepGood_tightCharge[1]))
+                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dxy[1]))
+                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dz[1]))
+                      passing_cuta = 1 if ev.GenHiggsDecayMode == 15 or ev.GenHiggsDecayMode == 23 or ev.GenHiggsDecayMode == 24 else 0
+                      passing_cutb = 1 if max(ev.LepGood_relIso03[0],ev.LepGood_relIso03[1]) < 0.1 else 0
+                      passing_cutc = 1 if ev.LepGood_tightId[0] > (abs(ev.LepGood_pdgId[0]) == 11) and ev.LepGood_tightId[1] > (abs(ev.LepGood_pdgId[1]) == 11) else 0
+                      passing_cutd = 1 if max(ev.LepGood_sip3d[0],ev.LepGood_sip3d[1]) < 4 else 0
+                      passing_cute = 1 if (abs(ev.LepGood_pdgId[0]) == 13 or (ev.LepGood_convVeto[0] and ev.LepGood_lostHits[0] == 0 and ev.LepGood_tightCharge[0] > 1)) and (abs(ev.LepGood_pdgId[1]) == 13 or (ev.LepGood_convVeto[1] and ev.LepGood_lostHits[1] == 0 and ev.LepGood_tightCharge[1] > 1)) else 0
+                      self._o_txt.write("    {0:6}".format(passing_cuta))
+                      self._o_txt.write("{0:6}".format(passing_cutb))
+                      self._o_txt.write("{0:6}".format(passing_cutc))
+                      self._o_txt.write("{0:6}".format(passing_cutd))
+                      self._o_txt.write("{0:6}".format(passing_cute))
+
+                      self._o_txt.write("{0:6}".format(passing_cuta))
+                      self._o_txt.write("{0:6}".format(passing_cuta and passing_cutb))
+                      self._o_txt.write("{0:6}".format(passing_cuta and passing_cutb and passing_cutc))
+                      self._o_txt.write("{0:6}".format(passing_cuta and passing_cutb and passing_cutc and passing_cutd))
+                      self._o_txt.write("{0:6}".format(passing_cuta and passing_cutb and passing_cutc and passing_cutd and passing_cute))
+
+                  self._o_txt.write('\n')
+
+               self._o_txt.close()
+               #self._o_csv.close()
+               del f_dummy1, f_dummy2
+               os.system('rm f_dummy1.root f_dummy2.root')
+
+            self._file_i += 1
+
             npass = tree.Draw("1",self.adaptExpr(cut,cut=True),"goff", self._options.maxEntries);
             return [ npass, sqrt(npass) ]
     def _stylePlot(self,plot,spec):
@@ -467,6 +566,10 @@ def addTreeToYieldOptions(parser):
     parser.add_option("--s2v", "--scalar2vector",     dest="doS2V",    action="store_true", default=False, help="Do scalar to vector conversion") 
     parser.add_option("--neg", "--allow-negative-results",     dest="allowNegative",    action="store_true", default=False, help="If the total yield is negative, keep it so rather than truncating it to zero") 
     parser.add_option("--max-entries",     dest="maxEntries", default=1000000000, type="int", help="Max entries to process in each tree") 
+    parser.add_option("--pV", "--printVariables",     dest="prtVars",    action="store_true", default=False, help="Print values of the variables relevant for the mcAnalysis cuts")
+    parser.add_option("--oD", "--output-directory", dest="outDir",  type="string", default=None, help="Path to the output directory")
+    parser.add_option("--eP", "--extendedPrint",     dest="extPrt",    action="store_true", default=False, help="Print extended list of variables")
+    parser.add_option("--cS", "--cutSelection",     dest="cutSel",    type="int", default=0, help="Print cut selection case [1..4]")
 
 def mergeReports(reports):
     import copy

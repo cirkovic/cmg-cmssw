@@ -99,7 +99,8 @@ _ElectronVars = {
 
 
 class LeptonMVA:
-    def __init__(self, kind, basepath, isMC):
+    def __init__(self, kind, basepath, isMC, fname=""):
+        self._fname = fname
         global _CommonVars, _CommonSpect, _ElectronVars
         #print "Creating LeptonMVA of kind %s, base path %s" % (kind, basepath)
         self._isMC = isMC
@@ -123,6 +124,39 @@ class LeptonMVA:
             ( lambda x: x.pt() >  25 and abs(x.eta()) >= 1.479                       , MVATool("BDTG",basepath%"el_pteta_high_ec",_CommonSpect,elVars) ),
         ])
     def __call__(self,lep,ncorr="auto"):
+        if self._fname != "":
+            with open(self._fname, 'a') as f:
+                f.write(" *** Inside the class LeptonMVA\n")
+                sline = ""
+                if self._kind == "Susy":
+                    sline += "LepGood_neuRelIso03 %6.6g " % (lep.relIso03 - lep.chargedHadronIsoR(0.3)/lep.pt())
+                    sline += "LepGood_chRelIso03 %6.6g " % (lep.chargedHadronIsoR(0.3)/lep.pt())
+                    sline += "LepGood_jetDR %6.6g " % (min(deltaR(lep.eta(),lep.phi(),lep.jet.eta(),lep.jet.phi()),0.5))
+                    sline += "LepGood_jetPtRatio %6.6g " % (min(lep.pt()/lep.jet.pt(),1.5))
+                    sline += "LepGood_jetBTagCSV %6.6g " % (max( (lep.jet.btag('combinedInclusiveSecondaryVertexV2BJetTags') if hasattr(lep.jet, 'btag') else -99) ,0.))
+                    sline += "LepGood_sip3d %6.6g " % (lep.sip3D())
+                    sline += "LepGood_dxy %6.6g " % (log(abs(lep.dxy())))
+                    sline += "LepGood_dz %6.6g " % (log(abs(lep.dz())))
+                if self._kind == "SusyWithBoost":
+                    sline += "LepGood_miniRelIsoCharged %6.6g " % (getattr(x,'miniAbsIsoCharged',-99)/lep.pt())
+                    sline += "LepGood_miniRelIsoNeutral %6.6g " % (getattr(x,'miniAbsIsoNeutral',-99)/lep.pt())
+                    sline += "LepGood_jetPtRelV1 %6.6g " % (ptRelv1(lep.p4(),lep.jet.p4()))
+                    sline += "LepGood_neuRelIso03 %6.6g " % (lep.relIso03 - lep.chargedHadronIsoR(0.3)/lep.pt())
+                    sline += "LepGood_chRelIso03 %6.6g " % (lep.chargedHadronIsoR(0.3)/lep.pt())
+                    sline += "LepGood_jetDR %6.6g " % (min(deltaR(lep.eta(),lep.phi(),lep.jet.eta(),lep.jet.phi()),0.5))
+                    sline += "LepGood_jetPtRatio %6.6g " % (min(lep.pt()/lep.jet.pt(),1.5))
+                    sline += "LepGood_jetBTagCSV %6.6g " % (max( (lep.jet.btag('combinedInclusiveSecondaryVertexV2BJetTags') if hasattr(lep.jet, 'btag') else -99) ,0.))
+                    sline += "LepGood_sip3d %6.6g " % (lep.sip3D())
+                    sline += "LepGood_dxy %6.6g " % (log(abs(lep.dxy())))
+                    sline += "LepGood_dz %6.6g " % (log(abs(lep.dz())))
+                if   abs(lep.pdgId()) == 11:
+                    sline += "LepGood_mvaIdPhys14 %6.6g" % lep.mvaRun2("NonTrigPhys14")
+                    f.write(sline+"\n")
+                    f.write(" ### MVA %6.6g\n" % self.el(lep,ncorr))
+                elif abs(lep.pdgId()) == 13:
+                    sline += "LepGood_segmentCompatibility %6.6g" % lep.segmentCompatibility()
+                    f.write(sline+"\n")
+                    f.write(" ### MVA %6.6g\n" % self.mu(lep,ncorr))
         if ncorr == "auto": ncorr = 0 # (1 if self._isMC else 0)
         if   abs(lep.pdgId()) == 11: return self.el(lep,ncorr)
         elif abs(lep.pdgId()) == 13: return self.mu(lep,ncorr)
