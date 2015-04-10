@@ -71,7 +71,10 @@ class LeptonPrinter( Analyzer ):
         #self.leptonMVAKindTTH = "SusyWithBoost" # --- <FATAL> BDTG                     : You declared 12 variables in the Reader while there are 9 variables declared in the file
         self.leptonMVAPathTTH = getattr(self.cfg_ana, "leptonMVAPathTTH", "CMGTools/TTHAnalysis/data/leptonMVA/tth/%s_BDTG.weights.xml")
         if self.leptonMVAPathTTH[0] != "/": self.leptonMVAPathTTH = "%s/src/%s" % ( os.environ['CMSSW_BASE'], self.leptonMVAPathTTH)
-        self.leptonMVATTH = LeptonMVA(self.leptonMVAKindTTH, self.leptonMVAPathTTH, self.cfg_comp.isMC, self.cfg_ana.fname)
+        if self.cfg_ana.printMVA:
+            self.leptonMVATTH = LeptonMVA(self.leptonMVAKindTTH, self.leptonMVAPathTTH, self.cfg_comp.isMC, self.cfg_ana.fname)
+        else:
+            self.leptonMVATTH = LeptonMVA(self.leptonMVAKindTTH, self.leptonMVAPathTTH, self.cfg_comp.isMC)
 
         with open(self.cfg_ana.fname, 'w') as f:
             f.write('event,pdgId,pT,Eta,Phi,dxy,dz,relIso,sip3D,prompt MVA,ele MVA ID / isPFMuon,lost hits / isGlobalMuon,isGsfCtfScPixChargeConsistent / chargeFlip,passConversionVeto / isTrackerMuon,global normalized chi2,chi2 local,track kink,valid Frac,segment compatibility,\n')
@@ -153,20 +156,19 @@ class LeptonPrinter( Analyzer ):
                   sline = sline.replace(" ", "")
                   #f.write(sline)
                   #slines.append(sline)
-                  f = open(self.cfg_ana.fname, "r")
-                  contents = f.readlines()
-                  f.close()
-
-                  contents.insert(-3, sline)
-
-                  f = open(self.cfg_ana.fname, "w")
-                  contents = "".join(contents)
-                  f.write(contents)
-                  f.close()
-
-#                  f = open(self.cfg_ana.fname, "a")
-#                  f.write(sline)
-#                  f.close()
+                  if self.cfg_ana.printMVA:
+                      f = open(self.cfg_ana.fname, "r")
+                      contents = f.readlines()
+                      f.close()
+                      contents.insert(-3, sline)
+                      f = open(self.cfg_ana.fname, "w")
+                      contents = "".join(contents)
+                      f.write(contents)
+                      f.close()
+                  else:
+                      f = open(self.cfg_ana.fname, "a")
+                      f.write(sline)
+                      f.close()
 
         for mu in event.selectedMuons:
              #if (event.genHiggsDecayMode in [15, 23, 24]) and len(event.selectedLeptons) == 2:
@@ -205,21 +207,19 @@ class LeptonPrinter( Analyzer ):
                   sline = sline.replace(" ", "")
                   #f.write(sline)
                   #slines.append(sline)
-
-                  f = open(self.cfg_ana.fname, "r")
-                  contents = f.readlines()
-                  f.close()
-
-                  contents.insert(-3, sline)
-
-                  f = open(self.cfg_ana.fname, "w")
-                  contents = "".join(contents)
-                  f.write(contents)
-                  f.close()
-
-#                  f = open(self.cfg_ana.fname, "a")
-#                  f.write(sline)
-#                  f.close()
+                  if self.cfg_ana.printMVA:
+                      f = open(self.cfg_ana.fname, "r")
+                      contents = f.readlines()
+                      f.close()
+                      contents.insert(-3, sline)
+                      f = open(self.cfg_ana.fname, "w")
+                      contents = "".join(contents)
+                      f.write(contents)
+                      f.close()
+                  else:
+                      f = open(self.cfg_ana.fname, "a")
+                      f.write(sline)
+                      f.close()
 
         #with open(self.cfg_ana.fname, 'a') as f:
 #             for sline in slines:

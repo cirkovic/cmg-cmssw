@@ -349,7 +349,8 @@ ttHCoreEventAna = cfg.Analyzer(
 from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
 leptonPrinter = cfg.Analyzer(
     LeptonPrinter, name="LeptonPrinter",
-    fname = 'preselEventDump_CERN.csv'
+    fname = 'preselEventDump_CERN.csv',
+    printMVA = False
     )
 
 # Core sequence of all common modules
@@ -377,7 +378,7 @@ susyCoreSequence = [
     #ttHSVAna, # out of core sequence for now
     metAna,
     ttHCoreEventAna,
-    leptonPrinter,
+#    leptonPrinter,
     #ttHJetMETSkim
     triggerFlagsAna,
     eventFlagsAna,

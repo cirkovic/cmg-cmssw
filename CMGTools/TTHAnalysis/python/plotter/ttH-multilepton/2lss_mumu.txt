@@ -1,4 +1,5 @@
->= 2 loose leptons : (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && nLepGood >= 2
+#>= 2 loose leptons : (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && nLepGood >= 2
+== 2 loose leptons : (GenHiggsDecayMode == 15 || GenHiggsDecayMode == 23 || GenHiggsDecayMode == 24) && nLepGood == 2
 
 mu mu SS: (abs(LepGood1_pdgId) == 13 && abs(LepGood2_pdgId) == 13) && (LepGood1_charge*LepGood2_charge > 0)
 

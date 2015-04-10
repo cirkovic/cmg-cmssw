@@ -293,6 +293,20 @@ class TreeToYield:
            #self._o_csv.write(self._csv_delimiter+form.format(arr[index]))
         #else:
            #self._o_csv.write(form.format(arr[index]))
+    def printLepInfo(self, ev, i):
+        self._o_txt.write("{0:+5}".format(ev.LepGood_pdgId[i]))
+        self._o_txt.write("{0:8.2f}".format(ev.LepGood_pt[i]))
+        self._o_txt.write("{0:+6.2f}".format(ev.LepGood_eta[i]))
+        self._o_txt.write("{0:+6.2f}".format(ev.LepGood_phi[i]))
+    def printLepInfoExtra(self, ev, i):
+        self._o_txt.write("{0:+6.2f}".format(ev.LepGood_relIso03[i]))
+        self._o_txt.write("{0:+6.2f}".format(ev.LepGood_tightId[i]))
+        self._o_txt.write("{0:+10.2f}".format(ev.LepGood_sip3d[i]))
+        self._o_txt.write("{0:6}".format(ev.LepGood_convVeto[i]))
+        self._o_txt.write("{0:6}".format(ev.LepGood_lostHits[i]))
+        self._o_txt.write("{0:6}".format(ev.LepGood_tightCharge[i]))
+        self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dxy[i]))
+        self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dz[i]))
     def _getYield(self,tree,cut):
         if self._weight:
             if self._isdata: cut = "(%s)     *(%s)*(%s)" % (self._weightString,                    self._scaleFactor, self.adaptExpr(cut,cut=True))
@@ -329,36 +343,17 @@ class TreeToYield:
                   self._o_txt.write("{0:6}".format(ev.run))
                   self._o_txt.write("{0:7}".format(ev.lumi))
                   self._o_txt.write("{0:11}".format(ev.evt))
-                  self._o_txt.write("{0:+5}".format(ev.LepGood_pdgId[0]))
-                  self._o_txt.write("{0:8.2f}".format(ev.LepGood_pt[0]))
-                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_eta[0]))
-                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_phi[0]))
-                  self._o_txt.write("{0:+6}".format(ev.LepGood_pdgId[1]))
-                  self._o_txt.write("{0:8.2f}".format(ev.LepGood_pt[1]))
-                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_eta[1]))
-                  self._o_txt.write("{0:+6.2f}".format(ev.LepGood_phi[1]))
+                  for i in xrange(ev.nLepGood):
+                      self.printLepInfo(ev, i)
+                  self._o_txt.write(" "*25*(5-ev.nLepGood))
                   self._o_txt.write("{0:10.1f}".format(ev.met_pt))
                   self._o_txt.write("{0:+7.2f}".format(ev.met_phi))
                   self._o_txt.write("    {0:<2}".format(ev.nJet25))
 
                   if self._file_i == 0 and self._options.extPrt:
                       self._o_txt.write("    {0:6}".format(ev.GenHiggsDecayMode))
-                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_relIso03[0]))
-                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_tightId[0]))
-                      self._o_txt.write("{0:+10.2f}".format(ev.LepGood_sip3d[0]))
-                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dxy[0]))
-                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dz[0]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_convVeto[0]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_lostHits[0]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_tightCharge[0]))
-                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_relIso03[1]))
-                      self._o_txt.write("{0:+6.2f}".format(ev.LepGood_tightId[1]))
-                      self._o_txt.write("{0:+10.2f}".format(ev.LepGood_sip3d[1]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_convVeto[1]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_lostHits[1]))
-                      self._o_txt.write("{0:6}".format(ev.LepGood_tightCharge[1]))
-                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dxy[1]))
-                      self._o_txt.write("{0:+10.2e}".format(ev.LepGood_dz[1]))
+                      for i in xrange(ev.nLepGood):
+                          self.printLepInfoExtra(ev, i)
                       passing_cuta = 1 if ev.GenHiggsDecayMode == 15 or ev.GenHiggsDecayMode == 23 or ev.GenHiggsDecayMode == 24 else 0
                       passing_cutb = 1 if max(ev.LepGood_relIso03[0],ev.LepGood_relIso03[1]) < 0.1 else 0
                       passing_cutc = 1 if ev.LepGood_tightId[0] > (abs(ev.LepGood_pdgId[0]) == 11) and ev.LepGood_tightId[1] > (abs(ev.LepGood_pdgId[1]) == 11) else 0

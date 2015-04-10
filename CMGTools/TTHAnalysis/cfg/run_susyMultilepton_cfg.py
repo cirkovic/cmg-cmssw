@@ -170,6 +170,7 @@ selectedComponents = [
 sequence = cfg.Sequence(susyCoreSequence+[
         ttHJetTauAna,
         ttHEventAna,
+        leptonPrinter,
         treeProducer,
     ])
 
