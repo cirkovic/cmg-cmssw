@@ -450,10 +450,34 @@ if is50ns:
     
 #-------- SEQUENCE -----------
 
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_11 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_11",
+    fname = 'preselEventDump_CERN_11.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_12 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_12",
+    fname = 'preselEventDump_CERN_12.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_13 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_13",
+    fname = 'preselEventDump_CERN_13.csv',
+    printMVA = False
+    )
+
 sequence = cfg.Sequence(susyCoreSequence+[
         ttHJetTauAna,
+        leptonPrinter_11,
         ttHEventAna,
+        leptonPrinter_12,
         treeProducer,
+        leptonPrinter_13,
     ])
 preprocessor = None
 
@@ -493,7 +517,9 @@ if doMETpreprocessor:
 #-------- HOW TO RUN -----------
 
 from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
-test = getHeppyOption('test')
+#test = getHeppyOption('test')
+test = 'synchronization'
+#test = 'ynchronization_pow'
 if test == '1':
     comp = DYJetsToLL_M50_50ns
     comp.files = comp.files[:1]
@@ -610,6 +636,18 @@ elif test == "express":
     #    sed -i 's/process.MINIAODoutput_step/process.endpath/' miniAOD-data_PAT.py
     from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
     preprocessor = CmsswPreprocessor("miniAOD-data_PAT.py")
+elif test == 'synchronization': # sync
+    comp = TTHnobb
+    comp.files = [ 'root://eoscms.cern.ch//store/mc/RunIISpring15DR74/ttHJetToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/Asympt25ns_MCRUN2_74_V9-v2/50000/F072B3D0-7F0C-E511-9604-0025901F8740.root' ]
+    comp.splitFactor = 1
+    comp.fineSplitFactor = 1
+    selectedComponents = [ comp ]
+elif test == 'synchronization_pow': # sync
+    comp = TTHnobb_pow
+    comp.files = [ 'root://eoscms.cern.ch://store/mc/RunIISpring15DR74/ttHToNonbb_M125_13TeV_powheg_pythia8/MINIAODSIM/Asympt25ns_MCRUN2_74_V9-v2/40000/42EA68A1-E529-E511-87B5-0025905C9742.root' ]
+    comp.splitFactor = 1
+    comp.fineSplitFactor = 1
+    selectedComponents = [ comp ]
 
 
 ## output histogram
@@ -629,7 +667,8 @@ from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 from CMGTools.TTHAnalysis.tools.EOSEventsWithDownload import EOSEventsWithDownload
 event_class = EOSEventsWithDownload if not preprocessor else Events
 EOSEventsWithDownload.aggressive = 2 # always fetch if running on Wigner
-if getHeppyOption("nofetch"):
+#if getHeppyOption("nofetch"):
+if True:
     event_class = Events
     if preprocessor: preprocessor.prefetch = False
 config = cfg.Config( components = selectedComponents,
