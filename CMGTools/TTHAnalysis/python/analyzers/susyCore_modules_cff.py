@@ -26,7 +26,7 @@ skimAnalyzer = cfg.Analyzer(
 # Pick individual events (normally not in the path)
 eventSelector = cfg.Analyzer(
     EventSelector,name="EventSelector",
-    toSelect = []  # here put the event numbers (actual event numbers from CMSSW)
+    toSelect = [ 121187, 49273, 26874, 143578, 177466, 69999, 72980, 189386, 37297, 84136, 118725, 26815, 168058, 30248, 144196, 126532, 112017, 101238, 125806, 85866, 195696, 64441, 136151, 103251, 19151, 116021, 148301, 131506, 121027, 120420, 139463, 17332, 171436, 135115, 60185, 101224, 67927, 67361, 113670, 195390, 44577 ]  # here put the event numbers (actual event numbers from CMSSW)
     )
 
 # Apply json file (if the dataset has one)
@@ -361,6 +361,75 @@ ttHJetMETSkim = cfg.Analyzer(
    nBJet     = ('CSVv2IVFM', 0, "jet.pt() > 30"),     # require at least 0 jets passing CSV medium and pt > 30
    )
 
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_1 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_1",
+    fname = 'preselEventDump_CERN_1.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_2 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_2",
+    fname = 'preselEventDump_CERN_2.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_3 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_3",
+    fname = 'preselEventDump_CERN_3.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_4 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_4",
+    fname = 'preselEventDump_CERN_4.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_5 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_5",
+    fname = 'preselEventDump_CERN_5.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_6 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_6",
+    fname = 'preselEventDump_CERN_6.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_7 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_7",
+    fname = 'preselEventDump_CERN_7.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_8 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_8",
+    fname = 'preselEventDump_CERN_8.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_9 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_9",
+    fname = 'preselEventDump_CERN_9.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_10 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_10",
+    fname = 'preselEventDump_CERN_10.csv',
+    printMVA = False
+    )
 
 # Core sequence of all common modules
 susyCoreSequence = [
@@ -376,17 +445,27 @@ susyCoreSequence = [
     susyScanAna,
     vertexAna,
     lepAna,
+    leptonPrinter_1,
     ttHLepSkim,
+    leptonPrinter_2,
     #ttHLepMCAna,
     photonAna,
+    leptonPrinter_3,
     tauAna,
+    leptonPrinter_4,
     isoTrackAna,
+    leptonPrinter_5,
     jetAna,
+    leptonPrinter_6,
     #ttHFatJetAna,  # out of core sequence for now
     #ttHSVAna, # out of core sequence for now
     metAna,
+    leptonPrinter_7,
     ttHCoreEventAna,
+    leptonPrinter_8,
     #ttHJetMETSkim,
     triggerFlagsAna,
+    leptonPrinter_9,
     eventFlagsAna,
+    leptonPrinter_10,
 ]

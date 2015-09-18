@@ -169,17 +169,42 @@ if False:
     
 #-------- SEQUENCE -----------
 
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_11 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_11",
+    fname = 'preselEventDump_CERN_11.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_12 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_12",
+    fname = 'preselEventDump_CERN_12.csv',
+    printMVA = False
+    )
+
+from CMGTools.TTHAnalysis.analyzers.LeptonPrinter import LeptonPrinter
+leptonPrinter_13 = cfg.Analyzer(
+    LeptonPrinter, name="LeptonPrinter_13",
+    fname = 'preselEventDump_CERN_13.csv',
+    printMVA = False
+    )
+
 sequence = cfg.Sequence(susyCoreSequence+[
         ttHJetTauAna,
+        leptonPrinter_11,
         ttHEventAna,
+        leptonPrinter_12,
         treeProducer,
+        leptonPrinter_13,
     ])
 
 
 #-------- HOW TO RUN -----------
 
 from PhysicsTools.HeppyCore.framework.heppy import getHeppyOption
-test = getHeppyOption('test')
+#test = getHeppyOption('test')
+test = 'synchronization'
 if test == '1':
     comp = TTH
     if getHeppyOption('T1tttt'):
@@ -234,6 +259,12 @@ elif test == '2lss-sync': # sync
     comp.splitFactor = 1
     comp.fineSplitFactor = 10
     selectedComponents = [ comp ]
+elif test == 'synchronization': # sync
+    comp = TTH
+    comp.files = [ 'root://eoscms.cern.ch//store/mc/Phys14DR/TTbarH_M-125_13TeV_amcatnlo-pythia8-tauola/MINIAODSIM/PU40bx25_PHYS14_25_V1-v1/00000/EC51B40A-0F77-E411-AB65-002590A831AA.root' ]
+    comp.splitFactor = 1
+    comp.fineSplitFactor = 1
+    selectedComponents = [ comp ]
 
 ## output histogram
 outputService=[]
@@ -251,7 +282,8 @@ outputService.append(output_service)
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 from CMGTools.TTHAnalysis.tools.EOSEventsWithDownload import EOSEventsWithDownload
 event_class = EOSEventsWithDownload
-if getHeppyOption("nofetch"):
+#if getHeppyOption("nofetch"):
+if True:
     event_class = Events 
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
