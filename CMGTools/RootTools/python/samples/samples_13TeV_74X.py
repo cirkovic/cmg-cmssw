@@ -237,9 +237,12 @@ TTHnobb_pow = kreator.makeMCComponent("TTHnobb_pow", "/ttHToNonbb_M125_13TeV_pow
 
 Higgs = [ TTHnobb, TTHnobb_pow ]
 
-TTG_v1 = kreator.makeMCComponent("TTHnobb", "/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",3.697)
-WZTo3lNu_v1 = kreator.makeMCComponent("TTHnobb", "/WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",4.42965)
-ZZTo4L_v1 = kreator.makeMCComponent("TTHnobb", "/ZZTo4L_13TeV_powheg_pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",1.256)
+TTG_v1 = kreator.makeMCComponent("TTG", "/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",3.697)
+#TTG = kreator.makeMCComponent("TTG", "", "CMS", ".*root",xs)
+WZTo3lNu_v1 = kreator.makeMCComponent("WZTo3lNu", "/WZTo3LNu_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",4.42965)
+#WZTo3lNu = kreator.makeMCComponent("WZTo3lNu", "", "CMS", ".*root",xs)
+ZZTo4L_v1 = kreator.makeMCComponent("ZZTo4L", "/ZZTo4L_13TeV_powheg_pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root",1.256)
+#ZZTo4L = kreator.makeMCComponent("ZZTo4L", "", "CMS", ".*root",xs)
 
 ### ==============  50 ns ========================
 TTJets_50ns = kreator.makeMCComponent("TTJets_50ns", "/TTJets_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v1/MINIAODSIM", "CMS", ".*root", 831.76,)
