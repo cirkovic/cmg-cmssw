@@ -223,9 +223,12 @@ DiBosons = [ WWTo2L2Nu, ZZp8, WZp8 ]
 
 ###TTV
 TTWToLNu_v1 = kreator.makeMCComponent("TTWToLNu", "/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.2043)
+#TTWToLNu = kreator.makeMCComponent("TTWToLNu", "", "CMS", ".*root", xs)
 TTZToLLNuNu_v1 = kreator.makeMCComponent("TTZToLLNuNu","/TTZToLLNuNu_M-10_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.2529)
+#TTZToLLNuNu = kreator.makeMCComponent("TTZToLLNuNu","", "CMS", ".*root", xs)
 
 TTV = [TTWToLNu_v1, TTZToLLNuNu_v1]
+#TTV = [TTWToLNu, TTZToLLNuNu]
 
 # Higgs
 # TTH cross section from LHC Higgs XS WG: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV?rev=15
