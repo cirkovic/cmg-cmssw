@@ -231,6 +231,24 @@ TTGJets = kreator.makeMCComponent("TTGJets","/TTGJets_TuneCUETP8M1_13TeV-amcatnl
 
 TTV = [TTWToLNu, TTZToLLNuNu, TTGJets]
 
+##Rares
+#DiBosons (cros section from ...)
+WWDblScat = kreator.makeMCComponent("WWDblScat", "/WW_DoubleScattering_13TeV-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", xsec)
+
+# TriBosons (cros section from https://twiki.cern.ch/twiki/bin/view/CMS/SummaryTable1G25ns)
+WWZ = kreator.makeMCComponent("WWZ", "/WWZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", xsec)
+WZZ = kreator.makeMCComponent("WZZ", "/WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.05565)
+ZZZ = kreator.makeMCComponent("ZZZ", "/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root", xsec)
+
+##Associated Higgs production with single top quark (cros section from https://indico.cern.ch/event/397517/contribution/4/attachments/797166/1092659/tHq.pdf)
+THQ_Hincl = kreator.makeMCComponent("THQ_Hincl", "/THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.018)
+THW_Hincl = kreator.makeMCComponent("THW_Hincl", "/THW_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.004)
+
+##t-channel with the radiated Z boson (cros section from )
+TZQ_ll = kreator.makeMCComponent("TZQ_ll", "/tZq_ll_4f_13TeV-amcatnlo-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root", xsec)
+
+Rares = [ WWDblScat, WWZ, WZZ, ZZZ, THQ_Hincl, THW_Hincl, TZQ_ll ]
+
 # Higgs
 # TTH cross section from LHC Higgs XS WG: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV?rev=15
 TTHnobb = kreator.makeMCComponent("TTHnobb", "/ttHJetToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root",0.5085*(1-0.577))
