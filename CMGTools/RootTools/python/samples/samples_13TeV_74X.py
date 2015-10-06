@@ -231,6 +231,23 @@ TTGJets = kreator.makeMCComponent("TTGJets","/TTGJets_TuneCUETP8M1_13TeV-amcatnl
 
 TTV = [TTWToLNu, TTZToLLNuNu, TTGJets]
 
+##Rares (cross sections from McM)
+#DiBosons
+WWDblScat = kreator.makeMCComponentFromOutside("WWDblScat", "sbgse1.in2p3.fr", "/WW_DoubleScattering_13TeV-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 1.64)
+# TriBosons
+WWZ = kreator.makeMCComponentFromOutside("WWZ", "sbgse1.in2p3.fr", "/WWZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.1651)
+WZZ = kreator.makeMCComponentFromOutside("WZZ", "sbgse1.in2p3.fr", "/WZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.05565)
+ZZZ = kreator.makeMCComponentFromOutside("ZZZ", "sbgse1.in2p3.fr", "/ZZZ_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root", 0.01398)
+
+##Associated Higgs production with single top quark
+THQ_Hincl = kreator.makeMCComponent("THQ_Hincl", "/THQ_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.2608)
+THW_Hincl = kreator.makeMCComponentFromOutside("THW_Hincl", "sbgse1.in2p3.fr", "/THW_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM", "CMS", ".*root", 0.1658)
+
+##t-channel with the radiated Z boson
+TZQ_ll = kreator.makeMCComponentFromOutside("TZQ_ll", "sbgse1.in2p3.fr", "/tZq_ll_4f_13TeV-amcatnlo-pythia8_TuneCUETP8M1/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root", 0.0758)
+
+Rares = [ WWDblScat, WWZ, WZZ, ZZZ, THQ_Hincl, THW_Hincl, TZQ_ll ]
+
 # Higgs
 # TTH cross section from LHC Higgs XS WG: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV?rev=15
 TTHnobb = kreator.makeMCComponent("TTHnobb", "/ttHJetToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2/MINIAODSIM", "CMS", ".*root",0.5085*(1-0.577))

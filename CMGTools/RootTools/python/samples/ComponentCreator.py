@@ -2,6 +2,7 @@ import PhysicsTools.HeppyCore.framework.config as cfg
 from CMGTools.Production import eostools
 from CMGTools.Production.dataset import createDataset, createMyDataset
 import re
+from CMGTools.Production.datasetToSource import datasetToSource
 
 class ComponentCreator(object):
     def makeMCComponent(self,name,dataset,user,pattern,xSec=1,useAAA=False):
@@ -123,6 +124,24 @@ class ComponentCreator(object):
             dataset=dataset,
             name = name,
             files = self.getFilesFromIC(dataset,path,pattern),
+            xSection = xSec,
+            nGenEvents = 1,
+            triggers = [],
+            effCorrFactor = 1,
+        )
+        return component
+
+    def getFilesFromOutside(self, site, dataset, user, pattern):
+        # print 'getting files for', dataset,user,pattern
+        ds = datasetToSource( user, dataset, pattern, True )
+        files = ds.fileNames
+        return [ 'root://'+site+'//%s' % f for f in files]
+
+    def makeMCComponentFromOutside(self,name,site,dataset,path,pattern=".*root",xSec=1):
+        component = cfg.MCComponent(
+            dataset=dataset,
+            name = name,
+            files = self.getFilesFromOutside(site,dataset,path,pattern),
             xSection = xSec,
             nGenEvents = 1,
             triggers = [],
