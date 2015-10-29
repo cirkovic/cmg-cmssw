@@ -1,0 +1,8 @@
+cut0 : 1 == 1
+
+sip3d1 : LepGood_sip3d < 8 && LepGood_indices == 0
+
+#electron1 : nLepGood >= 1 && LepGood1_pdgId == 11
+electron1 : abs(LepGood1_pdgId) == 11
+#sip3d : LepGood1_sip3d < 8
+#electron1 : nLepGood >= 1

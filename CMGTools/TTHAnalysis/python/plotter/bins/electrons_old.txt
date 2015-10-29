@@ -1,0 +1,12 @@
+cut0 : 1 == 1
+#sip3d : LepGood_sip3d < 8
+#sip3d : LepGood1_sip3d < 8
+#sip3d : (nLepGood == 1) && (LepGood1_sip3d < 8)
+#sip3d : (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8)
+#sip3d1 : nLepGood == 2 && LepGood2_sip3d < 8
+#sip3d3 && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8) && (LepGood5_sip3d < 8) && (LepGood6_sip3d < 8)
+#sip3d : ((nLepGood == 1) && (LepGood1_sip3d < 8)) || ((nLepGood == 2) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8)) || ((nLepGood == 3) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8)) || ((nLepGood == 4) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8)) || ((nLepGood == 5) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8) && (LepGood5_sip3d < 8)) || ((nLepGood == 6) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8) && (LepGood5_sip3d < 8) && (LepGood6_sip3d < 8)) || ((nLepGood == 7) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8) && (LepGood5_sip3d < 8) && (LepGood6_sip3d < 8) && (LepGood7_sip3d < 8)) || ((nLepGood == 8) && (LepGood1_sip3d < 8) && (LepGood2_sip3d < 8) && (LepGood3_sip3d < 8) && (LepGood4_sip3d < 8) && (LepGood5_sip3d < 8) && (LepGood6_sip3d < 8) && (LepGood7_sip3d < 8) && (LepGood8_sip3d < 8))
+#electron1 : nLepGood >= 1 && LepGood1_pdgId == 11
+electron1 : LepGood1_pdgId == 11
+sip3d : LepGood1_sip3d < 8
+#electron1 : nLepGood >= 1
